@@ -8,6 +8,7 @@
         "api-platform/api-pack": "^1.2",
         "aws/aws-sdk-php": "^3.91",
         "doctrine/doctrine-migrations-bundle": "^2.0",
+        "lexik/jwt-authentication-bundle": "^2.6",
         "symfony/console": "4.2.*",
         "symfony/dotenv": "4.2.*",
         "symfony/flex": "^1.1",
@@ -61,8 +62,7 @@
         }
     },
     "require-dev": {
-        "doctrine/doctrine-fixtures-bundle": "^3.1",
-        "fzaninotto/faker": "^1.8",
+        "hautelook/alice-bundle": "^2.4",
         "phpunit/phpunit": "^8.0",
         "symfony/web-server-bundle": "4.2.*"
     }
