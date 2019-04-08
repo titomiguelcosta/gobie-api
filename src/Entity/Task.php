@@ -12,6 +12,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Task
 {
+    const STATUS_PENDING = 'pending';
+    const STATUS_RUNNING = 'running';
+    const STATUS_FAILED = 'failed';
+    const STATUS_FINISHED = 'finished';
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -22,23 +27,49 @@ class Task
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Job", inversedBy="tasks")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\Type(Job::class)
      */
     private $job;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $tool;
 
     /**
-     * @ORM\Column(type="json_array")
+     * @ORM\Column(type="json")
      */
     private $options;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $command;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\Type(\DateTimeInterface::class)
+     */
+    private $startedAt;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\Type(\DateTimeInterface::class)
+     */
+    private $finishedAt;
+
+    /**
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank()
+     */
+    private $status;
+
+    public function __construct()
+    {
+        $this->status = self::STATUS_PENDING;
+    }
 
     public function getId(): ?int
     {
@@ -89,6 +120,42 @@ class Task
     public function setCommand(string $command): self
     {
         $this->command = $command;
+
+        return $this;
+    }
+
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    public function getStartedAt(): ?\DateTimeInterface
+    {
+        return $this->startedAt;
+    }
+
+    public function setStartedAt(\DateTimeInterface $startedAt = null): self
+    {
+        $this->startedAt = $startedAt;
+
+        return $this;
+    }
+
+    public function getFinishedAt(): ?\DateTimeInterface
+    {
+        return $this->finishedAt;
+    }
+
+    public function setFinishedAt(?\DateTimeInterface $finishedAt = null): self
+    {
+        $this->finishedAt = $finishedAt;
 
         return $this;
     }

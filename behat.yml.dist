@@ -17,7 +17,7 @@ default:
                 env: test
                 debug: true
         Behat\MinkExtension:
-            base_url: http://localhost:9000
+            base_url: http://localhost:8000
             default_session: symfony2
             javascript_session: selenium2
             browser_name: chrome

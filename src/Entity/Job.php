@@ -46,10 +46,6 @@ class Job
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="job", orphanRemoval=true)
-     * @Assert\Count(
-     *  min = 1,
-     *  minMessage = "You must specify at least one task",
-     * )
      * @Assert\Valid()
      */
     private $tasks;
