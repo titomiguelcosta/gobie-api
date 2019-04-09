@@ -6,7 +6,7 @@ require 'recipe/symfony4.php';
 
 set('application', 'groomingchimps:api');
 set('repository', 'git@bitbucket.org:groomingchimps/api.git');
-set('git_tty', true);
+set('git_tty', false);
 set('keep_releases', 3);
 set('shared_dirs', ['var/log', 'var/sessions', 'config/jwt', 'vendor']);
 set('writable_dirs', ['var']);
