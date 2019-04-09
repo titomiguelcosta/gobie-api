@@ -1,12 +1,13 @@
 image: php:7.2.15
 
 pipelines:
-  default:
-    - step:
-        script:
-          - sudo apt update
-          - sudo apt install openssh-client
-          - curl -LO https://deployer.org/deployer.phar
-          - mv deployer.phar /usr/local/bin/dep
-          - chmod +x /usr/local/bin/dep
-          - dep deploy prod
+  branches:
+    master:
+      - step:
+          script:
+            - apt-get update
+            - apt-get install openssh-client
+            - curl -LO https://deployer.org/deployer.phar
+            - mv deployer.phar /usr/local/bin/dep
+            - chmod +x /usr/local/bin/dep
+            - dep deploy prod
