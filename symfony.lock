@@ -68,6 +68,12 @@
     "container-interop/container-interop": {
         "version": "1.2.0"
     },
+    "deployer/deployer": {
+        "version": "v6.4.3"
+    },
+    "deployer/phar-update": {
+        "version": "v2.1.0"
+    },
     "dnoegel/php-xdg-base-dir": {
         "version": "0.1"
     },
@@ -329,6 +335,9 @@
             "config/bootstrap.php",
             "tests/.gitignore"
         ]
+    },
+    "pimple/pimple": {
+        "version": "v3.2.3"
     },
     "psr/cache": {
         "version": "1.0.1"
