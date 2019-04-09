@@ -74,7 +74,8 @@
         "friendsofphp/php-cs-fixer": "^2.14",
         "hautelook/alice-bundle": "^2.4",
         "phpunit/phpunit": "^8.0",
-        "symfony/web-server-bundle": "4.2.*"
+        "symfony/web-server-bundle": "4.2.*",
+        "theofidry/psysh-bundle": "^3.5"
     },
     "minimum-stability": "dev",
     "prefer-stable": true
