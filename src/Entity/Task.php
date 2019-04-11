@@ -15,7 +15,7 @@ class Task
     const STATUS_PENDING = 'pending';
     const STATUS_RUNNING = 'running';
     const STATUS_FAILED = 'failed';
-    const STATUS_FINISHED = 'finished';
+    const STATUS_SUCCEEDED = 'succeeded';
 
     /**
      * @ORM\Id()

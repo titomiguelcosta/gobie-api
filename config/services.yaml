@@ -26,3 +26,6 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    Aws\Batch\BatchClient:
+        arguments: 
+            - {'version': '2016-08-10', 'region': '%env(AWS_REGION_DEFAULT)%'}

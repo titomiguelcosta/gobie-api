@@ -9,7 +9,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     collectionOperations={"get", "post"},
+ *     itemOperations={"get"}
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\JobRepository")
  */
 class Job

@@ -11,6 +11,13 @@ use Aws\Batch\BatchClient;
 class TestAwsBatchJobSubmitCommand extends Command
 {
     protected static $defaultName = 'test:aws:batch:job:submit';
+    protected $batchClient;
+
+    public function __construct(BatchClient $batchClient)
+    {
+        $this->batchClient = $batchClient;
+        parent::__construct();
+    }
 
     protected function configure()
     {
@@ -33,8 +40,7 @@ class TestAwsBatchJobSubmitCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
-        $client = new BatchClient(['version' => '2016-08-10', 'region' => getenv('AWS_REGION_DEFAULT')]);
-        $output = $client->submitJob([
+        $output = $this->batchClient->submitJob([
             'containerOverrides' => [
                 'command' => ['--version'],
                 'environment' => [
