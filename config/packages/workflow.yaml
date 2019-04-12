@@ -1,2 +1,35 @@
 framework:
-    workflows: ~
+    workflows:
+        task:
+            type: state_machine
+            audit_trail:
+                enabled: true
+            marking_store:
+                type: single_state
+                arguments:
+                    - status
+            supports:
+                - App\Entity\Task
+            initial_place: pending
+            places:
+                - pending
+                - running
+                - aborted
+                - failed
+                - succeeded
+            transitions:
+                pending_to_running:
+                    from: pending
+                    to: running
+                pending_to_aborted:
+                    from: pending
+                    to: aborted
+                running_to_aborted:
+                    from: running
+                    to: aborted
+                running_to_failed:
+                    from: running
+                    to: failed
+                running_to_succeeded:
+                    from: running
+                    to: succeeded

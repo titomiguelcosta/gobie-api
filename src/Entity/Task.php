@@ -14,6 +14,7 @@ class Task
 {
     const STATUS_PENDING = 'pending';
     const STATUS_RUNNING = 'running';
+    const STATUS_ABORTED = 'aborted';
     const STATUS_FAILED = 'failed';
     const STATUS_SUCCEEDED = 'succeeded';
 
@@ -38,7 +39,7 @@ class Task
     private $tool;
 
     /**
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="json", nullable=true)
      */
     private $options;
 
@@ -47,6 +48,11 @@ class Task
      * @Assert\NotBlank()
      */
     private $command;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $ouptut;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -105,7 +111,7 @@ class Task
         return $this->options;
     }
 
-    public function setOptions($options): self
+    public function setOptions(array $options = null): self
     {
         $this->options = $options;
 
@@ -132,6 +138,18 @@ class Task
     public function setStatus(string $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getOutput(): ?string
+    {
+        return $this->ouptut;
+    }
+
+    public function setOutput(string $output = null): self
+    {
+        $this->ouptut = $output;
 
         return $this;
     }

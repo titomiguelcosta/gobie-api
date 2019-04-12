@@ -16,7 +16,7 @@ final class JobStartSubscriber implements EventSubscriberInterface
 
     public function __construct(BatchClient $batchClient)
     {
-        $this->batchClient = $batchClient; 
+        $this->batchClient = $batchClient;
     }
 
     public function onKernelView(GetResponseForControllerResultEvent $event)
