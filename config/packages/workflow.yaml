@@ -33,3 +33,32 @@ framework:
                 running_to_succeeded:
                     from: running
                     to: succeeded
+        job:
+            type: state_machine
+            audit_trail:
+                enabled: true
+            marking_store:
+                type: single_state
+                arguments:
+                    - status
+            supports:
+                - App\Entity\Job
+            initial_place: pending
+            places:
+                - pending
+                - aborted
+                - started
+                - finished
+            transitions:
+                pending_to_started:
+                    from: pending
+                    to: started
+                pending_to_aborted:
+                    from: pending
+                    to: aborted
+                started_to_aborted:
+                    from: started
+                    to: aborted
+                started_to_finished:
+                    from: started
+                    to: finished

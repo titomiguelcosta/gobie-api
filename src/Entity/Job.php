@@ -17,6 +17,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Job
 {
+    const STATUS_PENDING = 'pending';
+    const STATUS_STARTED = 'started';
+    const STATUS_FINISHED = 'finished';
+    const STATUS_ABORTED = 'aborted';
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -53,10 +58,17 @@ class Job
      */
     private $tasks;
 
+    /**
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank()
+     */
+    private $status;
+
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
         $this->branch = 'master';
+        $this->status = self::STATUS_PENDING;
     }
 
     public function getId(): ?int
@@ -84,6 +96,18 @@ class Job
     public function setBranch(?string $branch): self
     {
         $this->branch = $branch;
+
+        return $this;
+    }
+
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }
