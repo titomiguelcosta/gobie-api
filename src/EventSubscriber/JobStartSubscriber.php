@@ -9,17 +9,20 @@ use App\Entity\Job;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Aws\Batch\BatchClient;
+use Swift_Mailer;
 
 final class JobStartSubscriber implements EventSubscriberInterface
 {
     private $batchClient;
+    private $mailer;
 
-    public function __construct(BatchClient $batchClient)
+    public function __construct(BatchClient $batchClient, Swift_Mailer $mailer)
     {
         $this->batchClient = $batchClient;
+        $this->mailer = $mailer;
     }
 
-    public function onKernelView(GetResponseForControllerResultEvent $event)
+    public function startJobOnAwsBatch(GetResponseForControllerResultEvent $event)
     {
         $job = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
@@ -52,10 +55,33 @@ final class JobStartSubscriber implements EventSubscriberInterface
         ]);
     }
 
+    public function emailNotifyingJobStart(GetResponseForControllerResultEvent $event)
+    {
+        $job = $event->getControllerResult();
+        $method = $event->getRequest()->getMethod();
+
+        if (false === $job instanceof Job || Request::METHOD_POST !== $method) {
+            return;
+        }
+
+        $message = (new \Swift_Message('Grooming Chimps: Submit Job to AWS Batch'))
+            ->setFrom('groomingchimps@titomiguelcosta.com')
+            ->setTo('titomiguelcosta@gmail.com')
+            ->setBody(
+                sprintf('Job #%d submitted to AWS Batch', $job->getId()),
+                'text/plain'
+            );
+
+        $this->mailer->send($message);
+    }
+
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::VIEW => ['onKernelView', EventPriorities::POST_WRITE],
+            KernelEvents::VIEW => [
+                ['startJobOnAwsBatch', 10 + EventPriorities::POST_WRITE],
+                ['emailNotifyingJobStart', 5 + EventPriorities::POST_WRITE],
+            ]
         ];
     }
 }
