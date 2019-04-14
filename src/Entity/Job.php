@@ -43,7 +43,7 @@ class Job
     private $branch;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $startedAt;
 
