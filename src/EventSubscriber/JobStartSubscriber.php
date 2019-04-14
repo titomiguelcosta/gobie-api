@@ -68,7 +68,7 @@ final class JobStartSubscriber implements EventSubscriberInterface
             ->setFrom('groomingchimps@titomiguelcosta.com')
             ->setTo('titomiguelcosta@gmail.com')
             ->setBody(
-                sprintf('Job #%d submitted to AWS Batch', $job->getId()),
+                sprintf('Job #%d submitted to AWS Batch.', $job->getId()),
                 'text/plain'
             );
 

@@ -12,18 +12,19 @@ class TestAwsBatchJobSubmitCommand extends Command
 {
     protected static $defaultName = 'test:aws:batch:job:submit';
     protected $batchClient;
+    protected $mailer;
 
-    public function __construct(BatchClient $batchClient)
+    public function __construct(BatchClient $batchClient, \Swift_Mailer $mailer)
     {
         $this->batchClient = $batchClient;
+        $this->mailer = $mailer;
         parent::__construct();
     }
 
     protected function configure()
     {
         $this
-            ->setDescription('Submit a job to AWS Batch')
-        ;
+            ->setDescription('Submit a job to AWS Batch');
     }
 
     /**
@@ -40,6 +41,7 @@ class TestAwsBatchJobSubmitCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
+        /*
         $output = $this->batchClient->submitJob([
             'containerOverrides' => [
                 'command' => ['--version'],
@@ -50,7 +52,16 @@ class TestAwsBatchJobSubmitCommand extends Command
             'jobDefinition' => getenv('AWS_BATCH_JOB_DEFINITION'),
             'jobName' => 'api',
             'jobQueue' => getenv('AWS_BATCH_JOB_QUEUE'),
-        ]);
+        ]);*/
+        $message = (new \Swift_Message('Grooming Chimps: Submit Job to AWS Batch'))
+            ->setFrom('groomingchimps@titomiguelcosta.com')
+            ->setTo('titomiguelcosta@gmail.com')
+            ->setBody(
+                sprintf('Job #%d submitted to AWS Batch', 10),
+                'text/plain'
+            );
+
+        $output = $this->mailer->send($message);
 
         $io->success($output);
     }
