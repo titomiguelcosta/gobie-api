@@ -166,24 +166,4 @@ class Job
 
         return $this;
     }
-
-    /**
-     * @return Collection|Task[]
-     */
-    public function getTasksAsArray(): array
-    {
-        $tasks = [];
-
-        foreach ($this->getTasks() as $task) {
-            $tasks[] = [
-                'id' => $task->getId(),
-                'job' => $task->getJob(),
-                'tool' => $task->getTool(),
-                'options' => $task->getOptions(),
-                'command' => $task->getCommand(),
-            ];
-        }
-
-        return $tasks;
-    }
 }
