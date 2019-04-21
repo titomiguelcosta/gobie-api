@@ -81,7 +81,7 @@ final class JobStartSubscriber implements EventSubscriberInterface
             KernelEvents::VIEW => [
                 ['startJobOnAwsBatch', 10 + EventPriorities::POST_WRITE],
                 ['emailNotifyingJobStart', 5 + EventPriorities::POST_WRITE],
-            ]
+            ],
         ];
     }
 }

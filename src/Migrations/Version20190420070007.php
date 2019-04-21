@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20190414045442 extends AbstractMigration
+final class Version20190420070007 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -22,7 +22,8 @@ final class Version20190414045442 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf('mysql' !== $this->connection->getDatabasePlatform()->getName(), 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE task CHANGE command command VARCHAR(255) DEFAULT NULL');
+        $this->addSql('ALTER TABLE user ADD username VARCHAR(180) NOT NULL');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_8D93D649F85E0677 ON user (username)');
     }
 
     public function down(Schema $schema): void
@@ -30,6 +31,7 @@ final class Version20190414045442 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf('mysql' !== $this->connection->getDatabasePlatform()->getName(), 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE task CHANGE command command VARCHAR(255) NOT NULL COLLATE utf8mb4_unicode_ci');
+        $this->addSql('DROP INDEX UNIQ_8D93D649F85E0677 ON user');
+        $this->addSql('ALTER TABLE user DROP username');
     }
 }

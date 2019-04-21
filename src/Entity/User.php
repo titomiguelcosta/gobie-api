@@ -7,17 +7,17 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiProperty;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ApiResource(
- *  attributes={"access_control"="is_granted('ROLE_ADMIN')"},
- * )
+ * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
 class User implements UserInterface
 {
     /**
+     * @ApiProperty(identifier=false)
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -26,7 +26,6 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Assert\NotBlank()
      * @Assert\Email()
      */
     private $email;
@@ -35,6 +34,14 @@ class User implements UserInterface
      * @ORM\Column(type="json")
      */
     private $roles = [];
+
+    /**
+     * @ApiProperty(identifier=true)
+     * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Regex("/^\w+$/")
+     */
+    private $username;
 
     /**
      * @var string The hashed password
@@ -77,7 +84,14 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return $this->username;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
     }
 
     /**
