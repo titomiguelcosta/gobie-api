@@ -10,16 +10,24 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Aws\Batch\BatchClient;
 use Swift_Mailer;
+use App\Entity\User;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
+use function GuzzleHttp\json_encode;
 
 final class JobStartSubscriber implements EventSubscriberInterface
 {
     private $batchClient;
     private $mailer;
+    private $tokenManager;
 
-    public function __construct(BatchClient $batchClient, Swift_Mailer $mailer)
-    {
+    public function __construct(
+        BatchClient $batchClient,
+        Swift_Mailer $mailer,
+        JWTTokenManagerInterface $tokenManager
+    ) {
         $this->batchClient = $batchClient;
         $this->mailer = $mailer;
+        $this->tokenManager = $tokenManager;
     }
 
     public function startJobOnAwsBatch(GetResponseForControllerResultEvent $event)
@@ -31,6 +39,7 @@ final class JobStartSubscriber implements EventSubscriberInterface
             return;
         }
 
+        $user = $this->security->getUser();
         $this->batchClient->submitJob([
             'containerOverrides' => [
                 'command' => ['--version'],
@@ -44,8 +53,12 @@ final class JobStartSubscriber implements EventSubscriberInterface
                         'value' => $job->getId(),
                     ],
                     [
-                        'name' => 'TOKEN',
-                        'value' => 'SECRET_TO_CALL_API_BACK',
+                        'name' => 'AUTH_TOKEN',
+                        'value' => $user instanceof User ? $this->tokenManager->create($user) : '',
+                    ],
+                    [
+                        'name' => 'TASKS',
+                        'value' => json_encode($job->getTasksAsArray()),
                     ],
                 ],
             ],
