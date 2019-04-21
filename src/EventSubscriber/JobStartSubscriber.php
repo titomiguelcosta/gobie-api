@@ -43,6 +43,9 @@ final class JobStartSubscriber implements EventSubscriberInterface
         }
 
         $user = $this->security->getUser();
+        $token = $user instanceof User ? $this->tokenManager->create($user) : '';
+        $username = $user instanceof User ? $user->getUsername() : 'ANONYMOUS';
+
         $this->batchClient->submitJob([
             'containerOverrides' => [
                 'command' => ['help'],
@@ -57,7 +60,11 @@ final class JobStartSubscriber implements EventSubscriberInterface
                     ],
                     [
                         'name' => 'AUTH_TOKEN',
-                        'value' => $user instanceof User ? $this->tokenManager->create($user) : '',
+                        'value' => $token,
+                    ],
+                    [
+                        'name' => 'USER_USERNAME',
+                        'value' => $username,
                     ],
                 ],
             ],
@@ -91,8 +98,8 @@ final class JobStartSubscriber implements EventSubscriberInterface
     {
         return [
             KernelEvents::VIEW => [
-                ['startJobOnAwsBatch', 10 + EventPriorities::POST_WRITE],
-                ['emailNotifyingJobStart', 5 + EventPriorities::POST_WRITE],
+                ['startJobOnAwsBatch', EventPriorities::POST_WRITE],
+                ['emailNotifyingJobStart', EventPriorities::POST_WRITE],
             ],
         ];
     }
