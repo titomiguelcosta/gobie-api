@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource()
@@ -22,6 +23,7 @@ class Task
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"job"})
      */
     private $id;
 
@@ -35,39 +37,58 @@ class Task
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
+     * @Groups({"job"})
      */
     private $tool;
 
     /**
      * @ORM\Column(type="json", nullable=true)
+     * @Groups({"job"})
      */
     private $options;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"job"})
      */
     private $command;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"job"})
      */
-    private $ouptut;
+    private $output;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     * @Groups({"job"})
+     */
+    private $errorOutput;
+
+    /**
+     * @ORM\Column(type="smallint", nullable=true)
+     * @Groups({"job"})
+     */
+    private $exitCode;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @Assert\Type(\DateTimeInterface::class)
+     * @Groups({"job"})
      */
     private $startedAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @Assert\Type(\DateTimeInterface::class)
+     * @Groups({"job"})
      */
     private $finishedAt;
 
     /**
      * @ORM\Column(type="string")
      * @Assert\NotBlank()
+     * @Groups({"job"})
      */
     private $status;
 
@@ -141,14 +162,38 @@ class Task
         return $this;
     }
 
+    public function getErrorOutput(): ?string
+    {
+        return $this->errorOutput;
+    }
+
+    public function setErrorOutput(string $errorOutput = null): self
+    {
+        $this->errorOutput = $errorOutput;
+
+        return $this;
+    }
+
     public function getOutput(): ?string
     {
-        return $this->ouptut;
+        return $this->output;
     }
 
     public function setOutput(string $output = null): self
     {
-        $this->ouptut = $output;
+        $this->output = $output;
+
+        return $this;
+    }
+
+    public function getExitCode(): ?int
+    {
+        return $this->exitCode;
+    }
+
+    public function setExitCode(int $exitCode): self
+    {
+        $this->exitCode = $exitCode;
 
         return $this;
     }

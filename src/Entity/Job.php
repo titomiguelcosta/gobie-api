@@ -7,11 +7,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
- *     collectionOperations={"get", "post"},
- *     itemOperations={"get"}
+ *  normalizationContext={"groups"={"job"}}
  * )
  * @ORM\Entity(repositoryClass="App\Repository\JobRepository")
  */
@@ -26,6 +26,7 @@ class Job
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"job"})
      */
     private $id;
 
@@ -33,34 +34,46 @@ class Job
      * @ORM\ManyToOne(targetEntity="App\Entity\Project", inversedBy="jobs")
      * @ORM\JoinColumn(nullable=false)
      * @Assert\NotBlank()
+     * @Groups({"job"})
      */
     private $project;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
+     * @Groups({"job"})
      */
     private $branch;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"job"})
      */
     private $startedAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"job"})
      */
     private $finishedAt;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="job", orphanRemoval=true)
      * @Assert\Valid()
+     * @Groups({"job"})
      */
     private $tasks;
 
     /**
+     * @ORM\Column(type="array", nullable=true)
+     * @Groups({"job"})
+     */
+    private $errors;
+
+    /**
      * @ORM\Column(type="string")
      * @Assert\NotBlank()
+     * @Groups({"job"})
      */
     private $status;
 
@@ -69,6 +82,7 @@ class Job
         $this->tasks = new ArrayCollection();
         $this->branch = 'master';
         $this->status = self::STATUS_PENDING;
+        $this->errors = [];
     }
 
     public function getId(): ?int
@@ -132,6 +146,18 @@ class Job
     public function setFinishedAt(?\DateTimeInterface $finishedAt): self
     {
         $this->finishedAt = $finishedAt;
+
+        return $this;
+    }
+
+    public function getErrors(): ?array
+    {
+        return $this->errors;
+    }
+
+    public function setErrors(array $errors): self
+    {
+        $this->errors = $errors;
 
         return $this;
     }

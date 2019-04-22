@@ -48,22 +48,18 @@ final class JobStartSubscriber implements EventSubscriberInterface
 
         $this->batchClient->submitJob([
             'containerOverrides' => [
-                'command' => ['help'],
+                'command' => ['app:job:run', $job->getId()],
                 'environment' => [
                     [
-                        'name' => 'APP_ENV',
-                        'value' => getenv('APP_ENV'),
-                    ],
-                    [
-                        'name' => 'JOB_ID',
+                        'name' => 'GROOMING_CHIMPS_API_JOB_ID',
                         'value' => $job->getId(),
                     ],
                     [
-                        'name' => 'AUTH_TOKEN',
+                        'name' => 'GROOMING_CHIMPS_API_AUTH_TOKEN',
                         'value' => $token,
                     ],
                     [
-                        'name' => 'USER_USERNAME',
+                        'name' => 'GROOMING_CHIMPS_API_USER_USERNAME',
                         'value' => $username,
                     ],
                 ],

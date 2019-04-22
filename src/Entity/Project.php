@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource()
@@ -19,6 +20,7 @@ class Project
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"job"})
      */
     private $id;
 
@@ -28,11 +30,13 @@ class Project
      * @Assert\Url(
      *  protocols={"http", "https", "git"}
      * )
+     * @Groups({"job"})
      */
     private $repo;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"job"})
      */
     private $description;
 
@@ -45,6 +49,7 @@ class Project
     /**
      * @ORM\Column(type="datetime")
      * @Gedmo\Timestampable(on="create")
+     * @Groups({"job"})
      */
     private $createdAt;
 
