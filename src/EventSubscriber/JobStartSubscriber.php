@@ -51,6 +51,10 @@ final class JobStartSubscriber implements EventSubscriberInterface
                 'command' => ['app:job:run', $job->getId()],
                 'environment' => [
                     [
+                        'name' => 'GROOMING_CHIMPS_API_BASE_URI',
+                        'value' => 'https://api.groomingchimps.titomiguelcosta.com',
+                    ],
+                    [
                         'name' => 'GROOMING_CHIMPS_API_JOB_ID',
                         'value' => $job->getId(),
                     ],
