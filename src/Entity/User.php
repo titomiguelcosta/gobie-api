@@ -9,9 +9,25 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Controller\AuthController;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *  itemOperations={
+ *     "get",
+ *     "auth"={
+ *         "method"="POST",
+ *         "path"="/users/auth",
+ *         "controller"=AuthController::class,
+ *         "defaults"={"_api_receive"=false},
+ *         "normalization_context"={"groups"={"auth"}},
+ *     },
+ *     "delete",
+ *     "put"
+ *  })
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
 class User implements UserInterface
@@ -40,6 +56,7 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\NotBlank()
      * @Assert\Regex("/^\w+$/")
+     * @Groups("auth")
      */
     private $username;
 
@@ -47,6 +64,7 @@ class User implements UserInterface
      * @var string The hashed password
      * @ORM\Column(type="string")
      * @Assert\NotBlank()
+     * @Groups("auth")
      */
     private $password;
 
