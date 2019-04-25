@@ -1,0 +1,14 @@
+App\Entity\User:
+  user_tito:
+    username: tito
+    email: tito@titomiguelcosta.com
+    plainPassword: 1234567
+    roles:
+      - ROLE_ADMIN
+
+  user_chimp:
+    username: chimp
+    email: chimp@titomiguelcosta.com
+    plainPassword: 1234567
+    roles:
+      - ROLE_USER

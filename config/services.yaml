@@ -29,3 +29,7 @@ services:
     Aws\Batch\BatchClient:
         arguments: 
             - {'version': '2016-08-10', 'region': '%env(AWS_REGION_DEFAULT)%'}
+
+    App\EventSubscriber\UserPasswordSubscriber:
+        tags:
+            - { name: doctrine.event_subscriber }
