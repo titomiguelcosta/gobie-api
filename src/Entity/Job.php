@@ -11,7 +11,29 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
- *  normalizationContext={"groups"={"job"}}
+ *  attributes = {
+ *      "access_control" = "is_granted('ROLE_USER')"
+ *  },
+ *  normalizationContext = {"groups" = {"job"}},
+ *  collectionOperations={
+ *      "get" = {
+ *          "access_control" = "is_granted('ROLE_USER')"
+ *      },
+ *      "post" = {
+ *          "access_control" = "is_granted('ROLE_USER')"
+ *      }
+ *  },
+ *  itemOperations = {
+ *      "get" = {
+ *          "access_control" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.project.createdBy)"
+ *      },
+ *      "delete" = {
+ *          "access_control" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.project.createdBy)"
+ *      },
+ *      "put" = {
+ *          "access_control" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.project.createdBy)"
+ *      }
+ *  }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\JobRepository")
  */

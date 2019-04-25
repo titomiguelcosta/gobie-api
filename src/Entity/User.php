@@ -20,16 +20,24 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      "denormalization_context" = {"groups" = {"write"}}
  *  },
  *  collectionOperations={
- *    "get",
- *    "post"={"validation_groups"={"Default", "create"}}
+ *      "get" = {
+ *          "access_control" = "is_granted('ROLE_ADMIN')"
+ *      },
+ *      "post" = {
+ *          "validation_groups" = {"Default", "create"},
+ *          "access_control" = "is_granted('ROLE_ADMIN')"
+ *      }
  *  },
  *  itemOperations = {
- *      "get",
- *      "auth"={
+ *      "get" = {
+ *          "access_control" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object)"
+ *      },
+ *      "auth" = {
  *          "method" = "POST",
  *          "path" = "/users/auth",
  *          "controller" = AuthController::class,
  *          "defaults" = {"_api_receive" = false},
+ *          "access_control" = "is_granted('IS_AUTHENTICATED_ANONYMOUSLY')",
  *          "normalization_context" = {"groups" = {"auth"}},
  *          "swagger_context"={
  *              "parameters" = {
@@ -49,7 +57,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                          "password" = "secret"
  *                      }
  *                  }
- *               },
+ *              },
  *              "responses" = {
  *                  "200" = {
  *                      "description" = "Generate JWT token",
@@ -86,8 +94,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *              }
  *          }
  *      },
- *      "delete",
- *      "put"
+ *      "delete" = {
+ *          "access_control" = "is_granted('ROLE_ADMIN')"
+ *      },
+ *      "put" = {
+ *          "access_control" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object)"
+ *      }
  *  })
  * )
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")

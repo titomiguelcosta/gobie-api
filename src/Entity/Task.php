@@ -8,7 +8,28 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *  attributes = {"access_control" = "is_granted('ROLE_USER')"},
+ *  collectionOperations={
+ *      "get" = {
+ *          "access_control" = "is_granted('ROLE_USER')"
+ *      },
+ *      "post" = {
+ *          "access_control" = "is_granted('ROLE_USER')"
+ *      }
+ *  },
+ *  itemOperations = {
+ *      "get" = {
+ *          "access_control" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.job.project.createdBy)"
+ *      },
+ *      "delete" = {
+ *          "access_control" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.job.project.createdBy)"
+ *      },
+ *      "put" = {
+ *          "access_control" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.job.project.createdBy)"
+ *      }
+ *  }
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\TaskRepository")
  */
 class Task

@@ -11,7 +11,28 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *  attributes = {"access_control" = "is_granted('ROLE_USER')"},
+ *  collectionOperations={
+ *      "get" = {
+ *          "access_control" = "is_granted('ROLE_USER')"
+ *      },
+ *      "post" = {
+ *          "access_control" = "is_granted('ROLE_USER')"
+ *      }
+ *  },
+ *  itemOperations = {
+ *      "get" = {
+ *          "access_control" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.createdBy)"
+ *      },
+ *      "delete" = {
+ *          "access_control" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.createdBy)"
+ *      },
+ *      "put" = {
+ *          "access_control" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.createdBy)"
+ *      }
+ *  }
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\ProjectRepository")
  */
 class Project
