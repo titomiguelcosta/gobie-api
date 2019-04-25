@@ -17,7 +17,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ApiResource(
  *  attributes = {
  *      "normalization_context" = {"groups" = {"read"}},
- *      "denormalization_context" = {"groups" = {"write"}}
+ *      "denormalization_context" = {"groups" = {"write"}},
+ *      "access_control" = "is_granted('IS_AUTHENTICATED_FULLY')"
  *  },
  *  collectionOperations={
  *      "get" = {
@@ -30,6 +31,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *  },
  *  itemOperations = {
  *      "get" = {
+ *          "access_control" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object)"
+ *      },
+ *      "delete" = {
+ *          "access_control" = "is_granted('ROLE_ADMIN')"
+ *      },
+ *      "put" = {
  *          "access_control" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object)"
  *      },
  *      "auth" = {
@@ -93,12 +100,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                  "application/json"
  *              }
  *          }
- *      },
- *      "delete" = {
- *          "access_control" = "is_granted('ROLE_ADMIN')"
- *      },
- *      "put" = {
- *          "access_control" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object)"
  *      }
  *  })
  * )

@@ -12,7 +12,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ApiResource(
  *  attributes = {
- *      "access_control" = "is_granted('ROLE_USER')"
+ *      "access_control" = "is_granted('IS_AUTHENTICATED_FULLY')"
  *  },
  *  normalizationContext = {"groups" = {"job"}},
  *  collectionOperations={
