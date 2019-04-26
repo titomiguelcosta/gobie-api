@@ -1,0 +1,28 @@
+App\Entity\Job:
+  job_1:
+    project: "@project_1"
+    branch: master
+    status: pending
+  
+  job_2:
+    project: "@project_2"
+    branch: master
+    status: aborted
+    startedAt: <dateTimeBetween("-3 days", "-2 days")>
+    finishedAt: <dateTimeBetween($startedAt, "-1 day")>
+  job_3:
+    project: "@project_2"
+    branch: master
+    status: finished
+    errors:
+      - Repo is unreachable
+      - Branch not available
+    startedAt: <dateTimeBetween("-20 minutes", "-10 minutes")>
+    finishedAt: <dateTimeBetween($startedAt, "now")>
+  
+  job_4:
+    project: "@project_3"
+    branch: development
+    status: finished
+    startedAt: <dateTimeBetween("-20 minutes", "-10 minutes")>
+    finishedAt: <dateTimeBetween($startedAt, "now")>

@@ -1,0 +1,49 @@
+App\Entity\Task:
+  task_1:
+    job: "@job_1"
+    status: pending
+    tool: "lint:twig"
+    command: "php bin/console lint:twig templates"
+  task_2:
+    job: "@job_1"
+    status: pending
+    tool: "lint:xliff"
+    command: "php bin/console lint:xliff translations"
+  
+  task_3:
+    job: "@job_2"
+    status: aborted
+    tool: "lint:twig"
+    command: "php bin/console lint:twig templates"
+    output: ""
+    errorOutput: ""
+    exitCode: 1
+    startedAt: <dateTimeBetween("-3 days", "-2 days")>
+    finishedAt: <dateTimeBetween($startedAt, "-1 day")>
+  
+  task_4:
+    job: "@job_3"
+    status: pending
+    tool: "lint:twig"
+    command: "php bin/console lint:twig templates"
+  
+  task_5:
+    job: "@job_4"
+    status: finished
+    tool: "lint:twig"
+    command: "php bin/console lint:twig templates"
+    output: '\[\]'
+    errorOutput: ""
+    exitCode: 0
+    startedAt: <dateTimeBetween("-20 minutes", "-10 minutes")>
+    finishedAt: <dateTimeBetween($startedAt, "now")>
+  task_6:
+    job: "@job_4"
+    status: finished
+    tool: "phpmd"
+    command: "phpmd json src codestyle"
+    output: '\[\]'
+    errorOutput: ""
+    exitCode: 0
+    startedAt: <dateTimeBetween("-20 minutes", "-10 minutes")>
+    finishedAt: <dateTimeBetween($startedAt, "now")>

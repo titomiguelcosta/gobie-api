@@ -1,0 +1,10 @@
+App\Entity\Project:
+  project_1:
+    repo: 'https://github.com/tito/one.git'
+    createdBy: '@user_tito'
+  project_2:
+    repo: 'https://github.com/chimp/two.git'
+    createdBy: '@user_chimp'
+  project_3:
+    repo: 'https://github.com/chimp/three.git'
+    createdBy: '@user_chimp'
