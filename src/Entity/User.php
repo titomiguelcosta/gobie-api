@@ -71,15 +71,27 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                      "schema" =  {
  *                          "type" = "object",
  *                          "required" = {
+ *                              "id",
  *                              "username",
- *                              "password"
+ *                              "token",
+ *                              "email",
+ *                              "roles"
  *                          },
  *                          "properties" = {
+ *                              "id" = {
+ *                                  "type" = "integer"
+ *                              },
  *                              "username" = {
  *                                  "type" = "string"
  *                              },
- *                              "password" = {
+ *                              "token" = {
  *                                  "type" = "string"
+ *                              },
+ *                              "email" = {
+ *                                  "type" = "string"
+ *                              },
+ *                             "roles" = {
+ *                                  "type" = "object"
  *                              }
  *                          }
  *                      }
@@ -105,7 +117,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * )
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class User implements UserInterface
+class   User implements UserInterface
 {
     /**
      * @ApiProperty(identifier=false)

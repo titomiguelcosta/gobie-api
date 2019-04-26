@@ -35,7 +35,13 @@ class AuthController extends AbstractController
             $user instanceof User &&
             $userPasswordEncoder->isPasswordValid($user, $data['password'])
         ) {
-            return new JsonResponse(['token' => $tokenManager->create($user)]);
+            return new JsonResponse([
+                'id' => $user->getId(),
+                'username' => $user->getUsername(),
+                'email' => $user->getEmail(),
+                'roles' => $user->getRoles(),
+                'token' => $tokenManager->create($user),
+            ]);
         }
 
         throw new BadRequestHttpException('Invalid credentials');
