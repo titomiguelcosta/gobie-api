@@ -15,7 +15,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  * @ApiResource(
  *  attributes = {
  *      "access_control" = "is_granted('IS_AUTHENTICATED_FULLY')",
- *      "pagination_items_per_page" = 1
+ *      "pagination_items_per_page" = 5
  *  },
  *  normalizationContext = {"groups" = {"project"}},
  *  collectionOperations={
