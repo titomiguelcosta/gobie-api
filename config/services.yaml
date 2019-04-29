@@ -33,3 +33,7 @@ services:
     App\EventSubscriber\UserPasswordSubscriber:
         tags:
             - { name: doctrine.event_subscriber }
+
+    App\EventSubscriber\IsProjectPrivateSubscriber:
+        tags:
+            - { name: doctrine.event_subscriber }

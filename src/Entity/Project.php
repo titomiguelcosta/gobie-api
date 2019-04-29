@@ -3,18 +3,21 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiProperty;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * @ApiResource(
  *  attributes = {
- *      "access_control" = "is_granted('IS_AUTHENTICATED_FULLY')"
+ *      "access_control" = "is_granted('IS_AUTHENTICATED_FULLY')",
+ *      "pagination_items_per_page" = 1
  *  },
+ *  normalizationContext = {"groups" = {"project"}},
  *  collectionOperations={
  *      "get" = {
  *          "access_control" = "is_granted('ROLE_USER')"
@@ -43,7 +46,7 @@ class Project
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"job"})
+     * @Groups({"job", "project"})
      */
     private $id;
 
@@ -53,38 +56,45 @@ class Project
      * @Assert\Url(
      *  protocols={"http", "https", "git"}
      * )
-     * @Groups({"job"})
      */
     private $repo;
 
     /**
+     * @ApiProperty()
+     * @Groups({"job", "project"})
+     */
+    private $repoSanitized;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"job"})
+     * @Groups({"job", "project"})
      */
     private $description;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="projects")
      * @Assert\Type(User::class)
-     * @Groups({"job"})
+     * @Groups({"job", "project"})
      */
     private $createdBy;
 
     /**
      * @ORM\Column(type="datetime")
      * @Gedmo\Timestampable(on="create")
-     * @Groups({"job"})
+     * @Groups({"job", "project"})
      */
     private $createdAt;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Job", mappedBy="project", orphanRemoval=true)
      * @Assert\Valid()
+     * @Groups({"project"})
      */
     private $jobs;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups({"job", "project"})
      */
     private $isPrivate;
 
@@ -92,6 +102,7 @@ class Project
     {
         $this->jobs = new ArrayCollection();
         $this->isPrivate = false;
+        $this->repoSanitized = $this->getSanitizedRepo();
     }
 
     public function getId(): ?int
@@ -104,16 +115,27 @@ class Project
         return $this->repo;
     }
 
+    /**
+     * remove username and password from the repo
+     * @Groups({"job", "project"})
+     * @SerializedName("repo")
+     */
+    public function getSanitizedRepo(): ?string
+    {
+        return preg_replace('/.*:?.*@/', '', $this->repo);
+    }
+
     public function setRepo(string $repo): self
     {
         $this->repo = $repo;
+        $this->repoSanitized = $this->getSanitizedRepo();
 
         return $this;
     }
 
     public function getDescription(): ?string
     {
-        return $this->description;
+        return $this->description ?? $this->getSanitizedRepo();
     }
 
     public function setDescription(?string $description): self
@@ -135,12 +157,12 @@ class Project
         return $this;
     }
 
-    public function isPrivate(): bool
+    public function getIsPrivate(): bool
     {
         return $this->isPrivate;
     }
 
-    public function setPrivate(bool $private): self
+    public function setIsPrivate(bool $private): self
     {
         $this->isPrivate = $private;
 
@@ -160,11 +182,11 @@ class Project
     }
 
     /**
-     * @return Collection|Job[]
+     * @return Job[]
      */
-    public function getJobs(): Collection
+    public function getJobs(): array
     {
-        return $this->jobs;
+        return $this->jobs->getValues();
     }
 
     public function addJob(Job $job): self

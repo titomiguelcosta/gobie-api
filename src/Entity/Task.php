@@ -46,7 +46,7 @@ class Task
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"job"})
+     * @Groups({"job", "project"})
      */
     private $id;
 
@@ -60,58 +60,58 @@ class Task
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
-     * @Groups({"job"})
+     * @Groups({"job", "project"})
      */
     private $tool;
 
     /**
      * @ORM\Column(type="json", nullable=true)
-     * @Groups({"job"})
+     * @Groups({"job", "project"})
      */
     private $options;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"job"})
+     * @Groups({"job", "project"})
      */
     private $command;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"job"})
+     * @Groups({"job", "project"})
      */
     private $output;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"job"})
+     * @Groups({"job", "project"})
      */
     private $errorOutput;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
-     * @Groups({"job"})
+     * @Groups({"job", "project"})
      */
     private $exitCode;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @Assert\Type(\DateTimeInterface::class)
-     * @Groups({"job"})
+     * @Groups({"job", "project"})
      */
     private $startedAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @Assert\Type(\DateTimeInterface::class)
-     * @Groups({"job"})
+     * @Groups({"job", "project"})
      */
     private $finishedAt;
 
     /**
      * @ORM\Column(type="string")
      * @Assert\NotBlank()
-     * @Groups({"job"})
+     * @Groups({"job", "project"})
      */
     private $status;
 

@@ -1,10 +1,16 @@
 App\Entity\Project:
   project_1:
     repo: 'https://github.com/tito/one.git'
+    description: Project number one
     createdBy: '@user_tito'
+    isPrivate: false
   project_2:
-    repo: 'https://github.com/chimp/two.git'
+    repo: 'https://me:secret@github.com/chimp/two.git'
+    description: Private project number two
     createdBy: '@user_chimp'
+    isPrivate: true
   project_3:
     repo: 'https://github.com/chimp/three.git'
+    description: Project number three
     createdBy: '@user_chimp'
+    isPrivate: false

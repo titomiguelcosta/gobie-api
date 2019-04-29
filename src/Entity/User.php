@@ -124,7 +124,7 @@ class   User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"read"})
+     * @Groups({"read", "job", "project"})
      */
     private $id;
 
@@ -146,7 +146,7 @@ class   User implements UserInterface
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\NotBlank()
      * @Assert\Regex("/^\w+$/")
-     * @Groups({"auth", "read", "write"})
+     * @Groups({"auth", "read", "write", "job", "project"})
      */
     private $username;
 

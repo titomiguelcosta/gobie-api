@@ -48,7 +48,7 @@ class Job
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"job"})
+     * @Groups({"job", "project"})
      */
     private $id;
 
@@ -63,39 +63,39 @@ class Job
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
-     * @Groups({"job"})
+     * @Groups({"job", "project"})
      */
     private $branch;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @Groups({"job"})
+     * @Groups({"job", "project"})
      */
     private $startedAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @Groups({"job"})
+     * @Groups({"job", "project"})
      */
     private $finishedAt;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="job", orphanRemoval=true)
      * @Assert\Valid()
-     * @Groups({"job"})
+     * @Groups({"job", "project"})
      */
     private $tasks;
 
     /**
      * @ORM\Column(type="array", nullable=true)
-     * @Groups({"job"})
+     * @Groups({"job", "project"})
      */
     private $errors;
 
     /**
      * @ORM\Column(type="string")
      * @Assert\NotBlank()
-     * @Groups({"job"})
+     * @Groups({"job", "project"})
      */
     private $status;
 
@@ -185,11 +185,11 @@ class Job
     }
 
     /**
-     * @return Collection|Task[]
+     * @return Task[]
      */
-    public function getTasks(): Collection
+    public function getTasks(): array
     {
-        return $this->tasks;
+        return $this->tasks->getValues();
     }
 
     public function addTask(Task $task): self
