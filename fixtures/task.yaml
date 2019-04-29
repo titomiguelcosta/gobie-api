@@ -47,3 +47,23 @@ App\Entity\Task:
     exitCode: 0
     startedAt: <dateTimeBetween("-20 minutes", "-10 minutes")>
     finishedAt: <dateTimeBetween($startedAt, "now")>
+  task_7:
+    job: "@job_4"
+    status: finished
+    tool: "lint:xliff"
+    command: "php bin/console lint:xliff translations"
+    output: '\[\]'
+    errorOutput: ""
+    exitCode: 0
+    startedAt: <dateTimeBetween("-20 minutes", "-10 minutes")>
+    finishedAt: <dateTimeBetween($startedAt, "now")>
+  task_8:
+    job: "@job_4"
+    status: finished
+    tool: "lint:yaml"
+    command: "php bin/console lint:yaml config"
+    output: '\[\]'
+    errorOutput: ""
+    exitCode: 0
+    startedAt: <dateTimeBetween("-20 minutes", "-10 minutes")>
+    finishedAt: <dateTimeBetween($startedAt, "now")>
