@@ -89,6 +89,12 @@ class Task
     private $errorOutput;
 
     /**
+     * @ORM\Column(type="json", nullable=true)
+     * @Groups({"job", "project"})
+     */
+    private $graph;
+
+    /**
      * @ORM\Column(type="smallint", nullable=true)
      * @Groups({"job", "project"})
      */
@@ -205,6 +211,18 @@ class Task
     public function setOutput(string $output = null): self
     {
         $this->output = $output;
+
+        return $this;
+    }
+
+    public function getGraph()
+    {
+        return $this->graph;
+    }
+
+    public function setGraph(array $data = null): self
+    {
+        $this->graph = $data;
 
         return $this;
     }
