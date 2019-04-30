@@ -12,6 +12,11 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
+    _instanceof:
+        App\Graph\GraphInterface:
+            public: false
+            tags: ['app.graph']
+
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:
@@ -32,8 +37,15 @@ services:
 
     App\EventSubscriber\UserPasswordSubscriber:
         tags:
-            - { name: doctrine.event_subscriber }
+            - { name: 'doctrine.event_subscriber' }
 
     App\EventSubscriber\IsProjectPrivateSubscriber:
         tags:
-            - { name: doctrine.event_subscriber }
+            - { name: 'doctrine.event_subscriber' }
+    
+    App\EventSubscriber\TaskChartSubscriber:
+        tags:
+            - { name: 'doctrine.event_subscriber' }
+    
+    App\Graph\GraphManager:
+        arguments: [!tagged 'app.graph']

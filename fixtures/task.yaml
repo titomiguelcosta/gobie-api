@@ -42,7 +42,7 @@ App\Entity\Task:
     status: finished
     tool: "phpmd"
     command: "phpmd json src codestyle"
-    output: '\[\]'
+    output: '{"errors": 3}'
     errorOutput: ""
     exitCode: 0
     startedAt: <dateTimeBetween("-20 minutes", "-10 minutes")>
@@ -52,7 +52,7 @@ App\Entity\Task:
     status: finished
     tool: "lint:xliff"
     command: "php bin/console lint:xliff translations"
-    output: '\[\]'
+    output: '{"errors": 0, "tests": 21}'
     errorOutput: ""
     exitCode: 0
     startedAt: <dateTimeBetween("-20 minutes", "-10 minutes")>
@@ -62,6 +62,16 @@ App\Entity\Task:
     status: finished
     tool: "lint:yaml"
     command: "php bin/console lint:yaml config"
+    output: '\[\]'
+    errorOutput: ""
+    exitCode: 0
+    startedAt: <dateTimeBetween("-20 minutes", "-10 minutes")>
+    finishedAt: <dateTimeBetween($startedAt, "now")>
+  task_9:
+    job: "@job_4"
+    status: finished
+    tool: "security:check"
+    command: "security-checker --format=json security:check"
     output: '\[\]'
     errorOutput: ""
     exitCode: 0

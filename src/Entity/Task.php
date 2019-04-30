@@ -124,6 +124,7 @@ class Task
     public function __construct()
     {
         $this->status = self::STATUS_PENDING;
+        $this->graph = [];
     }
 
     public function getId(): ?int
@@ -198,6 +199,8 @@ class Task
 
     public function setErrorOutput(string $errorOutput = null): self
     {
+        // we will have to recalculate field value
+        $this->setGraph(null);
         $this->errorOutput = $errorOutput;
 
         return $this;
@@ -210,6 +213,8 @@ class Task
 
     public function setOutput(string $output = null): self
     {
+        // we will have to recalculate field value
+        $this->setGraph(null);
         $this->output = $output;
 
         return $this;
