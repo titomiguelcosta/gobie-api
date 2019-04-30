@@ -15,7 +15,8 @@ class SecurityCheckGraph implements GraphInterface
         if (JSON_ERROR_NONE !== \json_last_error()) {
             $data = [];
         }
-        
+
+        $data['errors']['total'] = count($data);
         $data['tool'] = self::TOOL;
 
         return $data;
