@@ -56,6 +56,7 @@ class Project
      * @Assert\Url(
      *  protocols={"http", "https", "git"}
      * )
+     * @Groups({"job", "project"})
      */
     private $repo;
 
