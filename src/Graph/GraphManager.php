@@ -20,5 +20,7 @@ class GraphManager
                 return $graph;
             }
         }
+
+        return null;
     }
 }

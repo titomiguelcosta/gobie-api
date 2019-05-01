@@ -10,13 +10,24 @@ class LintYamlGraph implements GraphInterface
 
     public function getData(Task $task): array
     {
-        $data = json_decode($task->getOutput(), true);
+        $output = json_decode($task->getOutput(), true);
+        $data = [];
 
         if (JSON_ERROR_NONE !== \json_last_error()) {
             $data = [];
+        } else {
+            foreach ($output as $file) {
+                if (false === $file['valid']) {
+                    $data['errors']['violations'][] = [
+                        'file' => $file['file'],
+                        'line' => $file['line'],
+                        'message' => $file['message'],
+                    ];
+                }
+            }
         }
         
-        $data['errors']['total'] = count($data);
+        $data['errors']['total'] = count($data['errors']['violations']);
         $data['tool'] = self::TOOL;
 
         return $data;
