@@ -16,6 +16,7 @@ class LintTwigGraph implements GraphInterface
             $data = [];
         }
         
+        $data['errors']['total'] = count($data);
         $data['tool'] = self::TOOL;
 
         return $data;
