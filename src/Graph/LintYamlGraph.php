@@ -12,9 +12,14 @@ class LintYamlGraph implements GraphInterface
     {
         $output = json_decode($task->getOutput(), true);
         $data = [];
+        $data['errors']['violations'] = [];
 
         if (JSON_ERROR_NONE !== \json_last_error()) {
-            $data = [];
+            $data['errors']['violations'][] = [
+                'file' => 'output',
+                'line' => 0,
+                'message' => 'Invalid output. Failed to parse json.',
+            ];
         } else {
             foreach ($output as $file) {
                 if (false === $file['valid']) {
