@@ -267,4 +267,9 @@ class Task
 
         return $this;
     }
+
+    public function isSuccessful()
+    {
+        return self::STATUS_SUCCEEDED === $this->getStatus();
+    }
 }

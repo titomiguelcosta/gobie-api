@@ -43,7 +43,7 @@ services:
         tags:
             - { name: 'doctrine.event_subscriber' }
     
-    App\EventSubscriber\TaskChartSubscriber:
+    App\EventSubscriber\TaskGraphSubscriber:
         tags:
             - { name: 'doctrine.event_subscriber' }
     

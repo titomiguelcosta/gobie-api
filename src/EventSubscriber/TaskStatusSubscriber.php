@@ -22,13 +22,15 @@ final class TaskStatusSubscriber implements EventSubscriber
     {
         $task = $event->getObject();
         if ($task instanceof Task && $event->hasChangedField('status')) {
-            $transitionName = sprintf('%s_to_%s', $event->getOldValue('state'), $event->getNewValue('state'));
+            $transitionName = sprintf('%s_to_%s', $event->getOldValue('status'), $event->getNewValue('status'));
             
+            $task->setStatus($event->getOldValue('status'));
             if ($this->stateMachine->can($task, $transitionName)) {
-                $task->setStatus($event->getOldValue('state'));
                 $this->stateMachine->apply($task, $transitionName);
             } else {
-                throw new LogicException('Invalid status');
+                throw new LogicException(
+                    sprintf('Invalid task status. From %s to %s. %s.', $event->getOldValue('status'), $event->getNewValue('status'), $transitionName)
+                );
             }
         }
     }

@@ -22,13 +22,15 @@ final class JobStatusSubscriber implements EventSubscriber
     {
         $job = $event->getObject();
         if ($job instanceof Job && $event->hasChangedField('status')) {
-            $transitionName = sprintf('%s_to_%s', $event->getOldValue('state'), $event->getNewValue('state'));
+            $transitionName = sprintf('%s_to_%s', $event->getOldValue('status'), $event->getNewValue('status'));
             
+            $job->setStatus($event->getOldValue('status'));
             if ($this->stateMachine->can($job, $transitionName)) {
-                $job->setStatus($event->getOldValue('state'));
                 $this->stateMachine->apply($job, $transitionName);
             } else {
-                throw new LogicException('Invalid status');
+                throw new LogicException(
+                    sprintf('Invalid job status. From %s to %s. %s.', $event->getOldValue('status'), $event->getNewValue('status'), $transitionName)
+                );
             }
         }
     }

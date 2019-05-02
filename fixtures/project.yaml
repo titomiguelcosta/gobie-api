@@ -1,6 +1,6 @@
 App\Entity\Project:
   project_1:
-    repo: 'https://github.com/tito/one.git'
+    repo: 'https://github.com/titomiguelcosta/hammer.git'
     description: Project number one
     createdBy: '@user_tito'
     isPrivate: false

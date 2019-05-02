@@ -10,7 +10,7 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use App\Graph\GraphManager;
 use App\Graph\GraphInterface;
 
-final class TaskChartSubscriber implements EventSubscriber
+final class TaskGraphSubscriber implements EventSubscriber
 {
     private $graphManager;
 
@@ -29,7 +29,7 @@ final class TaskChartSubscriber implements EventSubscriber
 
     public function preUpdate(PreUpdateEventArgs $event)
     {
-        if ($this->handleEvent($event)) {
+        if ($this->handleEvent($event) && $event->hasChangedField('graph')) {
             $event->setNewValue('graph', $this->recalculateGraph($event->getObject()));
         }
     }

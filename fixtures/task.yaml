@@ -3,14 +3,29 @@ App\Entity\Task:
     job: "@job_1"
     status: pending
     tool: "lint:twig"
-    command: "php bin/console lint:twig templates"
+    command: "php bin/console lint:twig --format=json templates"
   task_2:
     job: "@job_1"
     status: pending
     tool: "lint:xliff"
-    command: "php bin/console lint:xliff translations"
-  
+    command: "php bin/console lint:xliff --format=json translations"
   task_3:
+    job: "@job_1"
+    status: pending
+    tool: "phpmd"
+    command: "phpmd src xml \"cleancode,codesize,controversial,design,naming,unusedcode\""
+  task_4:
+    job: "@job_1"
+    status: pending
+    tool: "lint:yaml"
+    command: "php bin/console lint:yaml --format=json config"
+  task_5:
+    job: "@job_1"
+    status: pending
+    tool: "security:check"
+    command: "security-checker --format=json security:check"
+  
+  task_6:
     job: "@job_2"
     status: aborted
     tool: "lint:twig"
@@ -21,13 +36,13 @@ App\Entity\Task:
     startedAt: <dateTimeBetween("-3 days", "-2 days")>
     finishedAt: <dateTimeBetween($startedAt, "-1 day")>
   
-  task_4:
+  task_7:
     job: "@job_3"
     status: pending
     tool: "lint:twig"
     command: "php bin/console lint:twig templates"
   
-  task_5:
+  task_8:
     job: "@job_4"
     status: finished
     tool: "lint:twig"
@@ -37,17 +52,17 @@ App\Entity\Task:
     exitCode: 0
     startedAt: <dateTimeBetween("-20 minutes", "-10 minutes")>
     finishedAt: <dateTimeBetween($startedAt, "now")>
-  task_6:
+  task_9:
     job: "@job_4"
     status: finished
     tool: "phpmd"
-    command: "phpmd json src codestyle"
+    command: "phpmd src json codestyle"
     output: '{"errors": 3}'
     errorOutput: ""
     exitCode: 0
     startedAt: <dateTimeBetween("-20 minutes", "-10 minutes")>
     finishedAt: <dateTimeBetween($startedAt, "now")>
-  task_7:
+  task_10:
     job: "@job_4"
     status: finished
     tool: "lint:xliff"
@@ -57,7 +72,7 @@ App\Entity\Task:
     exitCode: 0
     startedAt: <dateTimeBetween("-20 minutes", "-10 minutes")>
     finishedAt: <dateTimeBetween($startedAt, "now")>
-  task_8:
+  task_11:
     job: "@job_4"
     status: finished
     tool: "lint:yaml"
@@ -67,7 +82,7 @@ App\Entity\Task:
     exitCode: 0
     startedAt: <dateTimeBetween("-20 minutes", "-10 minutes")>
     finishedAt: <dateTimeBetween($startedAt, "now")>
-  task_9:
+  task_12:
     job: "@job_4"
     status: finished
     tool: "security:check"

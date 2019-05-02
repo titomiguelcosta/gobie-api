@@ -25,25 +25,28 @@ class LintXliffGraph implements GraphInterface
      */
     public function getData(Task $task): array
     {
-        $output = json_decode($task->getOutput(), true);
+        $output = $task->isSuccessful() ? $task->getOutput() : $task->getErrorOutput();
         $data = [];
         $data['errors']['violations'] = [];
 
-        if (JSON_ERROR_NONE !== \json_last_error()) {
-            $data['errors']['violations'][] = [
-                'file' => 'output',
-                'line' => 0,
-                'message' => 'Invalid output. Failed to parse json.',
-            ];
-        } else {
-            foreach ($output as $file) {
-                if (false === $file['valid']) {
-                    foreach ($file['messages'] as $message) {
-                        $data['errors']['violations'][] = [
-                            'file' => $file['file'],
-                            'line' => $message['line'],
-                            'message' => $message['message'],
-                        ];
+        if (is_string($output) && strlen($output) > 0) {
+            $files = json_decode($output, true);
+            if (JSON_ERROR_NONE !== \json_last_error()) {
+                $data['errors']['violations'][] = [
+                    'file' => 'output',
+                    'line' => 0,
+                    'message' => 'Invalid output. Failed to parse json.',
+                ];
+            } else {
+                foreach ($files as $file) {
+                    if (false === $file['valid']) {
+                        foreach ($file['messages'] as $message) {
+                            $data['errors']['violations'][] = [
+                                'file' => $file['file'],
+                                'line' => $message['line'],
+                                'message' => $message['message'],
+                            ];
+                        }
                     }
                 }
             }
