@@ -47,5 +47,17 @@ services:
         tags:
             - { name: 'doctrine.event_subscriber' }
     
+    App\EventSubscriber\TaskStatusSubscriber:
+        arguments:
+            - '@state_machine.task'
+        tags:
+            - { name: 'doctrine.event_subscriber' }
+
+    App\EventSubscriber\JobStatusSubscriber:
+        arguments:
+            - '@state_machine.job'
+        tags:
+            - { name: 'doctrine.event_subscriber' }
+    
     App\Graph\GraphManager:
         arguments: [!tagged 'app.graph']
