@@ -28,13 +28,13 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *  },
  *  itemOperations = {
  *      "get" = {
- *          "access_control" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.createdBy)"
+ *          "access_control" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.getCreatedBy())"
  *      },
  *      "delete" = {
- *          "access_control" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.createdBy)"
+ *          "access_control" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.getCreatedBy())"
  *      },
  *      "put" = {
- *          "access_control" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.createdBy)"
+ *          "access_control" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.getCreatedBy())"
  *      }
  *  }
  * )

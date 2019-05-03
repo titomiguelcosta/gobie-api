@@ -1,5 +1,4 @@
 <?php
-// api/src/Doctrine/CurrentUserExtension.php
 
 namespace App\Doctrine;
 
@@ -8,8 +7,6 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Extension\QueryItemExtensionInterface;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Util\QueryNameGeneratorInterface;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Security\Core\Security;
-use App\Entity\Project;
-use App\Entity\Job;
 use App\Entity\Task;
 
 final class TaskExtension implements QueryCollectionExtensionInterface, QueryItemExtensionInterface

@@ -22,13 +22,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *  },
  *  itemOperations = {
  *      "get" = {
- *          "access_control" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.job.project.createdBy)"
+ *          "access_control" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.getJob().getProject().getCreatedBy())"
  *      },
  *      "delete" = {
- *          "access_control" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.job.project.createdBy)"
+ *          "access_control" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.getJob().getProject().getCreatedBy())"
  *      },
  *      "put" = {
- *          "access_control" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.job.project.createdBy)"
+ *          "access_control" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.getJob().getProject().getCreatedBy())"
  *      }
  *  }
  * )

@@ -1,5 +1,4 @@
 <?php
-// api/src/Doctrine/CurrentUserExtension.php
 
 namespace App\Doctrine;
 
@@ -9,7 +8,6 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Util\QueryNameGeneratorInterface;
 use App\Entity\Job;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Security\Core\Security;
-use App\Entity\Project;
 
 final class JobExtension implements QueryCollectionExtensionInterface, QueryItemExtensionInterface
 {

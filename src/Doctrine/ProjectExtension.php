@@ -1,5 +1,4 @@
 <?php
-// api/src/Doctrine/CurrentUserExtension.php
 
 namespace App\Doctrine;
 
