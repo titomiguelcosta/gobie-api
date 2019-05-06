@@ -10,13 +10,36 @@ class PhpstanGraph implements GraphInterface
 
     public function getData(Task $task): array
     {
-        $data = json_decode($task->getOutput(), true);
+        $output = $task->isSuccessful() ? $task->getOutput() : $task->getErrorOutput();
+        $data = [];
+        $data['errors']['violations'] = [];
 
-        if (JSON_ERROR_NONE !== \json_last_error()) {
-            $data = [];
+        if (is_string($output) && strlen($output) > 0) {
+            $files = json_decode($output, true);
+
+            if (JSON_ERROR_NONE !== \json_last_error()) {
+                $data['errors']['violations'][] = [
+                    'file' => 'output',
+                    'line' => 0,
+                    'message' => 'Invalid output. Failed to parse json.',
+                ];
+            } else {
+                $data['output'] = $files;
+                if (array_key_exists('files', $files)) {
+                    foreach ($files['files'] as $file => $messages) {
+                        foreach ($messages['messages'] as $message) {
+                            $data['errors']['violations'][] = [
+                                'file' => $file,
+                                'line' => $message['line'],
+                                'message' => $message['message'],
+                            ];
+                        }
+                    }
+                }
+            }
         }
-
-        $data['errors']['total'] = count($data);
+        
+        $data['errors']['total'] = count($data['errors']['violations']);
         $data['tool'] = self::TOOL;
 
         return $data;
