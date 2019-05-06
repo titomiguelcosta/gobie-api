@@ -10,7 +10,8 @@ class PhpstanGraph implements GraphInterface
 
     public function getData(Task $task): array
     {
-        $output = $task->isSuccessful() ? $task->getOutput() : $task->getErrorOutput();
+        // even if we get errors, they will be stored in the output
+        $output = $task->getOutput();
         $data = [];
         $data['errors']['violations'] = [];
 
