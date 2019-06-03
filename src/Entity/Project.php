@@ -118,8 +118,6 @@ class Project
 
     /**
      * remove username and password from the repo
-     * @Groups({"job", "project"})
-     * @SerializedName("repo")
      */
     public function getSanitizedRepo(): ?string
     {
