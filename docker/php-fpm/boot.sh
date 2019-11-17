@@ -2,4 +2,4 @@
 
 php /application/bin/console doctrine:migrations:migrate -n
 
-/usr/bin/php-fpm
+/usr/sbin/php-fpm7.3
