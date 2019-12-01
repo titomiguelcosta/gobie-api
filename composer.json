@@ -79,8 +79,7 @@
         "hautelook/alice-bundle": "^2.4",
         "phpunit/phpunit": "^8.0",
         "symfony/web-server-bundle": "^4.0",
-        "theofidry/psysh-bundle": "^3.5",
-        "deployer/deployer": "^6.4"
+        "theofidry/psysh-bundle": "^3.5"
     },
     "minimum-stability": "dev",
     "prefer-stable": true
