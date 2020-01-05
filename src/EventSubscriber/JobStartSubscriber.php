@@ -64,9 +64,9 @@ final class JobStartSubscriber implements EventSubscriberInterface
                     ],
                 ],
             ],
-            'jobDefinition' => getenv('AWS_BATCH_JOB_DEFINITION'),
+            'jobDefinition' => getenv('AWS_BATCH_JOB_DEFINITION_' . $job->getEnvironment()),
             'jobName' => 'api',
-            'jobQueue' => getenv('AWS_BATCH_JOB_QUEUE'),
+            'jobQueue' => getenv('AWS_BATCH_JOB_QUEUE_' . $job->getEnvironment()),
         ]);
     }
 

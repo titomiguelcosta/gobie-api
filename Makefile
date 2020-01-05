@@ -7,7 +7,7 @@ docker-purge-images:
 	docker rmi --force $(shell docker images -qa)
 
 docker-run:
-	docker-compose -f docker/docker-composer.dev.yml up
+	docker-compose -f docker/docker-compose.dev.yml up
 
 php-fix:
 	php vendor/bin/php-cs-fixer fix src/

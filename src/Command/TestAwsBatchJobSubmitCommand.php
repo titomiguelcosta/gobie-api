@@ -51,7 +51,7 @@ class TestAwsBatchJobSubmitCommand extends Command
             ],
             'jobDefinition' => getenv('AWS_BATCH_JOB_DEFINITION'),
             'jobName' => 'api',
-            'jobQueue' => getenv('AWS_BATCH_JOB_QUEUE'),
+            'jobQueue' => getenv('AWS_BATCH_JOB_QUEUE_PHP73'),
         ]);*/
         $message = (new \Swift_Message('Grooming Chimps: Submit Job to AWS Batch'))
             ->setFrom('groomingchimps@titomiguelcosta.com')

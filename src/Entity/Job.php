@@ -99,6 +99,13 @@ class Job
      */
     private $status;
 
+    /**
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank()
+     * @Groups({"job", "project"})
+     */
+    private $environment;
+
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
@@ -139,6 +146,18 @@ class Job
     public function getStatus(): string
     {
         return $this->status;
+    }
+
+    public function setEnvironment(string $env): self
+    {
+        $this->environment = $env;
+
+        return $this;
+    }
+
+    public function getEnvironment(): string
+    {
+        return strtoupper($this->environment);
     }
 
     public function setStatus(string $status): self
