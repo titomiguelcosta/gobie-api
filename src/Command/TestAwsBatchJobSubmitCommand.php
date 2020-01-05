@@ -41,7 +41,7 @@ class TestAwsBatchJobSubmitCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
-        /*
+
         $output = $this->batchClient->submitJob([
             'containerOverrides' => [
                 'command' => ['--version'],
@@ -49,10 +49,12 @@ class TestAwsBatchJobSubmitCommand extends Command
                     ['name' => 'APP_ENV', 'value' => getenv('APP_ENV')],
                 ],
             ],
-            'jobDefinition' => getenv('AWS_BATCH_JOB_DEFINITION'),
+            'jobDefinition' => getenv('AWS_BATCH_JOB_DEFINITION_PHP73'),
             'jobName' => 'api',
             'jobQueue' => getenv('AWS_BATCH_JOB_QUEUE_PHP73'),
-        ]);*/
+        ]);
+
+        /*
         $message = (new \Swift_Message('Grooming Chimps: Submit Job to AWS Batch'))
             ->setFrom('groomingchimps@titomiguelcosta.com')
             ->setTo('titomiguelcosta@gmail.com')
@@ -62,6 +64,7 @@ class TestAwsBatchJobSubmitCommand extends Command
             );
 
         $output = $this->mailer->send($message);
+        */
 
         $io->success($output);
     }
