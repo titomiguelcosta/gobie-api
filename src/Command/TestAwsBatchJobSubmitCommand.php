@@ -46,12 +46,12 @@ class TestAwsBatchJobSubmitCommand extends Command
             'containerOverrides' => [
                 'command' => ['--version'],
                 'environment' => [
-                    ['name' => 'APP_ENV', 'value' => getenv('APP_ENV')],
+                    ['name' => 'APP_ENV', 'value' => $_ENV['APP_ENV']],
                 ],
             ],
-            'jobDefinition' => getenv('AWS_BATCH_JOB_DEFINITION_PHP73'),
+            'jobDefinition' => $_ENV['AWS_BATCH_JOB_DEFINITION_PHP73'],
             'jobName' => 'api',
-            'jobQueue' => getenv('AWS_BATCH_JOB_QUEUE_PHP73'),
+            'jobQueue' => $_ENV['AWS_BATCH_JOB_QUEUE_PHP73'],
         ]);
 
         /*
