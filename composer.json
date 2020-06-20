@@ -7,7 +7,7 @@
         "ext-iconv": "*",
         "ext-json": "*",
         "api-platform/api-pack": "^1.2",
-        "aws/aws-sdk-php": "^3.91",
+        "aws/aws-sdk-php": "^3.142",
         "doctrine/annotations": "^1.6",
         "doctrine/doctrine-migrations-bundle": "^2.0",
         "lexik/jwt-authentication-bundle": "^2.6",
