@@ -2,13 +2,13 @@
 
 namespace App\EventSubscriber;
 
-use Doctrine\Common\EventSubscriber;
 use App\Entity\Task;
-use Doctrine\ORM\Events;
-use Doctrine\ORM\Event\PreUpdateEventArgs;
-use Doctrine\ORM\Event\LifecycleEventArgs;
-use App\Graph\GraphManager;
 use App\Graph\GraphInterface;
+use App\Graph\GraphManager;
+use Doctrine\Common\EventSubscriber;
+use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
+use Doctrine\ORM\Events;
 
 final class TaskGraphSubscriber implements EventSubscriber
 {
@@ -53,7 +53,7 @@ final class TaskGraphSubscriber implements EventSubscriber
 
         $data = [];
         if ($graph instanceof GraphInterface) {
-            $data = $graph->getData($task); 
+            $data = $graph->getData($task);
         }
 
         return $data;

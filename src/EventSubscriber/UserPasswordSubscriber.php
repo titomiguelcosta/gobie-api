@@ -2,11 +2,11 @@
 
 namespace App\EventSubscriber;
 
-use Doctrine\Common\EventSubscriber;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Entity\User;
-use Doctrine\ORM\Events;
+use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
+use Doctrine\ORM\Events;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 final class UserPasswordSubscriber implements EventSubscriber
 {
@@ -43,7 +43,6 @@ final class UserPasswordSubscriber implements EventSubscriber
             $user->setPassword($this->encoder->encodePassword($user, $user->getPlainPassword()));
         }
     }
-
 
     public function getSubscribedEvents()
     {

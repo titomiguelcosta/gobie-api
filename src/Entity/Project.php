@@ -2,14 +2,13 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiProperty;
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Serializer\Annotation\SerializedName;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
@@ -117,7 +116,7 @@ class Project
     }
 
     /**
-     * remove username and password from the repo
+     * remove username and password from the repo.
      */
     public function getSanitizedRepo(): ?string
     {

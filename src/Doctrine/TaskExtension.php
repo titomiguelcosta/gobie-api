@@ -5,9 +5,9 @@ namespace App\Doctrine;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Extension\QueryCollectionExtensionInterface;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Extension\QueryItemExtensionInterface;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Util\QueryNameGeneratorInterface;
+use App\Entity\Task;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Security\Core\Security;
-use App\Entity\Task;
 
 final class TaskExtension implements QueryCollectionExtensionInterface, QueryItemExtensionInterface
 {

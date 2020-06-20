@@ -2,16 +2,15 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiProperty;
+use ApiPlatform\Core\Annotation\ApiResource;
+use App\Controller\AuthController;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
-use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Annotation\ApiProperty;
-use Symfony\Component\Validator\Constraints as Assert;
-use App\Controller\AuthController;
 use Symfony\Component\Serializer\Annotation\Groups;
-
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
@@ -117,7 +116,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * )
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class   User implements UserInterface
+class User implements UserInterface
 {
     /**
      * @ApiProperty(identifier=false)
@@ -232,7 +231,7 @@ class   User implements UserInterface
      */
     public function getPassword(): string
     {
-        return (string)$this->password;
+        return (string) $this->password;
     }
 
     public function setPassword(string $password): self

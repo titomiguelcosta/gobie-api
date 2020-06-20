@@ -2,10 +2,10 @@
 
 namespace App\EventSubscriber;
 
-use Doctrine\Common\EventSubscriber;
 use App\Entity\Project;
-use Doctrine\ORM\Events;
+use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
+use Doctrine\ORM\Events;
 
 final class IsProjectPrivateSubscriber implements EventSubscriber
 {
@@ -43,7 +43,7 @@ final class IsProjectPrivateSubscriber implements EventSubscriber
 
     /**
      * Private repos should be in the following format
-     * https://username:password@github.com/path/repo.git
+     * https://username:password@github.com/path/repo.git.
      */
     private function isPrivate(Project $project): void
     {

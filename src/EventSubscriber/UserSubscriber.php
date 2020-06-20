@@ -2,13 +2,13 @@
 
 namespace App\EventSubscriber;
 
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use ApiPlatform\Core\EventListener\EventPriorities;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\KernelEvents;
-use Swift_Mailer;
 use App\Entity\User;
+use Swift_Mailer;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
+use Symfony\Component\HttpKernel\KernelEvents;
 
 final class UserSubscriber implements EventSubscriberInterface
 {

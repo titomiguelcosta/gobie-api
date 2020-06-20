@@ -2,14 +2,14 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use App\Repository\UserRepository;
 use App\Entity\User;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use App\Repository\UserRepository;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AuthController extends AbstractController
 {
@@ -18,8 +18,7 @@ class AuthController extends AbstractController
         UserRepository $userRepository,
         JWTTokenManagerInterface $tokenManager,
         UserPasswordEncoderInterface $userPasswordEncoder
-    )
-    {
+    ) {
         $data = \json_decode($request->getContent(), true);
 
         if (
@@ -37,7 +36,7 @@ class AuthController extends AbstractController
             $userPasswordEncoder->isPasswordValid($user, $data['password'])
         ) {
             return new JsonResponse([
-                '@id' => '/users/' . $user->getUsername(),
+                '@id' => '/users/'.$user->getUsername(),
                 'id' => $user->getId(),
                 'username' => $user->getUsername(),
                 'email' => $user->getEmail(),

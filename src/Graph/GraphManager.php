@@ -4,7 +4,7 @@ namespace App\Graph;
 
 use App\Entity\Task;
 
-class GraphManager 
+class GraphManager
 {
     private $graphs = [];
 

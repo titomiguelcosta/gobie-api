@@ -2,11 +2,11 @@
 
 namespace App\EventSubscriber;
 
-use LogicException;
-use Doctrine\Common\EventSubscriber;
 use App\Entity\Job;
-use Doctrine\ORM\Events;
+use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
+use Doctrine\ORM\Events;
+use LogicException;
 use Symfony\Component\Workflow\StateMachine;
 
 final class JobStatusSubscriber implements EventSubscriber
@@ -23,14 +23,12 @@ final class JobStatusSubscriber implements EventSubscriber
         $job = $event->getObject();
         if ($job instanceof Job && $event->hasChangedField('status')) {
             $transitionName = sprintf('%s_to_%s', $event->getOldValue('status'), $event->getNewValue('status'));
-            
+
             $job->setStatus($event->getOldValue('status'));
             if ($this->stateMachine->can($job, $transitionName)) {
                 $this->stateMachine->apply($job, $transitionName);
             } else {
-                throw new LogicException(
-                    sprintf('Invalid job status. From %s to %s. %s.', $event->getOldValue('status'), $event->getNewValue('status'), $transitionName)
-                );
+                throw new LogicException(sprintf('Invalid job status. From %s to %s. %s.', $event->getOldValue('status'), $event->getNewValue('status'), $transitionName));
             }
         }
     }

@@ -2,16 +2,16 @@
 
 namespace App\EventSubscriber;
 
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use ApiPlatform\Core\EventListener\EventPriorities;
 use App\Entity\Job;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\KernelEvents;
-use Aws\Batch\BatchClient;
-use Swift_Mailer;
 use App\Entity\User;
+use Aws\Batch\BatchClient;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
+use Swift_Mailer;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
+use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Security;
 
 final class JobStartSubscriber implements EventSubscriberInterface
@@ -64,9 +64,9 @@ final class JobStartSubscriber implements EventSubscriberInterface
                     ],
                 ],
             ],
-            'jobDefinition' => getenv('AWS_BATCH_JOB_DEFINITION_' . $job->getEnvironment()),
+            'jobDefinition' => getenv('AWS_BATCH_JOB_DEFINITION_'.$job->getEnvironment()),
             'jobName' => 'api',
-            'jobQueue' => getenv('AWS_BATCH_JOB_QUEUE_' . $job->getEnvironment()),
+            'jobQueue' => getenv('AWS_BATCH_JOB_QUEUE_'.$job->getEnvironment()),
         ]);
     }
 

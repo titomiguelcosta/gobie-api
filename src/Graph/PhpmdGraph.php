@@ -26,11 +26,11 @@ class PhpmdGraph implements GraphInterface
             $violations = $file->children()->each(function (Crawler $violation, $i) use ($file) {
                 return [
                     'file' => $file->attr('name'),
-                    'beginline' => (int)$violation->attr('beginline'),
-                    'endline' => (int)$violation->attr('endline'),
+                    'beginline' => (int) $violation->attr('beginline'),
+                    'endline' => (int) $violation->attr('endline'),
                     'rule' => $violation->attr('rule'),
                     'ruleset' => $violation->attr('ruleset'),
-                    'priority' => (int)$violation->attr('priority'),
+                    'priority' => (int) $violation->attr('priority'),
                     'message' => trim($violation->text()),
                 ];
             });

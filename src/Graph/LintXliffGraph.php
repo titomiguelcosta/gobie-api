@@ -21,7 +21,7 @@ class LintXliffGraph implements GraphInterface
      *              }
      *          ]
      *      }
-     *  ]
+     *  ].
      */
     public function getData(Task $task): array
     {
@@ -51,7 +51,7 @@ class LintXliffGraph implements GraphInterface
                 }
             }
         }
-        
+
         $data['errors']['total'] = count($data['errors']['violations']);
         $data['tool'] = self::TOOL;
 

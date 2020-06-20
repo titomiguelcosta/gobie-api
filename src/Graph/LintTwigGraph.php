@@ -16,7 +16,7 @@ class LintTwigGraph implements GraphInterface
 
         if (is_string($output) && strlen($output) > 0) {
             $files = json_decode($output, true);
-            
+
             if (JSON_ERROR_NONE !== \json_last_error()) {
                 $data['errors']['violations'][] = [
                     'file' => 'output',
@@ -35,7 +35,7 @@ class LintTwigGraph implements GraphInterface
                 }
             }
         }
-        
+
         $data['errors']['total'] = count($data['errors']['violations']);
         $data['tool'] = self::TOOL;
 

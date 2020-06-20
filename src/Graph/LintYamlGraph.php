@@ -35,7 +35,7 @@ class LintYamlGraph implements GraphInterface
                 }
             }
         }
-        
+
         $data['errors']['total'] = count($data['errors']['violations']);
         $data['tool'] = self::TOOL;
 
