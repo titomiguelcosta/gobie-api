@@ -142,6 +142,13 @@ class Job
         return $this;
     }
 
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
     public function getStatus(): string
     {
         return $this->status;
@@ -150,6 +157,13 @@ class Job
     public function getMarking(): string
     {
         return $this->status;
+    }
+
+    public function setMarking(string $status): self
+    {
+        $this->status = $status;
+
+        return $this;
     }
 
     public function setEnvironment(string $env): self
@@ -162,13 +176,6 @@ class Job
     public function getEnvironment(): string
     {
         return strtoupper($this->environment);
-    }
-
-    public function setStatus(string $status): self
-    {
-        $this->status = $status;
-
-        return $this;
     }
 
     public function getStartedAt(): ?\DateTimeInterface

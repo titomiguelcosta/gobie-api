@@ -185,6 +185,13 @@ class Task
         return $this->status;
     }
 
+    public function setMarking(string $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
     public function getStatus(): string
     {
         return $this->status;
