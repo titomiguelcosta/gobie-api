@@ -180,6 +180,11 @@ class Task
         return $this;
     }
 
+    public function getMarking(): string
+    {
+        return $this->status;
+    }
+
     public function getStatus(): string
     {
         return $this->status;

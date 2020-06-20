@@ -147,6 +147,11 @@ class Job
         return $this->status;
     }
 
+    public function getMarking(): string
+    {
+        return $this->status;
+    }
+
     public function setEnvironment(string $env): self
     {
         $this->environment = $env;
