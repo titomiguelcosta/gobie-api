@@ -5,12 +5,10 @@ framework:
             audit_trail:
                 enabled: true
             marking_store:
-                type: single_state
-                arguments:
-                    - status
+                property: status
             supports:
                 - App\Entity\Task
-            initial_place: pending
+            initial_marking: pending
             places:
                 - pending
                 - running
@@ -38,12 +36,10 @@ framework:
             audit_trail:
                 enabled: true
             marking_store:
-                type: single_state
-                arguments:
-                    - status
+                property: status
             supports:
                 - App\Entity\Job
-            initial_place: pending
+            initial_marking: pending
             places:
                 - pending
                 - aborted
