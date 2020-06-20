@@ -10,7 +10,7 @@ use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Swift_Mailer;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
+use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Security;
 
@@ -33,7 +33,7 @@ final class JobStartSubscriber implements EventSubscriberInterface
         $this->security = $security;
     }
 
-    public function startJobOnAwsBatch(GetResponseForControllerResultEvent $event)
+    public function startJobOnAwsBatch(ViewEvent $event)
     {
         $job = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
@@ -64,13 +64,13 @@ final class JobStartSubscriber implements EventSubscriberInterface
                     ],
                 ],
             ],
-            'jobDefinition' => getenv('AWS_BATCH_JOB_DEFINITION_'.$job->getEnvironment()),
+            'jobDefinition' => getenv('AWS_BATCH_JOB_DEFINITION_' . $job->getEnvironment()),
             'jobName' => 'api',
-            'jobQueue' => getenv('AWS_BATCH_JOB_QUEUE_'.$job->getEnvironment()),
+            'jobQueue' => getenv('AWS_BATCH_JOB_QUEUE_' . $job->getEnvironment()),
         ]);
     }
 
-    public function emailNotifyingJobStart(GetResponseForControllerResultEvent $event)
+    public function emailNotifyingJobStart(ViewEvent $event)
     {
         $job = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();

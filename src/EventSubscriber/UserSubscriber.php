@@ -7,7 +7,7 @@ use App\Entity\User;
 use Swift_Mailer;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
+use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 final class UserSubscriber implements EventSubscriberInterface
@@ -20,7 +20,7 @@ final class UserSubscriber implements EventSubscriberInterface
         $this->mailer = $mailer;
     }
 
-    public function welcomeEmail(GetResponseForControllerResultEvent $event)
+    public function welcomeEmail(ViewEvent $event)
     {
         $user = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
