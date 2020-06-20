@@ -192,9 +192,9 @@ class Task
         return $this;
     }
 
-    public function getErrorOutput(): ?string
+    public function getErrorOutput(): string
     {
-        return $this->errorOutput;
+        return (string) $this->errorOutput;
     }
 
     public function setErrorOutput(string $errorOutput = null): self
@@ -206,9 +206,9 @@ class Task
         return $this;
     }
 
-    public function getOutput(): ?string
+    public function getOutput(): string
     {
-        return $this->output;
+        return (string) $this->output;
     }
 
     public function setOutput(string $output = null): self
