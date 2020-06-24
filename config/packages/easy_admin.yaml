@@ -1,0 +1,7 @@
+easy_admin:
+    site_name: Grooming Chimps
+    entities:
+        - App\Entity\User
+        - App\Entity\Project
+        - App\Entity\Job
+        - App\Entity\Task

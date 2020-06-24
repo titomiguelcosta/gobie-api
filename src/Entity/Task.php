@@ -284,4 +284,9 @@ class Task
     {
         return self::STATUS_SUCCEEDED === $this->getStatus();
     }
+
+    public function __toString()
+    {
+        return (string) $this->getTool();
+    }
 }

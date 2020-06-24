@@ -10,6 +10,7 @@
         "aws/aws-sdk-php": "^3.142",
         "doctrine/annotations": "^1.6",
         "doctrine/doctrine-migrations-bundle": "^2.0",
+        "easycorp/easyadmin-bundle": "^3.0",
         "lexik/jwt-authentication-bundle": "^2.6",
         "stof/doctrine-extensions-bundle": "^1.3",
         "symfony/console": "^5.1",
