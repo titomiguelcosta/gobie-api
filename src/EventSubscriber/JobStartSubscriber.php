@@ -8,6 +8,7 @@ use App\Entity\User;
 use Aws\Batch\BatchClient;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Swift_Mailer;
+use Swift_Message;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
@@ -79,7 +80,7 @@ final class JobStartSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $message = (new \Swift_Message('Grooming Chimps: Submit Job to AWS Batch'))
+        $message = (new Swift_Message('Grooming Chimps: Submit Job to AWS Batch'))
             ->setFrom('groomingchimps@titomiguelcosta.com')
             ->setTo('titomiguelcosta@gmail.com')
             ->setBody(
