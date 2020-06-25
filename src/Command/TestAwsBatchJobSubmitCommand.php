@@ -14,10 +14,9 @@ class TestAwsBatchJobSubmitCommand extends Command
     protected $batchClient;
     protected $mailer;
 
-    public function __construct(BatchClient $batchClient, \Swift_Mailer $mailer)
+    public function __construct(BatchClient $batchClient)
     {
         $this->batchClient = $batchClient;
-        $this->mailer = $mailer;
         parent::__construct();
     }
 
@@ -53,18 +52,6 @@ class TestAwsBatchJobSubmitCommand extends Command
             'jobName' => 'api',
             'jobQueue' => $_ENV['AWS_BATCH_JOB_QUEUE_PHP73'],
         ]);
-
-        /*
-        $message = (new \Swift_Message('Grooming Chimps: Submit Job to AWS Batch'))
-            ->setFrom('groomingchimps@titomiguelcosta.com')
-            ->setTo('titomiguelcosta@gmail.com')
-            ->setBody(
-                sprintf('Job #%d submitted to AWS Batch', 10),
-                'text/plain'
-            );
-
-        $output = $this->mailer->send($message);
-        */
 
         $io->success($output);
     }
