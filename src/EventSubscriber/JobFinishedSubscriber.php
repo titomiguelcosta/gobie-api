@@ -3,12 +3,12 @@
 namespace App\EventSubscriber;
 
 use App\Entity\Job;
-use Doctrine\Common\EventSubscriber;
 use Swift_Mailer;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Workflow\Event\CompletedEvent;
 use Symfony\Component\Workflow\WorkflowEvents;
 
-final class JobFinishedSubscriber implements EventSubscriber
+final class JobFinishedSubscriber implements EventSubscriberInterface
 {
     private $mailer;
 
@@ -20,7 +20,7 @@ final class JobFinishedSubscriber implements EventSubscriber
     public function jobFinished(CompletedEvent $event)
     {
         $job = $event->getSubject();
-        if ($job instanceof Job && $event->getTransition()->getName() === 'finished') {
+        if ($job instanceof Job && $job->getStatus() === Job::STATUS_FINISHED) {
             $user = $job->getProject()->getCreatedBy();
             $message = (new \Swift_Message('Grooming Chimps: Job finished'))
                 ->setFrom('groomingchimps@titomiguelcosta.com')
@@ -38,7 +38,7 @@ final class JobFinishedSubscriber implements EventSubscriber
         }
     }
 
-    public function getSubscribedEvents()
+    public static function getSubscribedEvents()
     {
         return [
             WorkflowEvents::COMPLETED => ['jobFinished'],
