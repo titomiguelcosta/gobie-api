@@ -39,5 +39,7 @@ class TestEmailCommand extends Command
         $output = $this->mailer->send($message);
 
         $io->success($output);
+
+        return 0;
     }
 }

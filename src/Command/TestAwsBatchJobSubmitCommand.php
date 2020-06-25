@@ -54,5 +54,7 @@ class TestAwsBatchJobSubmitCommand extends Command
         ]);
 
         $io->success($output);
+
+        return 0;
     }
 }
