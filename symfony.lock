@@ -16,6 +16,12 @@
             "src/Entity/.gitignore"
         ]
     },
+    "async-aws/core": {
+        "version": "1.2.0"
+    },
+    "async-aws/sqs": {
+        "version": "1.2.0"
+    },
     "aws/aws-sdk-php": {
         "version": "3.91.0"
     },
@@ -369,6 +375,12 @@
     "swiftmailer/swiftmailer": {
         "version": "v6.2.0"
     },
+    "symfony/amazon-sqs-messenger": {
+        "version": "v5.1.2"
+    },
+    "symfony/amqp-messenger": {
+        "version": "v5.1.2"
+    },
     "symfony/asset": {
         "version": "v4.2.4"
     },
@@ -405,6 +417,9 @@
     },
     "symfony/doctrine-bridge": {
         "version": "v4.2.4"
+    },
+    "symfony/doctrine-messenger": {
+        "version": "v5.1.2"
     },
     "symfony/dom-crawler": {
         "version": "v4.2.5"
@@ -464,6 +479,12 @@
             "src/Kernel.php"
         ]
     },
+    "symfony/http-client": {
+        "version": "v5.1.2"
+    },
+    "symfony/http-client-contracts": {
+        "version": "v2.1.2"
+    },
     "symfony/http-foundation": {
         "version": "v4.2.4"
     },
@@ -484,6 +505,18 @@
             "version": "1.0",
             "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
         }
+    },
+    "symfony/messenger": {
+        "version": "4.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.3",
+            "ref": "8a2675c061737658bed85102e9241c752620e575"
+        },
+        "files": [
+            "config/packages/messenger.yaml"
+        ]
     },
     "symfony/monolog-bridge": {
         "version": "v4.2.5"
@@ -540,6 +573,9 @@
     },
     "symfony/property-info": {
         "version": "v4.2.4"
+    },
+    "symfony/redis-messenger": {
+        "version": "v5.1.2"
     },
     "symfony/routing": {
         "version": "4.2",
