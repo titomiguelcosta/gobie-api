@@ -22,5 +22,10 @@ host('api.groomingchimps.titomiguelcosta.com')
     ->set('branch', 'master')
     ->set('env', ['APP_ENV' => 'prod']);
 
+task('workers:restart', function () {
+    run('cd {{release_path}} && php bin/console workers:restart --env=prod');
+});
+
 after('deploy:failed', 'deploy:unlock');
 before('deploy:symlink', 'database:migrate');
+after('deploy:symlink', 'workers:restart');
