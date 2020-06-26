@@ -20,7 +20,6 @@ final class EmailMessageHandler implements MessageHandlerInterface
 
     public function __invoke(EmailMessage $message)
     {
-        echo "about to send a message to " . $message->getTo();
         $message = (new \Swift_Message('Grooming Chimps: Sent from messenger'))
             ->setFrom('groomingchimps@titomiguelcosta.com')
             ->setTo($message->getTo())

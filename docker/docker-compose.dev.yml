@@ -35,3 +35,19 @@ services:
         - ./php-fpm/php-ini-overrides.ini:/etc/php/7.3/fpm/conf.d/99-overrides.ini
       depends_on:
         - mysql
+
+    mailcatcher:
+      image: schickling/mailcatcher
+      container_name: grooming-chimps-api-mailcatcher
+      ports:
+        - "8095:1080"
+
+    sqs:
+      image: roribio16/alpine-sqs
+      container_name: grooming-chimps-api-sqs
+      ports:
+        - "9324:9324"
+        - "9325:9325"
+      volumes:
+        - ./sqs/elasticmq.conf:/opt/config/elasticmq.conf
+        - ./sqs/sqs-insight.conf:/opt/config/sqs-insight.conf
