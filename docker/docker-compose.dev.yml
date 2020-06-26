@@ -1,6 +1,6 @@
 version: "3.1"
 services:
-    mysql:
+    grooming-chimps-api-mysql:
       image: mysql:5.7
       container_name: grooming-chimps-api-mysql
       working_dir: /application
@@ -14,7 +14,7 @@ services:
       ports:
         - "8092:3306"
 
-    webserver:
+    grooming-chimps-api-webserver:
       image: nginx:alpine
       container_name: grooming-chimps-api-webserver
       working_dir: /application
@@ -24,9 +24,9 @@ services:
       ports:
         - "8090:80"
       depends_on:
-        - php-fpm
+        - grooming-chimps-api-php-fpm
 
-    php-fpm:
+    grooming-chimps-api-php-fpm:
       build: php-fpm
       container_name: grooming-chimps-api-php-fpm
       working_dir: /application
@@ -34,15 +34,15 @@ services:
         - ..:/application
         - ./php-fpm/php-ini-overrides.ini:/etc/php/7.3/fpm/conf.d/99-overrides.ini
       depends_on:
-        - mysql
+        - grooming-chimps-api-mysql
 
-    mailcatcher:
+    grooming-chimps-api-mailcatcher:
       image: schickling/mailcatcher
       container_name: grooming-chimps-api-mailcatcher
       ports:
         - "8095:1080"
 
-    sqs:
+    grooming-chimps-api-sqs:
       image: roribio16/alpine-sqs
       container_name: grooming-chimps-api-sqs
       ports:
