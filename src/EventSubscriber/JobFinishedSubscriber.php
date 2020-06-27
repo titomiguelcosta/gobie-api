@@ -20,7 +20,7 @@ final class JobFinishedSubscriber implements EventSubscriberInterface
     public function jobFinished(CompletedEvent $event)
     {
         $job = $event->getSubject();
-        if ($job instanceof Job && $job->getStatus() === Job::STATUS_FINISHED) {
+        if ($job instanceof Job && Job::STATUS_FINISHED === $job->getStatus()) {
             $user = $job->getProject()->getCreatedBy();
             $message = (new \Swift_Message('Grooming Chimps: Job finished'))
                 ->setFrom('groomingchimps@titomiguelcosta.com')
@@ -29,7 +29,7 @@ final class JobFinishedSubscriber implements EventSubscriberInterface
                     sprintf(
                         'Job #%d finished. Check the report %s.',
                         $job->getId(),
-                        'https://groomingchimps.titomiguelcosta.com/jobs/' . $job->getId()
+                        'https://groomingchimps.titomiguelcosta.com/jobs/'.$job->getId()
                     ),
                     'text/plain'
                 );

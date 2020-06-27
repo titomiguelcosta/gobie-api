@@ -168,9 +168,15 @@ class User implements UserInterface
      */
     private $projects;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Tracking::class, mappedBy="user")
+     */
+    private $trackings;
+
     public function __construct()
     {
         $this->projects = new ArrayCollection();
+        $this->trackings = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -306,5 +312,36 @@ class User implements UserInterface
     public function __toString()
     {
         return $this->getUsername();
+    }
+
+    /**
+     * @return Collection|Tracking[]
+     */
+    public function getTrackings(): Collection
+    {
+        return $this->trackings;
+    }
+
+    public function addTracking(Tracking $tracking): self
+    {
+        if (!$this->trackings->contains($tracking)) {
+            $this->trackings[] = $tracking;
+            $tracking->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTracking(Tracking $tracking): self
+    {
+        if ($this->trackings->contains($tracking)) {
+            $this->trackings->removeElement($tracking);
+            // set the owning side to null (unless already changed)
+            if ($tracking->getUser() === $this) {
+                $tracking->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }

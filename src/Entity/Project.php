@@ -212,6 +212,6 @@ class Project
 
     public function __toString()
     {
-        return '#' . $this->getId() . ': ' . $this->getDescription();
+        return '#'.$this->getId().': '.$this->getDescription();
     }
 }
