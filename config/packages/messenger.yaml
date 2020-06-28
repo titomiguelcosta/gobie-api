@@ -7,9 +7,9 @@ framework:
             # https://symfony.com/doc/current/messenger.html#transport-configuration
             async: '%env(MESSENGER_TRANSPORT_DSN)%'
             # failed: 'doctrine://default?queue_name=failed'
-            sync: 'sync://'
+            # sync: 'sync://'
 
         routing:
             App\Message\EmailMessage: async
-            App\Message\Tracking: sync
+            App\Message\Tracking: async
             # 'App\Message\YourMessage': async
