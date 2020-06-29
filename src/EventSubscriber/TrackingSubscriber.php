@@ -2,7 +2,7 @@
 
 namespace App\EventSubscriber;
 
-use App\Message\Tracking;
+use App\Message\TrackingMessage;
 use DateTimeImmutable;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
@@ -29,7 +29,7 @@ class TrackingSubscriber implements EventSubscriberInterface
 
     public function onKernelTerminate(TerminateEvent $event)
     {
-        $message = new Tracking(
+        $message = new TrackingMessage(
             $event->getRequest(),
             $event->getResponse(),
             $this->startedAt,

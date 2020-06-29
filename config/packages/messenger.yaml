@@ -11,5 +11,6 @@ framework:
 
         routing:
             App\Message\EmailMessage: async
-            App\Message\Tracking: async
+            App\Message\TrackingMessage: async
+            App\Message\PusherMessage: async
             # 'App\Message\YourMessage': async

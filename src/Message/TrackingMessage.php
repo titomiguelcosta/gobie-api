@@ -7,7 +7,7 @@ use DateTimeInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-final class Tracking
+final class TrackingMessage
 {
     private $routeName;
     private $queryParameters;

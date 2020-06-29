@@ -3,18 +3,22 @@
 namespace App\EventSubscriber;
 
 use App\Entity\Job;
+use App\Message\PusherMessage;
 use Swift_Mailer;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Workflow\Event\CompletedEvent;
 use Symfony\Component\Workflow\WorkflowEvents;
 
 final class JobFinishedSubscriber implements EventSubscriberInterface
 {
     private $mailer;
+    private $bus;
 
-    public function __construct(Swift_Mailer $mailer)
+    public function __construct(Swift_Mailer $mailer, MessageBusInterface $bus)
     {
         $this->mailer = $mailer;
+        $this->bus = $bus;
     }
 
     public function jobFinished(CompletedEvent $event)
@@ -29,12 +33,14 @@ final class JobFinishedSubscriber implements EventSubscriberInterface
                     sprintf(
                         'Job #%d finished. Check the report %s.',
                         $job->getId(),
-                        'https://groomingchimps.titomiguelcosta.com/jobs/'.$job->getId()
+                        'https://groomingchimps.titomiguelcosta.com/jobs/' . $job->getId()
                     ),
                     'text/plain'
                 );
 
             $this->mailer->send($message);
+
+            $this->bus->dispatch(new PusherMessage('project-' . $job->getId(), 'finished', ['job' => $job->getId()]));
         }
     }
 

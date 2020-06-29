@@ -5,12 +5,12 @@ namespace App\MessageHandler;
 use App\Entity\Request;
 use App\Entity\Response;
 use App\Entity\Tracking;
-use App\Message\Tracking as Message;
+use App\Message\TrackingMessage;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
-final class TrackingHandler implements MessageHandlerInterface
+final class TrackingMessageHandler implements MessageHandlerInterface
 {
     private $entityManager;
     private $userRepository;
@@ -23,7 +23,7 @@ final class TrackingHandler implements MessageHandlerInterface
         $this->userRepository = $userRepository;
     }
 
-    public function __invoke(Message $message)
+    public function __invoke(TrackingMessage $message)
     {
         $tracking = new Tracking();
         $tracking->setRouteName($message->getRouteName());
