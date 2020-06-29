@@ -40,7 +40,7 @@ final class JobFinishedSubscriber implements EventSubscriberInterface
 
             $this->mailer->send($message);
 
-            $this->bus->dispatch(new PusherMessage('project-' . $job->getId(), 'finished', ['job' => $job->getId()]));
+            $this->bus->dispatch(new PusherMessage('job-' . $job->getId(), 'finished', ['job' => $job->getId()]));
         }
     }
 
