@@ -17,33 +17,33 @@ use Symfony\Component\Validator\Constraints as Assert;
  *  attributes = {
  *      "normalization_context" = {"groups" = {"read"}},
  *      "denormalization_context" = {"groups" = {"write"}},
- *      "access_control" = "is_granted('IS_AUTHENTICATED_FULLY')"
+ *      "security" = "is_granted('IS_AUTHENTICATED_FULLY')"
  *  },
  *  collectionOperations={
  *      "get" = {
- *          "access_control" = "is_granted('ROLE_ADMIN')"
+ *          "security" = "is_granted('ROLE_ADMIN')"
  *      },
  *      "post" = {
  *          "validation_groups" = {"Default", "create"},
- *          "access_control" = "is_granted('ROLE_ADMIN')"
+ *          "security" = "is_granted('ROLE_ADMIN')"
  *      }
  *  },
  *  itemOperations = {
  *      "get" = {
- *          "access_control" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object)"
+ *          "security" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object)"
  *      },
  *      "delete" = {
- *          "access_control" = "is_granted('ROLE_ADMIN')"
+ *          "security" = "is_granted('ROLE_ADMIN')"
  *      },
  *      "put" = {
- *          "access_control" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object)"
+ *          "security" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object)"
  *      },
  *      "auth" = {
  *          "method" = "POST",
  *          "path" = "/users/auth",
  *          "controller" = AuthController::class,
  *          "defaults" = {"_api_receive" = false},
- *          "access_control" = "is_granted('IS_AUTHENTICATED_ANONYMOUSLY')",
+ *          "security" = "is_granted('IS_AUTHENTICATED_ANONYMOUSLY')",
  *          "normalization_context" = {"groups" = {"auth"}},
  *          "swagger_context"={
  *              "parameters" = {

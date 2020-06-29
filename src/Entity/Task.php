@@ -10,25 +10,25 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ApiResource(
  *  attributes = {
- *      "access_control" = "is_granted('IS_AUTHENTICATED_FULLY')"
+ *      "security" = "is_granted('IS_AUTHENTICATED_FULLY')"
  *  },
  *  collectionOperations={
  *      "get" = {
- *          "access_control" = "is_granted('ROLE_USER')"
+ *          "security" = "is_granted('ROLE_USER')"
  *      },
  *      "post" = {
- *          "access_control" = "is_granted('ROLE_USER')"
+ *          "security" = "is_granted('ROLE_USER')"
  *      }
  *  },
  *  itemOperations = {
  *      "get" = {
- *          "access_control" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.getJob().getProject().getCreatedBy())"
+ *          "security" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.getJob().getProject().getCreatedBy())"
  *      },
  *      "delete" = {
- *          "access_control" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.getJob().getProject().getCreatedBy())"
+ *          "security" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.getJob().getProject().getCreatedBy())"
  *      },
  *      "put" = {
- *          "access_control" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.getJob().getProject().getCreatedBy())"
+ *          "security" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.getJob().getProject().getCreatedBy())"
  *      }
  *  }
  * )
