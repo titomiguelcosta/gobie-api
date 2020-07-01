@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ApiResource(
@@ -34,6 +35,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      }
  *  }
  * )
+ * @UniqueEntity("token")
  * @ORM\Entity(repositoryClass="App\Repository\JobRepository")
  */
 class Job
@@ -105,12 +107,19 @@ class Job
      */
     private $environment;
 
+    /**
+     * @ORM\Column(type="string")
+     * @Groups({"job", "project"})
+     */
+    private $token;
+
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
         $this->branch = 'master';
         $this->status = self::STATUS_PENDING;
         $this->errors = [];
+        $this->token = md5(random_bytes(15));
     }
 
     public function getId(): ?int
@@ -247,6 +256,18 @@ class Job
 
     public function __toString()
     {
-        return '#'.$this->getId();
+        return '#' . $this->getId();
+    }
+
+    public function getToken(): string
+    {
+        return $this->token;
+    }
+
+    public function setToken(string $token): self
+    {
+        $this->token = $token;
+
+        return $this;
     }
 }
