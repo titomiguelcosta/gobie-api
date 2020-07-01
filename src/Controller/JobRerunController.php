@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Job;
+use App\Entity\Task;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,6 +30,9 @@ class JobRerunController extends AbstractController
             if (in_array($job->getStatus(), [Job::STATUS_FINISHED, Job::STATUS_ABORTED])) {
                 // @see JobStatusSubscriber and JobStartSubscriber
                 $job->setStatus(Job::STATUS_PENDING);
+                foreach ($job->getTasks() as $task) {
+                    $task->setStatus(Task::STATUS_PENDING);
+                }
                 $entityManager->flush();
 
                 return new Response('', Response::HTTP_CREATED);
