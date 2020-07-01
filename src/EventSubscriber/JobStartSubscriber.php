@@ -4,7 +4,6 @@ namespace App\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
 use App\Entity\Job;
-use App\Entity\User;
 use Aws\Batch\BatchClient;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Swift_Mailer;
@@ -13,28 +12,25 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Workflow\Event\CompletedEvent;
 
 final class JobStartSubscriber implements EventSubscriberInterface
 {
     private $batchClient;
     private $mailer;
     private $tokenManager;
-    private $security;
 
     public function __construct(
         BatchClient $batchClient,
         Swift_Mailer $mailer,
-        JWTTokenManagerInterface $tokenManager,
-        Security $security
+        JWTTokenManagerInterface $tokenManager
     ) {
         $this->batchClient = $batchClient;
         $this->mailer = $mailer;
         $this->tokenManager = $tokenManager;
-        $this->security = $security;
     }
 
-    public function startJobOnAwsBatch(ViewEvent $event)
+    public function jobCreated(ViewEvent $event)
     {
         $job = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
@@ -43,9 +39,45 @@ final class JobStartSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $user = $this->security->getUser();
-        $token = $user instanceof User ? $this->tokenManager->create($user) : '';
-        $username = $user instanceof User ? $user->getUsername() : 'ANONYMOUS';
+        $this->doSubmitJob($job);
+        $this->doEmail($job);
+    }
+
+    public function jobRerun(CompletedEvent $event)
+    {
+        $this->doSubmitJob($event->getSubject());
+        $this->doEmail($event->getSubject());
+    }
+
+    public static function getSubscribedEvents()
+    {
+        return [
+            KernelEvents::VIEW => [
+                ['jobCreated', EventPriorities::POST_WRITE],
+            ],
+            'workflow.job.completed.finished_to_pending' => ['jobRerun'],
+            'workflow.job.completed.aborted_to_pending' => ['jobRerun'],
+        ];
+    }
+
+    private function doEmail(Job $job): void
+    {
+        $message = (new Swift_Message('Grooming Chimps: Submit Job to AWS Batch'))
+            ->setFrom('groomingchimps@titomiguelcosta.com')
+            ->setTo('titomiguelcosta@gmail.com')
+            ->setBody(
+                sprintf('Job #%d submitted to AWS Batch.', $job->getId()),
+                'text/plain'
+            );
+
+        $this->mailer->send($message);
+    }
+
+    private function doSubmitJob(Job $job): void
+    {
+        $user = $job->getProject()->getCreatedBy();
+        $token = $this->tokenManager->create($user);
+        $username = $user->getUsername();
 
         $this->batchClient->submitJob([
             'containerOverrides' => [
@@ -65,39 +97,9 @@ final class JobStartSubscriber implements EventSubscriberInterface
                     ],
                 ],
             ],
-            'jobDefinition' => $_ENV['AWS_BATCH_JOB_DEFINITION_'.$job->getEnvironment()],
+            'jobDefinition' => $_ENV['AWS_BATCH_JOB_DEFINITION_' . $job->getEnvironment()],
             'jobName' => 'api',
-            'jobQueue' => $_ENV['AWS_BATCH_JOB_QUEUE_'.$job->getEnvironment()],
+            'jobQueue' => $_ENV['AWS_BATCH_JOB_QUEUE_' . $job->getEnvironment()],
         ]);
-    }
-
-    public function emailNotifyingJobStart(ViewEvent $event)
-    {
-        $job = $event->getControllerResult();
-        $method = $event->getRequest()->getMethod();
-
-        if (false === $job instanceof Job || Request::METHOD_POST !== $method) {
-            return;
-        }
-
-        $message = (new Swift_Message('Grooming Chimps: Submit Job to AWS Batch'))
-            ->setFrom('groomingchimps@titomiguelcosta.com')
-            ->setTo('titomiguelcosta@gmail.com')
-            ->setBody(
-                sprintf('Job #%d submitted to AWS Batch.', $job->getId()),
-                'text/plain'
-            );
-
-        $this->mailer->send($message);
-    }
-
-    public static function getSubscribedEvents()
-    {
-        return [
-            KernelEvents::VIEW => [
-                ['startJobOnAwsBatch', EventPriorities::POST_WRITE],
-                ['emailNotifyingJobStart', EventPriorities::POST_WRITE],
-            ],
-        ];
     }
 }

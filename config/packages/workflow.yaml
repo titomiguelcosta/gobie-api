@@ -58,3 +58,9 @@ framework:
                 started_to_finished:
                     from: started
                     to: finished
+                finished_to_pending:
+                    from: finished
+                    to: pending
+                aborted_to_pending:
+                    from: aborted
+                    to: pending

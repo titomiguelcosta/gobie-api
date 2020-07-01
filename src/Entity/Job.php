@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use App\Controller\JobRerunController;
 
 /**
  * @ApiResource(
@@ -32,6 +33,13 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *      },
  *      "put" = {
  *          "security" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.getProject().getCreatedBy())"
+ *      },
+ *      "rerun" = {
+ *          "method" = "POST",
+ *          "path" = "/jobs/{id}/rerun.{_format}",
+ *          "controller" = JobRerunController::class,
+ *          "defaults" = {"_api_receive" = false},
+ *          "security" = "is_granted('IS_AUTHENTICATED_ANONYMOUSLY') or (is_granted('ROLE_USER') and user == object)"
  *      }
  *  }
  * )
