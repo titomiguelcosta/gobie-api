@@ -33,14 +33,14 @@ final class JobFinishedSubscriber implements EventSubscriberInterface
                     sprintf(
                         'Job #%d finished. Check the report %s.',
                         $job->getId(),
-                        'https://groomingchimps.titomiguelcosta.com/jobs/' . $job->getId()
+                        'https://groomingchimps.titomiguelcosta.com/jobs/'.$job->getId()
                     ),
                     'text/plain'
                 );
 
             $this->mailer->send($message);
 
-            $this->bus->dispatch(new PusherMessage('job-' . $job->getId(), 'finished', ['job' => $job->getId()]));
+            $this->bus->dispatch(new PusherMessage('job-'.$job->getId(), 'finished', ['job' => $job->getId()]));
         }
     }
 
