@@ -43,9 +43,9 @@ class BatchService
                     ],
                 ],
             ],
-            'jobDefinition' => $_ENV['AWS_BATCH_JOB_DEFINITION_' . $job->getEnvironment()],
+            'jobDefinition' => $_ENV['AWS_BATCH_JOB_DEFINITION_'.$job->getEnvironment()],
             'jobName' => 'api',
-            'jobQueue' => $_ENV['AWS_BATCH_JOB_QUEUE_' . $job->getEnvironment()],
+            'jobQueue' => $_ENV['AWS_BATCH_JOB_QUEUE_'.$job->getEnvironment()],
         ]);
     }
 }

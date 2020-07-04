@@ -4,11 +4,11 @@ namespace App\EventSubscriber;
 
 use App\Aws\BatchService;
 use App\Entity\Job;
+use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
+use Doctrine\ORM\Events;
 use Swift_Mailer;
 use Swift_Message;
-use Doctrine\Common\EventSubscriber;
-use Doctrine\ORM\Events;
 
 final class JobCreatedSubscriber implements EventSubscriber
 {
