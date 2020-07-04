@@ -8,11 +8,10 @@ use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Swift_Mailer;
 use Swift_Message;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Events;
 
-final class JobStartSubscriber implements EventSubscriberInterface, EventSubscriber
+final class JobCreatedSubscriber implements EventSubscriber
 {
     private $batchClient;
     private $mailer;

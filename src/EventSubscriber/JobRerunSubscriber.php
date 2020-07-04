@@ -9,9 +9,8 @@ use Swift_Mailer;
 use Swift_Message;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Workflow\Event\CompletedEvent;
-use Doctrine\Common\EventSubscriber;
 
-final class JobRerunSubscriber implements EventSubscriberInterface, EventSubscriber
+final class JobRerunSubscriber implements EventSubscriberInterface
 {
     private $batchClient;
     private $mailer;
