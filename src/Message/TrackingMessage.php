@@ -51,6 +51,8 @@ final class TrackingMessage
         $this->startedAt = $startedAt;
         $this->terminatedAt = $terminatedAt;
         $this->userId = $user instanceof User ? $user->getId() : null;
+
+        $this->sanitize();
     }
 
     public function getStartedAt(): DateTimeInterface
@@ -136,5 +138,12 @@ final class TrackingMessage
     public function getResponseStatusText(): string
     {
         return $this->responseStatusText;
+    }
+
+    private function sanitize(): void
+    {
+        if (isset($this->requestHeaders['authorization'])) {
+            unset($this->requestHeaders['authorization']);
+        }
     }
 }
