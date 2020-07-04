@@ -2,9 +2,8 @@
 
 namespace App\EventSubscriber;
 
+use App\AWS\BatchService;
 use App\Entity\Job;
-use Aws\Batch\BatchClient;
-use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Swift_Mailer;
 use Swift_Message;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -12,23 +11,20 @@ use Symfony\Component\Workflow\Event\CompletedEvent;
 
 final class JobRerunSubscriber implements EventSubscriberInterface
 {
-    private $batchClient;
+    private $batchService;
     private $mailer;
-    private $tokenManager;
 
     public function __construct(
-        BatchClient $batchClient,
-        Swift_Mailer $mailer,
-        JWTTokenManagerInterface $tokenManager
+        BatchService $batchService,
+        Swift_Mailer $mailer
     ) {
-        $this->batchClient = $batchClient;
+        $this->batchService = $batchService;
         $this->mailer = $mailer;
-        $this->tokenManager = $tokenManager;
     }
 
     public function jobRerun(CompletedEvent $event)
     {
-        $this->doSubmitJob($event->getSubject());
+        $this->batchService->submitJob($event->getSubject());
         $this->doEmail($event->getSubject());
     }
 
@@ -51,35 +47,5 @@ final class JobRerunSubscriber implements EventSubscriberInterface
             );
 
         $this->mailer->send($message);
-    }
-
-    private function doSubmitJob(Job $job): void
-    {
-        $user = $job->getProject()->getCreatedBy();
-        $token = $this->tokenManager->create($user);
-        $username = $user->getUsername();
-
-        $this->batchClient->submitJob([
-            'containerOverrides' => [
-                'command' => ['app:job:run', $job->getId()],
-                'environment' => [
-                    [
-                        'name' => 'GROOMING_CHIMPS_API_JOB_ID',
-                        'value' => $job->getId(),
-                    ],
-                    [
-                        'name' => 'GROOMING_CHIMPS_API_AUTH_TOKEN',
-                        'value' => $token,
-                    ],
-                    [
-                        'name' => 'GROOMING_CHIMPS_API_USER_USERNAME',
-                        'value' => $username,
-                    ],
-                ],
-            ],
-            'jobDefinition' => $_ENV['AWS_BATCH_JOB_DEFINITION_' . $job->getEnvironment()],
-            'jobName' => 'api',
-            'jobQueue' => $_ENV['AWS_BATCH_JOB_QUEUE_' . $job->getEnvironment()],
-        ]);
     }
 }
