@@ -59,6 +59,10 @@ services:
         tags:
             - { name: 'doctrine.event_subscriber' }
     
+    App\EventSubscriber\JobCreatedSubscriber:
+        tags:
+            - { name: 'doctrine.event_subscriber' }
+    
     App\Graph\GraphManager:
         arguments: [!tagged 'app.graph']
 

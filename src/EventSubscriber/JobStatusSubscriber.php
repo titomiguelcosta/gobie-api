@@ -25,12 +25,11 @@ final class JobStatusSubscriber implements EventSubscriber
     {
         $job = $event->getObject();
         if ($job instanceof Job && $event->hasChangedField('status')) {
-            $transitionName = sprintf('%s_to_%s', $event->getOldValue('status'), $event->getNewValue('status'));
-
             if (!in_array($event->getNewValue('status'), [Job::STATUS_ABORTED, Job::STATUS_FINISHED], true)) {
                 $this->auditConfiguration->disableAuditFor(Job::class);
             }
 
+            $transitionName = sprintf('%s_to_%s', $event->getOldValue('status'), $event->getNewValue('status'));
             $job->setStatus($event->getOldValue('status'));
             if ($this->stateMachine->can($job, $transitionName)) {
                 $this->stateMachine->apply($job, $transitionName);

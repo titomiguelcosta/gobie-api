@@ -8,7 +8,6 @@ use App\Security\Permissions;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
@@ -19,8 +18,7 @@ class JobRerunController extends AbstractController
      */
     public function __invoke(
         Request $request,
-        Job $job,
-        EntityManagerInterface $entityManager
+        Job $job
     ) {
         if (
             $this->isGranted(Permissions::JOB_RERUN, $job)
@@ -32,7 +30,6 @@ class JobRerunController extends AbstractController
                 foreach ($job->getTasks() as $task) {
                     $task->setStatus(Task::STATUS_PENDING);
                 }
-                $entityManager->flush();
 
                 return $job;
             }

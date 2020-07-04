@@ -2,19 +2,16 @@
 
 namespace App\EventSubscriber;
 
-use ApiPlatform\Core\EventListener\EventPriorities;
 use App\Entity\Job;
 use Aws\Batch\BatchClient;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Swift_Mailer;
 use Swift_Message;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Event\ViewEvent;
-use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Workflow\Event\CompletedEvent;
+use Doctrine\Common\EventSubscriber;
 
-final class JobStartSubscriber implements EventSubscriberInterface
+final class JobRerunSubscriber implements EventSubscriberInterface, EventSubscriber
 {
     private $batchClient;
     private $mailer;
@@ -30,19 +27,6 @@ final class JobStartSubscriber implements EventSubscriberInterface
         $this->tokenManager = $tokenManager;
     }
 
-    public function jobCreated(ViewEvent $event)
-    {
-        $job = $event->getControllerResult();
-        $method = $event->getRequest()->getMethod();
-
-        if (false === $job instanceof Job || Request::METHOD_POST !== $method) {
-            return;
-        }
-
-        $this->doSubmitJob($job);
-        $this->doEmail($job);
-    }
-
     public function jobRerun(CompletedEvent $event)
     {
         $this->doSubmitJob($event->getSubject());
@@ -52,9 +36,6 @@ final class JobStartSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::VIEW => [
-                ['jobCreated', EventPriorities::POST_WRITE],
-            ],
             'workflow.job.completed.finished_to_pending' => ['jobRerun'],
             'workflow.job.completed.aborted_to_pending' => ['jobRerun'],
         ];
@@ -62,7 +43,7 @@ final class JobStartSubscriber implements EventSubscriberInterface
 
     private function doEmail(Job $job): void
     {
-        $message = (new Swift_Message('Grooming Chimps: Submit Job to AWS Batch'))
+        $message = (new Swift_Message('Grooming Chimps: Job about to rerun'))
             ->setFrom('groomingchimps@titomiguelcosta.com')
             ->setTo('titomiguelcosta@gmail.com')
             ->setBody(
