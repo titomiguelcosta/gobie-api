@@ -344,4 +344,9 @@ class User implements UserInterface
 
         return $this;
     }
+
+    public function isAdmin(): bool
+    {
+        return in_array('ROLE_ADMIN', $this->roles, true);
+    }
 }

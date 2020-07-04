@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Job;
 use App\Entity\Task;
-use App\Entity\User;
+use App\Security\Permissions;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,9 +22,8 @@ class JobRerunController extends AbstractController
         Job $job,
         EntityManagerInterface $entityManager
     ) {
-        $user = $job->getProject()->getCreatedBy();
         if (
-            ($this->getUser() instanceof User && $this->getUser()->getId() === $user->getId())
+            $this->isGranted(Permissions::JOB_RERUN, $job)
             || $job->getToken() === $request->query->get('token')
         ) {
             if (in_array($job->getStatus(), [Job::STATUS_FINISHED, Job::STATUS_ABORTED])) {
@@ -35,7 +34,7 @@ class JobRerunController extends AbstractController
                 }
                 $entityManager->flush();
 
-                return new Response('', Response::HTTP_CREATED);
+                return $job;
             }
 
             throw new BadRequestHttpException('Only aborted or finished jobs can be rerun');
