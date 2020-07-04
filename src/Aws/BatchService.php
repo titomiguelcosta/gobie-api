@@ -1,6 +1,6 @@
 <?php
 
-namespace App\AWS;
+namespace App\Aws;
 
 use App\Entity\Job;
 use Aws\Batch\BatchClient;

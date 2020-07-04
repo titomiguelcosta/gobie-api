@@ -2,7 +2,7 @@
 
 namespace App\EventSubscriber;
 
-use App\AWS\BatchService;
+use App\Aws\BatchService;
 use App\Entity\Job;
 use Swift_Mailer;
 use Swift_Message;

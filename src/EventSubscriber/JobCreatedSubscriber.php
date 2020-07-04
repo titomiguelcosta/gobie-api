@@ -2,7 +2,7 @@
 
 namespace App\EventSubscriber;
 
-use App\AWS\BatchService;
+use App\Aws\BatchService;
 use App\Entity\Job;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Swift_Mailer;
