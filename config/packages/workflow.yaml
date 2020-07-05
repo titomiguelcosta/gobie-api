@@ -31,15 +31,6 @@ framework:
                 running_to_succeeded:
                     from: running
                     to: succeeded
-                succeeded_to_pending:
-                    from: succeeded
-                    to: pending
-                failed_to_pending:
-                    from: failed
-                    to: pending
-                aborted_to_pending:
-                    from: aborted
-                    to: pending
         job:
             type: state_machine
             audit_trail:
@@ -67,9 +58,3 @@ framework:
                 started_to_finished:
                     from: started
                     to: finished
-                finished_to_pending:
-                    from: finished
-                    to: pending
-                aborted_to_pending:
-                    from: aborted
-                    to: pending

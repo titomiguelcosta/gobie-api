@@ -23,7 +23,7 @@ final class JobCreatedSubscriber implements EventSubscriber
         $this->mailer = $mailer;
     }
 
-    public function prePersist(LifecycleEventArgs $event)
+    public function postPersist(LifecycleEventArgs $event)
     {
         $job = $event->getObject();
 
@@ -38,7 +38,7 @@ final class JobCreatedSubscriber implements EventSubscriber
     public function getSubscribedEvents()
     {
         return [
-            Events::prePersist,
+            Events::postPersist,
         ];
     }
 

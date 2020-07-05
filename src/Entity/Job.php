@@ -262,11 +262,6 @@ class Job
         return $this;
     }
 
-    public function __toString()
-    {
-        return '#'.$this->getId();
-    }
-
     public function getToken(): string
     {
         return $this->token;
@@ -277,5 +272,10 @@ class Job
         $this->token = $token;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return '#' . $this->getId();
     }
 }
