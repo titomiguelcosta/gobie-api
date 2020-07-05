@@ -32,8 +32,8 @@ class AuthController extends AbstractController
         $user = $userRepository->findOneBy(['username' => $data['username']]);
 
         if (
-            $user instanceof User &&
-            $userPasswordEncoder->isPasswordValid($user, $data['password'])
+            $user instanceof User
+            && $userPasswordEncoder->isPasswordValid($user, $data['password'])
         ) {
             return new JsonResponse([
                 '@id' => '/users/'.$user->getUsername(),

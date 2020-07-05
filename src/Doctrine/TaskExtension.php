@@ -38,6 +38,7 @@ final class TaskExtension implements QueryCollectionExtensionInterface, QueryIte
         $queryBuilder->innerJoin(sprintf('%s.job', $rootAlias), 'j');
         $queryBuilder->innerJoin('j.project', 'p');
         $queryBuilder->andWhere('p.createdBy = :current_user');
+        $queryBuilder->orderBy($rootAlias.'.startedAt', 'desc');
         $queryBuilder->setParameter('current_user', $user);
     }
 }

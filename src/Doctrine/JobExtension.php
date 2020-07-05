@@ -37,6 +37,7 @@ final class JobExtension implements QueryCollectionExtensionInterface, QueryItem
         $rootAlias = $queryBuilder->getRootAliases()[0];
         $queryBuilder->innerJoin(sprintf('%s.project', $rootAlias), 'p');
         $queryBuilder->andWhere('p.createdBy = :current_user');
+        $queryBuilder->orderBy($rootAlias.'.startedAt', 'desc');
         $queryBuilder->setParameter('current_user', $user);
     }
 }
