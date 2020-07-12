@@ -23,7 +23,7 @@ host('api.groomingchimps.titomiguelcosta.com')
     ->set('env', ['APP_ENV' => 'prod']);
 
 task('workers:restart', function () {
-    run('sudo supervisorctl reload grooming-chimps-*');
+    run('sudo supervisorctl reload');
 });
 
 after('deploy:failed', 'deploy:unlock');
