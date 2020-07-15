@@ -9,7 +9,7 @@ set('repository', 'git@bitbucket.org:groomingchimps/api.git');
 set('git_tty', false);
 set('keep_releases', 3);
 set('shared_dirs', ['var/log', 'var/sessions', 'config/jwt', 'vendor']);
-set('writable_dirs', ['var/log', 'var/cache']);
+set('writable_dirs', ['var/log', 'var/cache', 'var/sessions']);
 set('writable_mode', 'acl');
 set('composer_action', 'install');
 set('composer_options', '{{composer_action}} --verbose --prefer-dist --no-progress --no-interaction --optimize-autoloader --no-suggest');
