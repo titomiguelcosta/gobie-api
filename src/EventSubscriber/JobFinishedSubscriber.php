@@ -4,6 +4,7 @@ namespace App\EventSubscriber;
 
 use App\Entity\Job;
 use App\Message\PusherMessage;
+use App\Message\SlackMessage;
 use Swift_Mailer;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -33,14 +34,26 @@ final class JobFinishedSubscriber implements EventSubscriberInterface
                     sprintf(
                         'Job #%d finished. Check the report %s.',
                         $job->getId(),
-                        'https://groomingchimps.titomiguelcosta.com/jobs/'.$job->getId()
+                        'https://groomingchimps.titomiguelcosta.com/jobs/' . $job->getId()
                     ),
                     'text/plain'
                 );
 
             $this->mailer->send($message);
 
-            $this->bus->dispatch(new PusherMessage('job-'.$job->getId(), 'finished', ['job' => $job->getId()]));
+            $this->bus->dispatch(
+                new PusherMessage('job-' . $job->getId(), Job::STATUS_FINISHED, ['job' => $job->getId()])
+            );
+            $this->bus->dispatch(
+                new SlackMessage(
+                    sprintf(
+                        'Job #%d by %s finished with a status of %s',
+                        $job->getId(),
+                        $user->getEmail(),
+                        $job->getStatus()
+                    )
+                )
+            );
         }
     }
 
