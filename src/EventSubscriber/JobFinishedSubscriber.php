@@ -47,11 +47,11 @@ final class JobFinishedSubscriber implements EventSubscriberInterface
             $this->bus->dispatch(
                 new SlackMessage(
                     sprintf(
-                        'Job #%d by %s finished with a status of %s',
+                        'Job #%d by %s just finished building.',
                         $job->getId(),
-                        $user->getEmail(),
-                        $job->getStatus()
-                    )
+                        $user->getEmail()
+                    ),
+                    'builds'
                 )
             );
         }

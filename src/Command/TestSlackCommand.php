@@ -28,7 +28,7 @@ class TestSlackCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $chat = new ChatMessage('Testing integration with slack');
-        $chat->transport('slack');
+        $chat->transport('slack_builds');
 
         $this->notifier->send($chat);
 

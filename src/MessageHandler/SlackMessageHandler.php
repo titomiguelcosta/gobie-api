@@ -19,7 +19,7 @@ final class SlackMessageHandler implements MessageHandlerInterface
     public function __invoke(SlackMessage $message)
     {
         $chat = new ChatMessage($message->getMessage());
-        $chat->transport('slack');
+        $chat->transport($message->getChannel());
 
         $this->notifier->send($chat);
     }
