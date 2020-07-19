@@ -32,7 +32,7 @@ class TrackingSubscriber implements EventSubscriberInterface
         $message = new TrackingMessage(
             $event->getRequest(),
             $event->getResponse(),
-            $this->startedAt,
+            $this->startedAt ?? new DateTimeImmutable(),
             new DateTimeImmutable(),
             $this->security->getUser()
         );
