@@ -5,6 +5,8 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\EventRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Annotation\ApiFilter;
 
 /**
  * @ApiResource(
@@ -32,6 +34,7 @@ use Doctrine\ORM\Mapping as ORM;
  *      }
  *  }
  * )
+ * @ApiFilter(OrderFilter::class, properties={"dispatchedAt": "DESC"}, arguments={"orderParameterName"="order"})
  * @ORM\Entity(repositoryClass=EventRepository::class)
  */
 class Event
