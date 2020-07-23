@@ -70,6 +70,10 @@ services:
         tags:
             - { name: 'doctrine.event_subscriber' }
     
+    App\EventSubscriber\JobFinishedSubscriber:
+        tags:
+            - { name: 'doctrine.event_subscriber' }
+    
     App\Graph\GraphManager:
         arguments: [!tagged 'app.graph']
 
