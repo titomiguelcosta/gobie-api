@@ -51,7 +51,7 @@ final class EventMessageHandler implements MessageHandlerInterface
 
         if ($user instanceof User) {
             $this->pusher->trigger(
-                'gobie.event.user.' . $user->getId(),
+                'gobie.event.user.'.$user->getId(),
                 'created',
                 $message->getMessage()
             );

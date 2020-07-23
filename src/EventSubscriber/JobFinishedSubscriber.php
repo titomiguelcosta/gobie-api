@@ -33,7 +33,7 @@ final class JobFinishedSubscriber implements EventSubscriberInterface
             $this->doEmail($job, $user);
 
             $this->bus->dispatch(
-                new PusherMessage('gobie.job.' . $job->getId(), Job::STATUS_FINISHED, ['job' => $job->getId()])
+                new PusherMessage('gobie.job.'.$job->getId(), Job::STATUS_FINISHED, ['job' => $job->getId()])
             );
 
             $this->bus->dispatch(
@@ -76,7 +76,7 @@ final class JobFinishedSubscriber implements EventSubscriberInterface
                 sprintf(
                     'Job #%d finished. Check the report %s.',
                     $job->getId(),
-                    'https://groomingchimps.titomiguelcosta.com/jobs/' . $job->getId()
+                    'https://groomingchimps.titomiguelcosta.com/jobs/'.$job->getId()
                 ),
                 'text/plain'
             );
