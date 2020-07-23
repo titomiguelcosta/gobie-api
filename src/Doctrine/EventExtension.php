@@ -35,8 +35,8 @@ final class EventExtension implements QueryCollectionExtensionInterface, QueryIt
         }
 
         $rootAlias = $queryBuilder->getRootAliases()[0];
-        $queryBuilder->andWhere($rootAlias . '.user = :current_user');
-        $queryBuilder->orderBy($rootAlias . '.dispatchedAt', 'desc');
+        $queryBuilder->andWhere($rootAlias.'.user = :current_user');
+        $queryBuilder->orderBy($rootAlias.'.dispatchedAt', 'desc');
         $queryBuilder->setParameter('current_user', $user);
     }
 }

@@ -7,6 +7,7 @@ use DateTimeImmutable;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\TerminateEvent;
+use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Security\Core\Security;
 
@@ -43,8 +44,8 @@ class TrackingSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            'kernel.terminate' => 'onKernelTerminate',
-            'kernel.request' => 'onKernelRequest',
+            KernelEvents::TERMINATE => 'onKernelTerminate',
+            KernelEvents::REQUEST => 'onKernelRequest',
         ];
     }
 }

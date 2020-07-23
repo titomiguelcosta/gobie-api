@@ -3,6 +3,8 @@
 namespace App\EventSubscriber;
 
 use App\Entity\Job;
+use App\Entity\User;
+use App\Message\EventMessage;
 use App\Message\PusherMessage;
 use App\Message\SlackMessage;
 use Swift_Mailer;
@@ -27,23 +29,13 @@ final class JobFinishedSubscriber implements EventSubscriberInterface
         $job = $event->getSubject();
         if ($job instanceof Job && Job::STATUS_FINISHED === $job->getStatus()) {
             $user = $job->getProject()->getCreatedBy();
-            $message = (new \Swift_Message('Grooming Chimps: Job finished'))
-                ->setFrom('groomingchimps@titomiguelcosta.com')
-                ->setTo($user->getEmail())
-                ->setBody(
-                    sprintf(
-                        'Job #%d finished. Check the report %s.',
-                        $job->getId(),
-                        'https://groomingchimps.titomiguelcosta.com/jobs/' . $job->getId()
-                    ),
-                    'text/plain'
-                );
 
-            $this->mailer->send($message);
+            $this->doEmail($job, $user);
 
             $this->bus->dispatch(
-                new PusherMessage('job-' . $job->getId(), Job::STATUS_FINISHED, ['job' => $job->getId()])
+                new PusherMessage('gobie.job.' . $job->getId(), Job::STATUS_FINISHED, ['job' => $job->getId()])
             );
+
             $this->bus->dispatch(
                 new SlackMessage(
                     sprintf(
@@ -54,6 +46,17 @@ final class JobFinishedSubscriber implements EventSubscriberInterface
                     'builds'
                 )
             );
+
+            $eventMessage = new EventMessage();
+            $eventMessage
+                ->setName('job.finished')
+                ->setAction(Job::STATUS_FINISHED)
+                ->setEntityNamespace(Job::class)
+                ->setEntityId($job->getId())
+                ->setUserId($user->getId())
+                ->setMessage(sprintf('Job #%d finished building.', $job->getId()))
+                ->setLevel('info');
+            $this->bus->dispatch($eventMessage);
         }
     }
 
@@ -62,5 +65,22 @@ final class JobFinishedSubscriber implements EventSubscriberInterface
         return [
             WorkflowEvents::COMPLETED => ['jobFinished'],
         ];
+    }
+
+    private function doEmail(Job $job, User $user): void
+    {
+        $message = (new \Swift_Message('Grooming Chimps: Job finished'))
+            ->setFrom('groomingchimps@titomiguelcosta.com')
+            ->setTo($user->getEmail())
+            ->setBody(
+                sprintf(
+                    'Job #%d finished. Check the report %s.',
+                    $job->getId(),
+                    'https://groomingchimps.titomiguelcosta.com/jobs/' . $job->getId()
+                ),
+                'text/plain'
+            );
+
+        $this->mailer->send($message);
     }
 }

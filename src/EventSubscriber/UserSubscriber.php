@@ -14,9 +14,8 @@ final class UserSubscriber implements EventSubscriberInterface
 {
     private $mailer;
 
-    public function __construct(
-        Swift_Mailer $mailer
-    ) {
+    public function __construct(Swift_Mailer $mailer)
+    {
         $this->mailer = $mailer;
     }
 

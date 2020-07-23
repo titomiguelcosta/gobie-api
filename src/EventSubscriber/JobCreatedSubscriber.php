@@ -4,23 +4,29 @@ namespace App\EventSubscriber;
 
 use App\Aws\BatchService;
 use App\Entity\Job;
+use App\Message\EventMessage;
+use App\Message\PusherMessage;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
 use Swift_Mailer;
 use Swift_Message;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 final class JobCreatedSubscriber implements EventSubscriber
 {
     private $batchService;
     private $mailer;
+    private $bus;
 
     public function __construct(
         BatchService $batchService,
-        Swift_Mailer $mailer
+        Swift_Mailer $mailer,
+        MessageBusInterface $bus
     ) {
         $this->batchService = $batchService;
         $this->mailer = $mailer;
+        $this->bus = $bus;
     }
 
     public function postPersist(LifecycleEventArgs $event)
@@ -32,6 +38,22 @@ final class JobCreatedSubscriber implements EventSubscriber
         }
 
         $this->batchService->submitJob($job);
+
+        $this->bus->dispatch(
+            new PusherMessage('gobie.job.' . $job->getId(), Job::STATUS_STARTED, ['job' => $job->getId()])
+        );
+
+        $eventMessage = new EventMessage();
+        $eventMessage
+            ->setName('job.started')
+            ->setAction(Job::STATUS_STARTED)
+            ->setEntityNamespace(Job::class)
+            ->setEntityId($job->getId())
+            ->setUserId($job->getProject()->getCreatedBy()->getId())
+            ->setMessage(sprintf('Job #%d queued to be built.', $job->getId()))
+            ->setLevel('info');
+        $this->bus->dispatch($eventMessage);
+
         $this->doEmail($job);
     }
 
