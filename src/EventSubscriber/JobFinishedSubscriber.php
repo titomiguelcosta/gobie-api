@@ -7,13 +7,13 @@ use App\Entity\User;
 use App\Message\EventMessage;
 use App\Message\PusherMessage;
 use App\Message\SlackMessage;
+use Doctrine\Common\EventSubscriber;
+use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
+use Doctrine\ORM\Events;
 use Swift_Mailer;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\Workflow\Event\CompletedEvent;
-use Symfony\Component\Workflow\WorkflowEvents;
 
-final class JobFinishedSubscriber implements EventSubscriberInterface
+final class JobFinishedSubscriber implements EventSubscriber
 {
     private $mailer;
     private $bus;
@@ -24,16 +24,16 @@ final class JobFinishedSubscriber implements EventSubscriberInterface
         $this->bus = $bus;
     }
 
-    public function jobFinished(CompletedEvent $event)
+    public function postUpdate(LifecycleEventArgs $event)
     {
-        $job = $event->getSubject();
+        $job = $event->getObject();
         if ($job instanceof Job && Job::STATUS_FINISHED === $job->getStatus()) {
             $user = $job->getProject()->getCreatedBy();
 
             $this->doEmail($job, $user);
 
             $this->bus->dispatch(
-                new PusherMessage('gobie.job.'.$job->getId(), Job::STATUS_FINISHED, ['job' => $job->getId()])
+                new PusherMessage('gobie.job.' . $job->getId(), Job::STATUS_FINISHED, ['job' => $job->getId()])
             );
 
             $this->bus->dispatch(
@@ -60,10 +60,10 @@ final class JobFinishedSubscriber implements EventSubscriberInterface
         }
     }
 
-    public static function getSubscribedEvents()
+    public function getSubscribedEvents()
     {
         return [
-            WorkflowEvents::COMPLETED => ['jobFinished'],
+            Events::postUpdate,
         ];
     }
 
@@ -76,7 +76,7 @@ final class JobFinishedSubscriber implements EventSubscriberInterface
                 sprintf(
                     'Job #%d finished. Check the report %s.',
                     $job->getId(),
-                    'https://groomingchimps.titomiguelcosta.com/jobs/'.$job->getId()
+                    'https://groomingchimps.titomiguelcosta.com/jobs/' . $job->getId()
                 ),
                 'text/plain'
             );
