@@ -21,7 +21,7 @@ class WebhookController extends AbstractController
      */
     public function __invoke(Request $request)
     {
-        $this->logger->warning('Debug GitHub request: ' . $request);
+        $this->logger->critical('Debug GitHub request: ' . $request);
 
         return new Response('Got info.');
     }
