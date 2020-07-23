@@ -45,7 +45,7 @@ final class TrackingMessage
         $this->locale = $request->getLocale();
         $this->device = '';
         $this->navigator = $request->headers->get('User-Agent');
-        $this->responseBody = $response->getContent();
+        $this->responseBody = ''; // Having issues when body is too big
         $this->responseStatusCode = $response->getStatusCode();
         $this->responseStatusText = Response::$statusTexts[$response->getStatusCode()] ?? 'unknown status';
         $this->startedAt = $startedAt;

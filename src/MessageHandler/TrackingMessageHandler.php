@@ -48,8 +48,7 @@ final class TrackingMessageHandler implements MessageHandlerInterface
         $response = new Response();
         $response->setStatusCode($message->getResponseStatusCode());
         $response->setStatusText($message->getResponseStatusText());
-        // Having issues when body is too big
-        //$response->setBody($message->getResponseBody());
+        $response->setBody($message->getResponseBody());
         $response->setTracking($tracking);
 
         $this->entityManager->persist($tracking);
