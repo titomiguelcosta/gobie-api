@@ -294,6 +294,9 @@
     "php-http/discovery": {
         "version": "1.9.1"
     },
+    "php-http/guzzle6-adapter": {
+        "version": "v2.0.1"
+    },
     "php-http/httplug": {
         "version": "2.2.0"
     },
@@ -389,6 +392,9 @@
     },
     "ralouphie/getallheaders": {
         "version": "2.0.5"
+    },
+    "sebastian/cli-parser": {
+        "version": "1.0.0"
     },
     "sebastian/code-unit": {
         "version": "1.0.3"
@@ -637,6 +643,9 @@
     "symfony/options-resolver": {
         "version": "v4.2.5"
     },
+    "symfony/orm-pack": {
+        "version": "v1.0.8"
+    },
     "symfony/polyfill-intl-grapheme": {
         "version": "v1.17.0"
     },
@@ -717,6 +726,9 @@
     },
     "symfony/serializer": {
         "version": "v4.2.4"
+    },
+    "symfony/serializer-pack": {
+        "version": "v1.0.3"
     },
     "symfony/service-contracts": {
         "version": "v1.1.2"

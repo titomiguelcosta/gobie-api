@@ -121,6 +121,12 @@ class Job
      */
     private $token;
 
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @Groups({"job", "project"})
+     */
+    private $headSha;
+
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
@@ -274,8 +280,20 @@ class Job
         return $this;
     }
 
+    public function getHeadSha(): ?string
+    {
+        return $this->headSha;
+    }
+
+    public function setHeadSha(string $headSha): self
+    {
+        $this->headSha = $headSha;
+
+        return $this;
+    }
+
     public function __toString()
     {
-        return '#'.$this->getId();
+        return '#' . $this->getId();
     }
 }
