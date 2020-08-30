@@ -285,7 +285,7 @@ class Job
         return $this->headSha;
     }
 
-    public function setHeadSha(string $headSha): self
+    public function setHeadSha(?string $headSha): self
     {
         $this->headSha = $headSha;
 
