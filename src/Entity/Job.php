@@ -125,7 +125,7 @@ class Job
      * @ORM\Column(type="string", nullable=true)
      * @Groups({"job", "project"})
      */
-    private $headSha;
+    private $commitHash;
 
     public function __construct()
     {
@@ -280,20 +280,20 @@ class Job
         return $this;
     }
 
-    public function getHeadSha(): ?string
+    public function getCommitHash(): ?string
     {
-        return $this->headSha;
+        return $this->commitHash;
     }
 
-    public function setHeadSha(?string $headSha): self
+    public function setCommitHash(?string $commitHash): self
     {
-        $this->headSha = $headSha;
+        $this->commitHash = $commitHash;
 
         return $this;
     }
 
     public function __toString()
     {
-        return '#' . $this->getId();
+        return '#'.$this->getId();
     }
 }

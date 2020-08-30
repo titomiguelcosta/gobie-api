@@ -4,14 +4,14 @@ namespace App\Command;
 
 use Github\Client as GithubClient;
 use Github\HttpClient\Builder as GithubBuilder;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
+use Http\Adapter\Guzzle6\Client as GuzzleClient;
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Signer\Key;
 use Lcobucci\JWT\Signer\Rsa\Sha256;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Http\Adapter\Guzzle6\Client as GuzzleClient;
 
 class TestGithubCommand extends Command
 {
@@ -68,7 +68,7 @@ class TestGithubCommand extends Command
             'output' => [
                 'title' => 'All good',
                 'summary' => 'just started running checks',
-            ]
+            ],
         ];
         $check = $github->api('repo')->checks()->update('titomiguelcosta', 'hammer', 1047538484, $params);
 
