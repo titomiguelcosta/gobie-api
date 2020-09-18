@@ -14,11 +14,11 @@ set('writable_mode', 'acl');
 set('composer_action', 'install');
 set('composer_options', '{{composer_action}} --verbose --prefer-dist --no-progress --no-interaction --optimize-autoloader --no-suggest');
 
-host('api.groomingchimps.titomiguelcosta.com')
+host('api.gobie.titomiguelcosta.com')
     ->user('ubuntu')
     ->stage('prod')
     ->set('deploy_path', '/mnt/websites/groomingchimps/api')
-    ->set('shared_files', ['.env.prod.local'])
+    ->set('shared_files', ['.env.local'])
     ->set('branch', 'master')
     ->set('env', ['APP_ENV' => 'prod']);
 
