@@ -15,6 +15,7 @@
         "guzzlehttp/guzzle": "^6.0",
         "knplabs/github-api": "^2.15",
         "lexik/jwt-authentication-bundle": "^2.6",
+        "nelmio/cors-bundle": "^2.1",
         "php-http/guzzle6-adapter": "^2.0",
         "pusher/pusher-php-server": "^4.1",
         "sensio/framework-extra-bundle": "^5.5",
