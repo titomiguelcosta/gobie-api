@@ -8,7 +8,7 @@ use App\Message\EventMessage;
 use App\Message\PusherMessage;
 use App\Message\SlackMessage;
 use Doctrine\Common\EventSubscriber;
-use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
 use Swift_Mailer;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -33,7 +33,7 @@ final class JobFinishedSubscriber implements EventSubscriber
             $this->doEmail($job, $user);
 
             $this->bus->dispatch(
-                new PusherMessage('gobie.job.'.$job->getId(), Job::STATUS_FINISHED, ['job' => $job->getId()])
+                new PusherMessage('gobie.job.' . $job->getId(), Job::STATUS_FINISHED, ['job' => $job->getId()])
             );
 
             $this->bus->dispatch(
@@ -76,7 +76,7 @@ final class JobFinishedSubscriber implements EventSubscriber
                 sprintf(
                     'Job #%d finished. Check the report %s.',
                     $job->getId(),
-                    'https://groomingchimps.titomiguelcosta.com/jobs/'.$job->getId()
+                    'https://groomingchimps.titomiguelcosta.com/jobs/' . $job->getId()
                 ),
                 'text/plain'
             );

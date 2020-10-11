@@ -4,7 +4,7 @@ namespace App\EventSubscriber;
 
 use App\Entity\Project;
 use Doctrine\Common\EventSubscriber;
-use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
 
 final class IsProjectPrivateSubscriber implements EventSubscriber

@@ -7,7 +7,7 @@ use App\Entity\Job;
 use App\Message\EventMessage;
 use App\Message\PusherMessage;
 use Doctrine\Common\EventSubscriber;
-use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
 use Swift_Mailer;
 use Swift_Message;
@@ -40,7 +40,7 @@ final class JobCreatedSubscriber implements EventSubscriber
         $this->batchService->submitJob($job);
 
         $this->bus->dispatch(
-            new PusherMessage('gobie.job.'.$job->getId(), Job::STATUS_STARTED, ['job' => $job->getId()])
+            new PusherMessage('gobie.job.' . $job->getId(), Job::STATUS_STARTED, ['job' => $job->getId()])
         );
 
         $eventMessage = new EventMessage();
