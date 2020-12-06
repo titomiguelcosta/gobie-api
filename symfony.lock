@@ -147,6 +147,9 @@
     "egulias/email-validator": {
         "version": "2.1.7"
     },
+    "fakerphp/faker": {
+        "version": "v1.12.0"
+    },
     "fig/link-util": {
         "version": "1.0.0"
     },
@@ -161,9 +164,6 @@
         "files": [
             ".php_cs.dist"
         ]
-    },
-    "fzaninotto/faker": {
-        "version": "v1.8.0"
     },
     "gedmo/doctrine-extensions": {
         "version": "v2.4.37"
@@ -205,6 +205,9 @@
     },
     "laminas/laminas-zendframework-bridge": {
         "version": "1.0.4"
+    },
+    "lcobucci/clock": {
+        "version": "2.0.0"
     },
     "lcobucci/jwt": {
         "version": "3.2.5"
