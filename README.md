@@ -1,8 +1,12 @@
 # Gobie API
 
-API for the Gobie project
+API and admin area for the Gobie project.
 
-## Generate JWT pem keys
+Powered by [Symfony Framework](https://symfony.com/), API [API Platform](https://api-platform.com/) and [EasyAdmin](https://github.com/EasyCorp/EasyAdminBundle)
+
+## Setup
+
+### Auth keys
 $ mkdir -p config/jwt
 $ openssl genrsa -out config/jwt/private.pem -aes256 4096
 $ openssl rsa -pubout -in config/jwt/private.pem -out config/jwt/public.pem
@@ -23,4 +27,3 @@ Access the docs on http://localhost:8090/docs
 ### SQS
 
 Access on http://localhost:9325/
-
