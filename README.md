@@ -1,4 +1,6 @@
-# Grooming Chimps API
+# Gobie API
+
+API for the Gobie project
 
 ## Generate JWT pem keys
 $ mkdir -p config/jwt
@@ -21,3 +23,4 @@ Access the docs on http://localhost:8090/docs
 ### SQS
 
 Access on http://localhost:9325/
+

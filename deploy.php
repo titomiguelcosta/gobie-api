@@ -4,8 +4,8 @@ namespace Deployer;
 
 require 'recipe/symfony4.php';
 
-set('application', 'groomingchimps:api');
-set('repository', 'git@bitbucket.org:groomingchimps/api.git');
+set('application', 'gobie:api');
+set('repository', 'git@github.com:titomiguelcosta/gobie-api.git');
 set('git_tty', false);
 set('keep_releases', 3);
 set('shared_dirs', ['var/log', 'var/sessions', 'config/jwt', 'vendor']);
@@ -29,3 +29,4 @@ task('workers:restart', function () {
 after('deploy:failed', 'deploy:unlock');
 before('deploy:symlink', 'database:migrate');
 after('deploy:symlink', 'workers:restart');
+
