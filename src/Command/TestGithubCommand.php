@@ -8,7 +8,6 @@ use Http\Adapter\Guzzle6\Client as GuzzleClient;
 use Lcobucci\JWT\Encoding\JoseEncoder;
 use Lcobucci\JWT\Encoding\MicrosecondBasedDateConversion;
 use Lcobucci\JWT\Token\Builder;
-use Lcobucci\JWT\Signer\Key;
 use Lcobucci\JWT\Signer\Key\LocalFileReference;
 use Lcobucci\JWT\Signer\Rsa\Sha256;
 use Symfony\Component\Console\Command\Command;
@@ -48,7 +47,7 @@ class TestGithubCommand extends Command
             ->expiresAt(new \DateTimeImmutable("+60 seconds"))
             ->getToken(
                 new Sha256(),
-                new LocalFileReference(sprintf('file://%s/%s', $this->projectDir, 'config/jwt/github.pem'), '')
+                LocalFileReference::file(sprintf('file://%s/%s', $this->projectDir, 'config/jwt/github.pem'), '')
             );
 
         $github->authenticate($jwt, null, GithubClient::AUTH_JWT);
