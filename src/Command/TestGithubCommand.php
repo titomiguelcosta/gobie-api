@@ -9,6 +9,7 @@ use Lcobucci\JWT\Encoding\JoseEncoder;
 use Lcobucci\JWT\Encoding\MicrosecondBasedDateConversion;
 use Lcobucci\JWT\Token\Builder;
 use Lcobucci\JWT\Signer\Key;
+use Lcobucci\JWT\Signer\Key\LocalFileReference;
 use Lcobucci\JWT\Signer\Rsa\Sha256;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -47,11 +48,12 @@ class TestGithubCommand extends Command
             ->expiresAt(new \DateTimeImmutable("+60 seconds"))
             ->getToken(
                 new Sha256(),
-                new Key(sprintf('file://%s/%s', $this->projectDir, 'config/jwt/github.pem'))
+                new LocalFileReference(sprintf('file://%s/%s', $this->projectDir, 'config/jwt/github.pem'), '')
             );
 
         $github->authenticate($jwt, null, GithubClient::AUTH_JWT);
 
+        // id of instalation... 
         $token = $github->api('apps')->createInstallationToken(10751498);
         $github->authenticate($token['token'], null, GithubClient::AUTH_ACCESS_TOKEN);
 
