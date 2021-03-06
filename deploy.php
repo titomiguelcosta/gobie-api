@@ -19,7 +19,7 @@ host('api.gobie.titomiguelcosta.com')
     ->stage('prod')
     ->set('deploy_path', '/mnt/websites/groomingchimps/api')
     ->set('shared_files', ['.env.local'])
-    ->set('branch', 'master')
+    ->set('branch', 'github-checks')
     ->set('env', ['APP_ENV' => 'prod']);
 
 task('workers:restart', function () {

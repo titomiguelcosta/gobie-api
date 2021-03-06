@@ -5,7 +5,9 @@ namespace App\Command;
 use Github\Client as GithubClient;
 use Github\HttpClient\Builder as GithubBuilder;
 use Http\Adapter\Guzzle6\Client as GuzzleClient;
-use Lcobucci\JWT\Builder;
+use Lcobucci\JWT\Encoding\JoseEncoder;
+use Lcobucci\JWT\Encoding\MicrosecondBasedDateConversion;
+use Lcobucci\JWT\Token\Builder;
 use Lcobucci\JWT\Signer\Key;
 use Lcobucci\JWT\Signer\Rsa\Sha256;
 use Symfony\Component\Console\Command\Command;
@@ -39,10 +41,10 @@ class TestGithubCommand extends Command
         $builder = new GithubBuilder(new GuzzleClient());
         $github = new GithubClient($builder, 'machine-man-preview');
 
-        $jwt = (new Builder())
+        $jwt = (new Builder(new JoseEncoder(), new MicrosecondBasedDateConversion()))
             ->issuedBy($this->githubAppId)
-            ->issuedAt(time())
-            ->expiresAt(time() + 60)
+            ->issuedAt(new \DateTimeImmutable())
+            ->expiresAt(new \DateTimeImmutable("+60 seconds"))
             ->getToken(
                 new Sha256(),
                 new Key(sprintf('file://%s/%s', $this->projectDir, 'config/jwt/github.pem'))
