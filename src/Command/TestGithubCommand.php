@@ -3,10 +3,8 @@
 namespace App\Command;
 
 use Github\Client as GithubClient;
-use Github\HttpClient\Builder as GithubBuilder;
-use Http\Adapter\Guzzle6\Client as GuzzleClient;
 use Lcobucci\JWT\Encoding\JoseEncoder;
-use Lcobucci\JWT\Encoding\MicrosecondBasedDateConversion;
+use Lcobucci\JWT\Encoding\UnixTimestampDates;
 use Lcobucci\JWT\Token\Builder;
 use Lcobucci\JWT\Signer\Key\LocalFileReference;
 use Lcobucci\JWT\Signer\Rsa\Sha256;
@@ -38,42 +36,40 @@ class TestGithubCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $builder = new GithubBuilder(new GuzzleClient());
-        $github = new GithubClient($builder, 'machine-man-preview');
+        $github = new GithubClient();
 
-        $jwt = (new Builder(new JoseEncoder(), new MicrosecondBasedDateConversion()))
+        $jwt = (new Builder(new JoseEncoder(), new UnixTimestampDates()))
             ->issuedBy($this->githubAppId)
-            ->issuedAt(new \DateTimeImmutable())
-            ->expiresAt(new \DateTimeImmutable("+60 seconds"))
+            ->issuedAt(new \DateTimeImmutable("now", new \DateTimeZone("UTC")))
+            ->expiresAt(new \DateTimeImmutable("+360 seconds", new \DateTimeZone("UTC")))
             ->getToken(
                 new Sha256(),
-                LocalFileReference::file(sprintf('file://%s/%s', $this->projectDir, 'config/jwt/github.pem'), '')
+                LocalFileReference::file(sprintf('file://%s/%s', $this->projectDir, 'config/jwt/github.pem'), 'sfsdfds')
             );
 
-        $github->authenticate($jwt, null, GithubClient::AUTH_JWT);
+        $github->authenticate($jwt->toString(), null, GithubClient::AUTH_JWT);
 
-        // id of instalation... 
-        $token = $github->api('apps')->createInstallationToken(10751498);
+        $appInstalationDetails = $github->api('apps')->getInstallationForRepo('titomiguelcosta', 'hammer');
+        $token = $github->api('apps')->createInstallationToken($appInstalationDetails["id"]);
+
         $github->authenticate($token['token'], null, GithubClient::AUTH_ACCESS_TOKEN);
 
         $io->success('Authentication was successful');
 
-        $repos = $github->api('apps')->listRepositories();
-
-        print_r($repos);
-
         $params = [
             'name' => 'testing integration with gobie',
-            'head_sha' => '6bfde2a0cfcc721f8bea6ff3e9c6798cfb5a0a6c',
+            'head_sha' => 'c7a6e495551de62b7c3c40710bd74a4d60d4d5d0',
             //'status' => 'in_progress',
             'conclusion' => 'success',
             'details_url' => 'https://gobie.titomiguelcosta.com/',
             'output' => [
-                'title' => 'All good',
+                'title' => 'I know the id of the instalation',
                 'summary' => 'just started running checks',
             ],
         ];
-        $check = $github->api('repo')->checks()->update('titomiguelcosta', 'hammer', 1047538484, $params);
+
+        //$check = $github->api('repo')->checkRuns()->create('titomiguelcosta', 'hammer', $params);
+        $check = $github->api('repo')->checkRuns()->update('titomiguelcosta', 'hammer', 2051856036, $params);
 
         print_r($check);
 
