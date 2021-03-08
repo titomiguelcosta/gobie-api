@@ -22,6 +22,8 @@ class WebhookController extends AbstractController
 {
     private $logger;
     private $entityManager;
+    private $projectDir;
+    private $githubAppId;
 
     public function __construct(
         LoggerInterface $logger,
@@ -43,7 +45,7 @@ class WebhookController extends AbstractController
         $body = $request->toArray();
 
         if (array_key_exists('check_suite', $body) && array_key_exists('action', $body) && 'requested' === $body['action']) {
-            $this->logger->info('About to start GitHub check');
+            $this->logger->error('About to start GitHub check: ' . $this->githubAppId);
 
             $github = new GithubClient();
 
@@ -58,7 +60,7 @@ class WebhookController extends AbstractController
 
             $github->authenticate($jwt->toString(), null, GithubClient::AUTH_JWT);
 
-            $this->logger->info('GitHub authentication was successful');
+            $this->logger->error('GitHub authentication was successful');
 
             $jobRepository = $this->entityManager->getRepository(Job::class);
 
@@ -106,7 +108,7 @@ class WebhookController extends AbstractController
 
                 $check = $github->api('repo')->checkRuns()->create($body['sender']['login'], $body['repository']['name'], $params);
 
-                $this->logger->info('GitHub check run was created');
+                $this->logger->error('GitHub check run was created');
 
                 $checkRun = new CheckRun();
                 $checkRun->setJob($copyJob);
@@ -120,7 +122,7 @@ class WebhookController extends AbstractController
 
                 $this->entityManager->flush();
 
-                $this->logger->info('GitHub was stored');
+                $this->logger->error('GitHub was stored');
             }
         }
 
