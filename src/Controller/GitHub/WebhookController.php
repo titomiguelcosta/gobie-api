@@ -101,8 +101,7 @@ class WebhookController extends AbstractController
                 $params = [
                     'name' => 'Gobie',
                     'head_sha' => $body['check_suite']['head_branch'],
-                    'status' => 'in_progress',
-                    'conclusion' => 'success',
+                    'status' => 'queued',
                     'details_url' => 'https://gobie.titomiguelcosta.com/jobs/' . $copyJob->getId(),
                     'output' => [
                         'title' => 'About to run checks',
