@@ -56,7 +56,7 @@ final class GitHubCheckRunMessageHandler implements MessageHandlerInterface
                     'title' => 'Finished with a status of ' . $checkRun->getJob()->getStatus(),
                     'summary' => 'Go to the website to see the output of the tasks.',
                 ],
-                'completed_at' => $checkRun->getJob()->getFinishedAt()
+                //'completed_at' => $checkRun->getJob()->getFinishedAt()->format()
             ];
 
             $github->api('repo')->checkRuns()->update($checkRun->getUsername(), $checkRun->getRepo(), $checkRun->getCheckId(), $params);
