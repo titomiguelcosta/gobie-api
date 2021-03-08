@@ -97,8 +97,7 @@ class Job
     private $tasks;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\GitHub\CheckRun", mappedBy="job", orphanRemoval=true)
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\OneToOne(targetEntity="App\Entity\GitHub\CheckRun", mappedBy="job")
      * @Assert\Valid()
      */
     private $checkRun;

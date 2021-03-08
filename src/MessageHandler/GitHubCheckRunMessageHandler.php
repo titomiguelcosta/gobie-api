@@ -16,10 +16,14 @@ use Lcobucci\JWT\Signer\Rsa\Sha256;
 final class GitHubCheckRunMessageHandler implements MessageHandlerInterface
 {
     private $entityManager;
+    private $projectDir;
+    private $githubAppId;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, string $projectDir, string $githubAppId)
     {
         $this->entityManager = $entityManager;
+        $this->projectDir = $projectDir;
+        $this->githubAppId = $githubAppId;
     }
 
     public function __invoke(GitHubCheckRunMessage $message)
