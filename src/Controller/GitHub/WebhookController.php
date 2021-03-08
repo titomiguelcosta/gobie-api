@@ -59,6 +59,8 @@ class WebhookController extends AbstractController
                 );
 
             $github->authenticate($jwt->toString(), null, GithubClient::AUTH_JWT);
+            $token = $github->api('apps')->createInstallationToken($body['installation']['id']);
+            $github->authenticate($token['token'], null, GithubClient::AUTH_ACCESS_TOKEN);
 
             $this->logger->error('GitHub authentication was successful');
 
@@ -74,6 +76,8 @@ class WebhookController extends AbstractController
             }
 
             if ($job instanceof Job) {
+                $this->logger->error('GitHub check run has a job');
+
                 $copyJob = new Job();
                 $copyJob->setProject($job->getProject());
                 $copyJob->setBranch($job->getBranch());
