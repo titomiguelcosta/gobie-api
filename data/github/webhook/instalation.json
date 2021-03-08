@@ -1,0 +1,83 @@
+{
+    "action": "created",
+    "installation": {
+        "id": 15216810,
+        "account": {
+            "login": "titomiguelcosta",
+            "id": 192639,
+            "node_id": "MDQ6VXNlcjE5MjYzOQ==",
+            "avatar_url": "https://avatars.githubusercontent.com/u/192639?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/titomiguelcosta",
+            "html_url": "https://github.com/titomiguelcosta",
+            "followers_url": "https://api.github.com/users/titomiguelcosta/followers",
+            "following_url": "https://api.github.com/users/titomiguelcosta/following{/other_user}",
+            "gists_url": "https://api.github.com/users/titomiguelcosta/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/titomiguelcosta/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/titomiguelcosta/subscriptions",
+            "organizations_url": "https://api.github.com/users/titomiguelcosta/orgs",
+            "repos_url": "https://api.github.com/users/titomiguelcosta/repos",
+            "events_url": "https://api.github.com/users/titomiguelcosta/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/titomiguelcosta/received_events",
+            "type": "User",
+            "site_admin": false
+        },
+        "repository_selection": "selected",
+        "access_tokens_url": "https://api.github.com/app/installations/15216810/access_tokens",
+        "repositories_url": "https://api.github.com/installation/repositories",
+        "html_url": "https://github.com/settings/installations/15216810",
+        "app_id": 74050,
+        "app_slug": "gobie-php",
+        "target_id": 192639,
+        "target_type": "User",
+        "permissions": {
+            "checks": "write",
+            "contents": "read",
+            "metadata": "read",
+            "pull_requests": "read",
+            "repository_hooks": "write"
+        },
+        "events": [
+            "check_run",
+            "pull_request",
+            "push"
+        ],
+        "created_at": "2021-03-08T18:00:01.000+01:00",
+        "updated_at": "2021-03-08T18:00:02.000+01:00",
+        "single_file_name": null,
+        "has_multiple_single_files": false,
+        "single_file_paths": [],
+        "suspended_by": null,
+        "suspended_at": null
+    },
+    "repositories": [
+        {
+            "id": 125795985,
+            "node_id": "MDEwOlJlcG9zaXRvcnkxMjU3OTU5ODU=",
+            "name": "hammer",
+            "full_name": "titomiguelcosta/hammer",
+            "private": false
+        }
+    ],
+    "requester": null,
+    "sender": {
+        "login": "titomiguelcosta",
+        "id": 192639,
+        "node_id": "MDQ6VXNlcjE5MjYzOQ==",
+        "avatar_url": "https://avatars.githubusercontent.com/u/192639?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/titomiguelcosta",
+        "html_url": "https://github.com/titomiguelcosta",
+        "followers_url": "https://api.github.com/users/titomiguelcosta/followers",
+        "following_url": "https://api.github.com/users/titomiguelcosta/following{/other_user}",
+        "gists_url": "https://api.github.com/users/titomiguelcosta/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/titomiguelcosta/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/titomiguelcosta/subscriptions",
+        "organizations_url": "https://api.github.com/users/titomiguelcosta/orgs",
+        "repos_url": "https://api.github.com/users/titomiguelcosta/repos",
+        "events_url": "https://api.github.com/users/titomiguelcosta/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/titomiguelcosta/received_events",
+        "type": "User",
+        "site_admin": false
+    }
+}

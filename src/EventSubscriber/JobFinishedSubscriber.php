@@ -2,9 +2,11 @@
 
 namespace App\EventSubscriber;
 
+use App\Entity\GitHub\CheckRun;
 use App\Entity\Job;
 use App\Entity\User;
 use App\Message\EventMessage;
+use App\Message\GitHubCheckRunMessage;
 use App\Message\PusherMessage;
 use App\Message\SlackMessage;
 use Doctrine\Common\EventSubscriber;
@@ -57,6 +59,14 @@ final class JobFinishedSubscriber implements EventSubscriber
                 ->setMessage(sprintf('Job #%d finished building.', $job->getId()))
                 ->setLevel('info');
             $this->bus->dispatch($eventMessage);
+
+            $checkRun = $job->getCheckRun();
+
+            if ($checkRun instanceof CheckRun) {
+                $gitHubCheckRunMessage = new GitHubCheckRunMessage($checkRun->getCheckId());
+
+                $this->bus->dispatch($gitHubCheckRunMessage);
+            }
         }
     }
 

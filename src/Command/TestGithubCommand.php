@@ -44,7 +44,7 @@ class TestGithubCommand extends Command
             ->expiresAt(new \DateTimeImmutable("+360 seconds", new \DateTimeZone("UTC")))
             ->getToken(
                 new Sha256(),
-                LocalFileReference::file(sprintf('file://%s/%s', $this->projectDir, 'config/jwt/github.pem'), 'sfsdfds')
+                LocalFileReference::file(sprintf('file://%s/%s', $this->projectDir, 'config/jwt/github.pem'), '')
             );
 
         $github->authenticate($jwt->toString(), null, GithubClient::AUTH_JWT);

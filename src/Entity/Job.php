@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Controller\JobRerunController;
+use App\Entity\GitHub\CheckRun;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -94,6 +95,13 @@ class Job
      * @Groups({"job", "project"})
      */
     private $tasks;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\GitHub\CheckRun", mappedBy="job", orphanRemoval=true)
+     * @ORM\JoinColumn(nullable=true)
+     * @Assert\Valid()
+     */
+    private $checkRun;
 
     /**
      * @ORM\Column(type="array", nullable=true)
@@ -268,6 +276,18 @@ class Job
         return $this;
     }
 
+    public function getCheckRun(): ?CheckRun
+    {
+        return $this->checkRun;
+    }
+
+    public function setCheckRun(?CheckRun $checkRun): self
+    {
+        $this->checkRun = $checkRun;
+
+        return $this;
+    }
+
     public function getToken(): string
     {
         return $this->token;
@@ -294,6 +314,6 @@ class Job
 
     public function __toString()
     {
-        return '#'.$this->getId();
+        return '#' . $this->getId();
     }
 }
