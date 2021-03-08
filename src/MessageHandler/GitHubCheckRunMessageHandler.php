@@ -28,22 +28,24 @@ final class GitHubCheckRunMessageHandler implements MessageHandlerInterface
 
     public function __invoke(GitHubCheckRunMessage $message)
     {
-        $github = new GithubClient();
-
-        $jwt = (new Builder(new JoseEncoder(), new UnixTimestampDates()))
-            ->issuedBy($this->githubAppId)
-            ->issuedAt(new \DateTimeImmutable("now", new \DateTimeZone("UTC")))
-            ->expiresAt(new \DateTimeImmutable("+360 seconds", new \DateTimeZone("UTC")))
-            ->getToken(
-                new Sha256(),
-                LocalFileReference::file(sprintf('file://%s/%s', $this->projectDir, 'config/jwt/github.pem'), '')
-            );
-
-        $github->authenticate($jwt->toString(), null, GithubClient::AUTH_JWT);
-
         $checkRun = $this->entityManager->getRepository(CheckRun::class)->findOneBy(['checkId' => $message->getCheckId()]);
 
         if ($checkRun instanceof CheckRun) {
+            $github = new GithubClient();
+
+            $jwt = (new Builder(new JoseEncoder(), new UnixTimestampDates()))
+                ->issuedBy($this->githubAppId)
+                ->issuedAt(new \DateTimeImmutable("now", new \DateTimeZone("UTC")))
+                ->expiresAt(new \DateTimeImmutable("+360 seconds", new \DateTimeZone("UTC")))
+                ->getToken(
+                    new Sha256(),
+                    LocalFileReference::file(sprintf('file://%s/%s', $this->projectDir, 'config/jwt/github.pem'), '')
+                );
+
+            $github->authenticate($jwt->toString(), null, GithubClient::AUTH_JWT);
+            $token = $github->api('apps')->createInstallationToken($checkRun->getInstalationId());
+            $github->authenticate($token['token'], null, GithubClient::AUTH_ACCESS_TOKEN);
+
             $params = [
                 'name' => 'Gobie',
                 'head_sha' => $checkRun->getJob()->getCommitHash(),
