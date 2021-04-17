@@ -49,9 +49,6 @@
             "config/packages/dh_doctrine_audit.yaml"
         ]
     },
-    "dnoegel/php-xdg-base-dir": {
-        "version": "0.1"
-    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -78,6 +75,9 @@
     },
     "doctrine/dbal": {
         "version": "v2.9.2"
+    },
+    "doctrine/deprecations": {
+        "version": "v0.5.3"
     },
     "doctrine/doctrine-bundle": {
         "version": "1.6",
