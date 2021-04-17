@@ -18,22 +18,25 @@ final class JobCreatedSubscriber implements EventSubscriber
     private $batchService;
     private $mailer;
     private $bus;
+    private $processJobsEnabled;
 
     public function __construct(
         BatchService $batchService,
         Swift_Mailer $mailer,
-        MessageBusInterface $bus
+        MessageBusInterface $bus,
+        bool $processJobsEnabled = true
     ) {
         $this->batchService = $batchService;
         $this->mailer = $mailer;
         $this->bus = $bus;
+        $this->processJobsEnabled = $processJobsEnabled;
     }
 
     public function postPersist(LifecycleEventArgs $event)
     {
         $job = $event->getObject();
 
-        if (false === $job instanceof Job) {
+        if (false === $job instanceof Job || false === $this->processJobsEnabled) {
             return;
         }
 

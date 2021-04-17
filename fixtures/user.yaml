@@ -1,14 +1,14 @@
 App\Entity\User:
-  user_tito:
-    username: tito
-    email: tito@titomiguelcosta.com
+  admin:
+    username: admin
+    email: admin@gobie.com
     plainPassword: 1234567
     roles:
       - ROLE_ADMIN
 
-  user_chimp:
+  chimp:
     username: chimp
-    email: chimp@titomiguelcosta.com
+    email: chimp@gobie.com
     plainPassword: 1234567
     roles:
       - ROLE_USER

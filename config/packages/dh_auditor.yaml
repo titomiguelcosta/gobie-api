@@ -1,0 +1,13 @@
+dh_auditor:
+  # Configuration reference available at:
+  # https://github.com/DamienHarper/DoctrineAuditBundle#configuration
+  enabled: true
+  providers:
+    doctrine:
+      table_prefix: ""
+      table_suffix: "_audit"
+      viewer: false
+      entities:
+        App\Entity\Project: ~
+        App\Entity\Job: ~
+        App\Entity\Task: ~

@@ -3,7 +3,7 @@
 namespace App\EventSubscriber;
 
 use App\Entity\Task;
-use DH\DoctrineAuditBundle\AuditConfiguration;
+use DH\Auditor\Provider\Doctrine\Configuration;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Events;
@@ -15,7 +15,7 @@ final class TaskStatusSubscriber implements EventSubscriber
     private $stateMachine;
     private $auditConfiguration;
 
-    public function __construct(StateMachine $stateMachine, AuditConfiguration $auditConfiguration)
+    public function __construct(StateMachine $stateMachine, Configuration $auditConfiguration)
     {
         $this->stateMachine = $stateMachine;
         $this->auditConfiguration = $auditConfiguration;
