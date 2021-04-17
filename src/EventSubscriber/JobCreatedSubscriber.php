@@ -43,7 +43,7 @@ final class JobCreatedSubscriber implements EventSubscriber
         $this->batchService->submitJob($job);
 
         $this->bus->dispatch(
-            new PusherMessage('gobie.job.' . $job->getId(), Job::STATUS_STARTED, ['job' => $job->getId()])
+            new PusherMessage('gobie.job.'.$job->getId(), Job::STATUS_STARTED, ['job' => $job->getId()])
         );
 
         $eventMessage = new EventMessage();

@@ -14,3 +14,6 @@ php-fix:
 
 deploy:
 	php bin/dep deploy prod
+
+phpunit:
+	php vendor/bin/phpunit
