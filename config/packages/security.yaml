@@ -1,4 +1,6 @@
 security:
+    enable_authenticator_manager: true
+
     encoders:
         App\Entity\User:
             algorithm: bcrypt
@@ -19,21 +21,16 @@ security:
             pattern: ^/admin
             provider: app_user_provider
             stateless: false
-            anonymous: true
-            guard:
-                authenticators:
-                    - App\Security\AdminAuthenticator
-                entry_point: App\Security\AdminAuthenticator
+            custom_authenticators:
+                - App\Security\AdminAuthenticator
+            entry_point: App\Security\AdminAuthenticator
             logout:
                 path: admin_logout
         main:
             pattern: ^/
             provider: app_user_provider
             stateless: true
-            anonymous: true
-            guard:
-                authenticators:
-                    - lexik_jwt_authentication.jwt_token_authenticator
+            jwt: ~
             json_login:
                 check_path: /login_check
                 success_handler: lexik_jwt_authentication.handler.authentication_success

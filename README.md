@@ -2,7 +2,7 @@
 
 API and admin area for the Gobie project.
 
-Powered by [Symfony Framework](https://symfony.com/), API [API Platform](https://api-platform.com/) and [EasyAdmin](https://github.com/EasyCorp/EasyAdminBundle)
+Powered by [Symfony Framework](https://symfony.com/), [API Platform](https://api-platform.com/) and [EasyAdmin](https://github.com/EasyCorp/EasyAdminBundle)
 
 ## Setup
 
