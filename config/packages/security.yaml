@@ -1,42 +1,42 @@
 security:
-    enable_authenticator_manager: true
+  enable_authenticator_manager: true
 
-    encoders:
-        App\Entity\User:
-            algorithm: bcrypt
+  password_hashers:
+    App\Entity\User:
+      algorithm: bcrypt
 
-    role_hierarchy:
-        ROLE_ADMIN: ROLE_USER
+  role_hierarchy:
+    ROLE_ADMIN: ROLE_USER
 
-    providers:
-        app_user_provider:
-            entity:
-                class: App\Entity\User
-                property: username
-    firewalls:
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-        admin:
-            pattern: ^/admin
-            provider: app_user_provider
-            stateless: false
-            custom_authenticators:
-                - App\Security\AdminAuthenticator
-            entry_point: App\Security\AdminAuthenticator
-            logout:
-                path: admin_logout
-        main:
-            pattern: ^/
-            provider: app_user_provider
-            stateless: true
-            jwt: ~
-            json_login:
-                check_path: /login_check
-                success_handler: lexik_jwt_authentication.handler.authentication_success
-                failure_handler: lexik_jwt_authentication.handler.authentication_failure
-    access_control:
-        - { path: ^/jobs/(.+)/rerun, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/login_check, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin, roles: ROLE_ADMIN }
+  providers:
+    app_user_provider:
+      entity:
+        class: App\Entity\User
+        property: username
+  firewalls:
+    dev:
+      pattern: ^/(_(profiler|wdt)|css|images|js)/
+      security: false
+    admin:
+      pattern: ^/admin
+      provider: app_user_provider
+      stateless: false
+      custom_authenticators:
+        - App\Security\AdminAuthenticator
+      entry_point: App\Security\AdminAuthenticator
+      logout:
+        path: admin_logout
+    main:
+      pattern: ^/
+      provider: app_user_provider
+      stateless: true
+      jwt: ~
+      json_login:
+        check_path: /login_check
+        success_handler: lexik_jwt_authentication.handler.authentication_success
+        failure_handler: lexik_jwt_authentication.handler.authentication_failure
+  access_control:
+    - { path: ^/jobs/(.+)/rerun, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/login_check, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/admin, roles: ROLE_ADMIN }

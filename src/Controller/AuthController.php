@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AuthController extends AbstractController
 {
@@ -17,7 +17,7 @@ class AuthController extends AbstractController
         Request $request,
         UserRepository $userRepository,
         JWTTokenManagerInterface $tokenManager,
-        UserPasswordEncoderInterface $userPasswordEncoder
+        UserPasswordHasherInterface $userPasswordHasher
     ) {
         $data = \json_decode($request->getContent(), true);
 
@@ -33,10 +33,10 @@ class AuthController extends AbstractController
 
         if (
             $user instanceof User
-            && $userPasswordEncoder->isPasswordValid($user, $data['password'])
+            && $userPasswordHasher->isPasswordValid($user, $data['password'])
         ) {
             return new JsonResponse([
-                '@id' => '/users/'.$user->getUsername(),
+                '@id' => '/users/' . $user->getUsername(),
                 'id' => $user->getId(),
                 'username' => $user->getUsername(),
                 'email' => $user->getEmail(),

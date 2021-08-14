@@ -6,13 +6,13 @@ use App\Entity\User;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 final class UserPasswordSubscriber implements EventSubscriber
 {
     private $encoder;
 
-    public function __construct(UserPasswordEncoderInterface $encoder)
+    public function __construct(UserPasswordHasherInterface $encoder)
     {
         $this->encoder = $encoder;
     }
@@ -26,7 +26,7 @@ final class UserPasswordSubscriber implements EventSubscriber
             return;
         }
 
-        $user->setPassword($this->encoder->encodePassword($user, $user->getPlainPassword()));
+        $user->setPassword($this->encoder->hashPassword($user, $user->getPlainPassword()));
     }
 
     public function preUpdate(LifecycleEventArgs $event)
@@ -39,7 +39,7 @@ final class UserPasswordSubscriber implements EventSubscriber
         }
 
         if ($user->getPlainPassword()) {
-            $user->setPassword($this->encoder->encodePassword($user, $user->getPlainPassword()));
+            $user->setPassword($this->encoder->hashPassword($user, $user->getPlainPassword()));
         }
     }
 
