@@ -36,7 +36,7 @@ class AuthController extends AbstractController
             && $userPasswordHasher->isPasswordValid($user, $data['password'])
         ) {
             return new JsonResponse([
-                '@id' => '/users/' . $user->getUsername(),
+                '@id' => '/users/'.$user->getUsername(),
                 'id' => $user->getId(),
                 'username' => $user->getUsername(),
                 'email' => $user->getEmail(),
