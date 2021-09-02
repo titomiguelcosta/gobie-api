@@ -69,8 +69,8 @@ final class JobCreatedSubscriber implements EventSubscriber
 
     private function doEmail(Job $job): void
     {
-        $message = (new Swift_Message('Grooming Chimps: Job created'))
-            ->setFrom('groomingchimps@titomiguelcosta.com')
+        $message = (new Swift_Message('Gobie: Job created'))
+            ->setFrom('gobie@titomiguelcosta.com')
             ->setTo('titomiguelcosta@gmail.com')
             ->setBody(
                 sprintf('Job #%d submitted to AWS Batch.', $job->getId()),

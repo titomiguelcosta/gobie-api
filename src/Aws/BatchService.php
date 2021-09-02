@@ -30,15 +30,15 @@ class BatchService
                 'command' => ['app:job:run', $job->getId()],
                 'environment' => [
                     [
-                        'name' => 'GROOMING_CHIMPS_API_JOB_ID',
+                        'name' => 'GOBIE_API_JOB_ID',
                         'value' => $job->getId(),
                     ],
                     [
-                        'name' => 'GROOMING_CHIMPS_API_AUTH_TOKEN',
+                        'name' => 'GOBIE_API_AUTH_TOKEN',
                         'value' => $token,
                     ],
                     [
-                        'name' => 'GROOMING_CHIMPS_API_USER_USERNAME',
+                        'name' => 'GOBIE_API_USER_USERNAME',
                         'value' => $username,
                     ],
                 ],

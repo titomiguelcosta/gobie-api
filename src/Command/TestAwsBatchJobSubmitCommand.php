@@ -30,8 +30,8 @@ class TestAwsBatchJobSubmitCommand extends Command
      * Replicated the execution of the command
      * aws --profile titodevops batch submit-job
      *      --job-name version
-     *      --job-queue arn:aws:batch:ap-southeast-2:616022673352:job-queue/gromming-chimps-queue
-     *      --job-definition arn:aws:batch:ap-southeast-2:616022673352:job-definition/grooming-chimps-agent-job:1
+     *      --job-queue arn:aws:batch:ap-southeast-2:616022673352:job-queue/gobie-queue
+     *      --job-definition arn:aws:batch:ap-southeast-2:616022673352:job-definition/gobie-agent-job:1
      *      --container-overrides '{"command": ["--version"], "environment": [{"name": "APP_ENV", "value": "prod"}]}'.
      *
      * @see https://docs.aws.amazon.com/aws-sdk-php/v3/api/api-batch-2016-08-10.html

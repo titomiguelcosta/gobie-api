@@ -17,7 +17,7 @@ set('composer_options', '{{composer_action}} --verbose --prefer-dist --no-progre
 host('api.gobie.titomiguelcosta.com')
     ->user('ubuntu')
     ->stage('prod')
-    ->set('deploy_path', '/mnt/websites/groomingchimps/api')
+    ->set('deploy_path', '/mnt/websites/gobie/api')
     ->set('shared_files', ['.env.local'])
     ->set('branch', 'master')
     ->set('env', ['APP_ENV' => 'prod']);
@@ -29,4 +29,3 @@ task('workers:restart', function () {
 after('deploy:failed', 'deploy:unlock');
 before('deploy:symlink', 'database:migrate');
 after('deploy:symlink', 'workers:restart');
-

@@ -28,8 +28,8 @@ class TestEmailCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $message = (new \Swift_Message('Grooming Chimps: Submit Job to AWS Batch'))
-            ->setFrom('groomingchimps@titomiguelcosta.com')
+        $message = (new \Swift_Message('Gobie: Submit Job to AWS Batch'))
+            ->setFrom('gobie@titomiguelcosta.com')
             ->setTo('titomiguelcosta@gmail.com')
             ->setBody(
                 'Job submitted to AWS Batch',

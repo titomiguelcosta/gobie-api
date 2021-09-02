@@ -69,14 +69,14 @@ final class JobFinishedSubscriber implements EventSubscriber
 
     private function doEmail(Job $job, User $user): void
     {
-        $message = (new \Swift_Message('Grooming Chimps: Job finished'))
-            ->setFrom('groomingchimps@titomiguelcosta.com')
+        $message = (new \Swift_Message('Gobie: Job finished'))
+            ->setFrom('gobie@titomiguelcosta.com')
             ->setTo($user->getEmail())
             ->setBody(
                 sprintf(
                     'Job #%d finished. Check the report %s.',
                     $job->getId(),
-                    'https://groomingchimps.titomiguelcosta.com/jobs/'.$job->getId()
+                    'https://gobie.titomiguelcosta.com/jobs/'.$job->getId()
                 ),
                 'text/plain'
             );

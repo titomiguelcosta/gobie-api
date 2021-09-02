@@ -28,11 +28,11 @@ final class UserSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $message = (new \Swift_Message('Grooming Chimps: Welcome'))
-            ->setFrom('groomingchimps@titomiguelcosta.com')
+        $message = (new \Swift_Message('Gobie: Welcome'))
+            ->setFrom('gobie@titomiguelcosta.com')
             ->setTo($user->getEmail())
             ->setBody(
-                sprintf('Hello, welcome to Grooming Chimps. Thanks for joining.'),
+                sprintf('Hello, welcome to Gobie. Thanks for joining.'),
                 'text/plain'
             );
 
