@@ -1,6 +1,9 @@
 security:
   enable_authenticator_manager: true
 
+  access_decision_manager:
+    strategy: unanimous
+
   password_hashers:
     App\Entity\User:
       algorithm: bcrypt
@@ -13,6 +16,7 @@ security:
       entity:
         class: App\Entity\User
         property: username
+
   firewalls:
     dev:
       pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -21,6 +25,8 @@ security:
       pattern: ^/admin
       provider: app_user_provider
       stateless: false
+      custom_authenticators:
+        - App\Security\AdminAuthenticator
       entry_point: App\Security\AdminAuthenticator
       logout:
         path: admin_logout
@@ -33,6 +39,7 @@ security:
         check_path: /login_check
         success_handler: lexik_jwt_authentication.handler.authentication_success
         failure_handler: lexik_jwt_authentication.handler.authentication_failure
+
   access_control:
     - { path: ^/jobs/(.+)/rerun, roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/login_check, roles: IS_AUTHENTICATED_ANONYMOUSLY }

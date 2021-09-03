@@ -4,6 +4,7 @@ namespace App\Security;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -17,10 +18,15 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
+use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
+use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
+use Symfony\Component\Security\Http\Authenticator\Passport\PassportInterface;
+use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
 use Symfony\Component\Security\Http\EntryPoint\AuthenticationEntryPointInterface;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
-class AdminAuthenticator implements AuthenticationEntryPointInterface
+class AdminAuthenticator extends AbstractAuthenticator implements AuthenticationEntryPointInterface
 {
     use TargetPathTrait;
 
@@ -45,6 +51,14 @@ class AdminAuthenticator implements AuthenticationEntryPointInterface
             && $request->isMethod('POST');
     }
 
+    public function authenticate(Request $request): PassportInterface
+    {
+        return new Passport(
+            new UserBadge($this->getUser($request)->getUserIdentifier()),
+            new PasswordCredentials($request->request->get('password'))
+        );
+    }
+
     public function getCredentials(Request $request): array
     {
         $credentials = [
@@ -60,8 +74,9 @@ class AdminAuthenticator implements AuthenticationEntryPointInterface
         return $credentials;
     }
 
-    public function getUser($credentials, UserProviderInterface $userProvider): UserInterface
+    public function getUser(Request $request): UserInterface
     {
+        $credentials = $this->getCredentials($request);
         $token = new CsrfToken('authenticate', $credentials['csrf_token']);
         if (!$this->csrfTokenManager->isTokenValid($token)) {
             throw new InvalidCsrfTokenException();
@@ -118,9 +133,7 @@ class AdminAuthenticator implements AuthenticationEntryPointInterface
 
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        $url = $this->getLoginUrl();
-
-        return new RedirectResponse($url);
+        return new RedirectResponse($this->getLoginUrl());
     }
 
     protected function getLoginUrl(): string
