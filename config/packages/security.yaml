@@ -21,8 +21,6 @@ security:
       pattern: ^/admin
       provider: app_user_provider
       stateless: false
-      custom_authenticators:
-        - App\Security\AdminAuthenticator
       entry_point: App\Security\AdminAuthenticator
       logout:
         path: admin_logout
