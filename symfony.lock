@@ -16,6 +16,9 @@
     "async-aws/core": {
         "version": "1.2.0"
     },
+    "async-aws/ses": {
+        "version": "1.4.1"
+    },
     "async-aws/sqs": {
         "version": "1.2.0"
     },
@@ -464,6 +467,15 @@
         "files": [
             "config/packages/stof_doctrine_extensions.yaml"
         ]
+    },
+    "symfony/amazon-mailer": {
+        "version": "5.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.4",
+            "ref": "9648db3ecae5c8a6b1a5f74715d3907124348815"
+        }
     },
     "symfony/amazon-sqs-messenger": {
         "version": "v5.1.2"
