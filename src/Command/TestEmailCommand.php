@@ -6,13 +6,15 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 class TestEmailCommand extends Command
 {
     protected static $defaultName = 'test:email';
     protected $mailer;
 
-    public function __construct(\Swift_Mailer $mailer)
+    public function __construct(MailerInterface $mailer)
     {
         $this->mailer = $mailer;
         parent::__construct();
@@ -28,13 +30,12 @@ class TestEmailCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $message = (new \Swift_Message('Gobie: Submit Job to AWS Batch'))
-            ->setFrom('gobie@titomiguelcosta.com')
-            ->setTo('titomiguelcosta@gmail.com')
-            ->setBody(
-                'Job submitted to AWS Batch',
-                'text/plain'
-            );
+        $message = (new Email())
+            ->subject('Gobie: Submit Job to AWS Batch')
+            ->from('gobie@titomiguelcosta.com')
+            ->to('titomiguelcosta@gmail.com')
+            ->text('Job submitted to AWS Batch')
+            ->html('<p>Job submitted to AWS Batch</p>');
 
         $output = $this->mailer->send($message);
 

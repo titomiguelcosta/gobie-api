@@ -294,9 +294,6 @@
     "php-http/discovery": {
         "version": "1.9.1"
     },
-    "php-http/guzzle6-adapter": {
-        "version": "v2.0.1"
-    },
     "php-http/httplug": {
         "version": "2.2.0"
     },
@@ -305,6 +302,9 @@
     },
     "php-http/message-factory": {
         "version": "v1.0.2"
+    },
+    "php-http/multipart-stream-builder": {
+        "version": "1.2.0"
     },
     "php-http/promise": {
         "version": "1.1.0"
@@ -465,9 +465,6 @@
             "config/packages/stof_doctrine_extensions.yaml"
         ]
     },
-    "swiftmailer/swiftmailer": {
-        "version": "v6.2.0"
-    },
     "symfony/amazon-sqs-messenger": {
         "version": "v5.1.2"
     },
@@ -593,6 +590,18 @@
     "symfony/lock": {
         "version": "v5.1.2"
     },
+    "symfony/mailer": {
+        "version": "5.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.3",
+            "ref": "bbfc7e27257d3a3f12a6fb0a42540a42d9623a37"
+        },
+        "files": [
+            "config/packages/mailer.yaml"
+        ]
+    },
     "symfony/maker-bundle": {
         "version": "1.0",
         "recipe": {
@@ -613,6 +622,9 @@
         "files": [
             "config/packages/messenger.yaml"
         ]
+    },
+    "symfony/mime": {
+        "version": "v5.4.0"
     },
     "symfony/monolog-bridge": {
         "version": "v4.2.5"
@@ -768,20 +780,6 @@
     },
     "symfony/string": {
         "version": "v5.1.2"
-    },
-    "symfony/swiftmailer-bundle": {
-        "version": "2.5",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "2.5",
-            "ref": "3db029c03e452b4a23f7fc45cec7c922c2247eb8"
-        },
-        "files": [
-            "config/packages/dev/swiftmailer.yaml",
-            "config/packages/swiftmailer.yaml",
-            "config/packages/test/swiftmailer.yaml"
-        ]
     },
     "symfony/test-pack": {
         "version": "v1.0.7"

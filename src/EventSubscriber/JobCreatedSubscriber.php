@@ -9,8 +9,8 @@ use App\Message\PusherMessage;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
-use Swift_Mailer;
-use Swift_Message;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 final class JobCreatedSubscriber implements EventSubscriber
@@ -22,7 +22,7 @@ final class JobCreatedSubscriber implements EventSubscriber
 
     public function __construct(
         BatchService $batchService,
-        Swift_Mailer $mailer,
+        MailerInterface $mailer,
         MessageBusInterface $bus,
         bool $processJobsEnabled = true
     ) {
@@ -43,7 +43,7 @@ final class JobCreatedSubscriber implements EventSubscriber
         $this->batchService->submitJob($job);
 
         $this->bus->dispatch(
-            new PusherMessage('gobie.job.'.$job->getId(), Job::STATUS_STARTED, ['job' => $job->getId()])
+            new PusherMessage('gobie.job.' . $job->getId(), Job::STATUS_STARTED, ['job' => $job->getId()])
         );
 
         $eventMessage = new EventMessage();
@@ -69,13 +69,11 @@ final class JobCreatedSubscriber implements EventSubscriber
 
     private function doEmail(Job $job): void
     {
-        $message = (new Swift_Message('Gobie: Job created'))
-            ->setFrom('gobie@titomiguelcosta.com')
-            ->setTo('titomiguelcosta@gmail.com')
-            ->setBody(
-                sprintf('Job #%d submitted to AWS Batch.', $job->getId()),
-                'text/plain'
-            );
+        $message = (new Email())
+            ->subject('Gobie: Job created')
+            ->from('gobie@titomiguelcosta.com')
+            ->to('titomiguelcosta@gmail.com')
+            ->text(sprintf('Job #%d submitted to AWS Batch.', $job->getId()));
 
         $this->mailer->send($message);
     }

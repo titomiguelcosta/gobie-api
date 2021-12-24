@@ -4,7 +4,8 @@ namespace App\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
 use App\Entity\User;
-use Swift_Mailer;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
@@ -14,7 +15,7 @@ final class UserSubscriber implements EventSubscriberInterface
 {
     private $mailer;
 
-    public function __construct(Swift_Mailer $mailer)
+    public function __construct(MailerInterface $mailer)
     {
         $this->mailer = $mailer;
     }
@@ -28,13 +29,11 @@ final class UserSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $message = (new \Swift_Message('Gobie: Welcome'))
-            ->setFrom('gobie@titomiguelcosta.com')
-            ->setTo($user->getEmail())
-            ->setBody(
-                sprintf('Hello, welcome to Gobie. Thanks for joining.'),
-                'text/plain'
-            );
+        $message = (new Email())
+            ->subject('Gobie: Welcome')
+            ->from('gobie@titomiguelcosta.com')
+            ->to($user->getEmail())
+            ->text(sprintf('Hello, welcome to Gobie. Thanks for joining.'));
 
         $this->mailer->send($message);
     }

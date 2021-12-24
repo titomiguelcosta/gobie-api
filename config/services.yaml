@@ -82,8 +82,3 @@ services:
 
   App\Graph\GraphManager:
     arguments: [!tagged "app.graph"]
-
-  App\MessageHandler\EmailMessageHandler:
-    arguments:
-      - "@swiftmailer.mailer"
-      - "@swiftmailer.transport.real"

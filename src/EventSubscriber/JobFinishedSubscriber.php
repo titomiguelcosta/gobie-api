@@ -10,7 +10,8 @@ use App\Message\SlackMessage;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
-use Swift_Mailer;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 final class JobFinishedSubscriber implements EventSubscriber
@@ -18,7 +19,7 @@ final class JobFinishedSubscriber implements EventSubscriber
     private $mailer;
     private $bus;
 
-    public function __construct(Swift_Mailer $mailer, MessageBusInterface $bus)
+    public function __construct(MailerInterface $mailer, MessageBusInterface $bus)
     {
         $this->mailer = $mailer;
         $this->bus = $bus;
@@ -33,7 +34,7 @@ final class JobFinishedSubscriber implements EventSubscriber
             $this->doEmail($job, $user);
 
             $this->bus->dispatch(
-                new PusherMessage('gobie.job.'.$job->getId(), Job::STATUS_FINISHED, ['job' => $job->getId()])
+                new PusherMessage('gobie.job.' . $job->getId(), Job::STATUS_FINISHED, ['job' => $job->getId()])
             );
 
             $this->bus->dispatch(
@@ -69,16 +70,16 @@ final class JobFinishedSubscriber implements EventSubscriber
 
     private function doEmail(Job $job, User $user): void
     {
-        $message = (new \Swift_Message('Gobie: Job finished'))
-            ->setFrom('gobie@titomiguelcosta.com')
-            ->setTo($user->getEmail())
-            ->setBody(
+        $message = (new Email())
+            ->subject('Gobie: Job finished')
+            ->from('gobie@titomiguelcosta.com')
+            ->to($user->getEmail())
+            ->text(
                 sprintf(
                     'Job #%d finished. Check the report %s.',
                     $job->getId(),
-                    'https://gobie.titomiguelcosta.com/jobs/'.$job->getId()
-                ),
-                'text/plain'
+                    'https://gobie.titomiguelcosta.com/jobs/' . $job->getId()
+                )
             );
 
         $this->mailer->send($message);
