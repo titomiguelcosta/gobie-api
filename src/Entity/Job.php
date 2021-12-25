@@ -39,7 +39,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          "path" = "/jobs/{id}/rerun.{_format}",
  *          "controller" = JobRerunController::class,
  *          "defaults" = {"_api_receive" = false},
- *          "security" = "is_granted('IS_AUTHENTICATED_ANONYMOUSLY') or (is_granted('ROLE_USER') and user == object)"
+ *          "security" = "is_granted('PUBLIC_ACCESS') or (is_granted('ROLE_USER') and user == object)"
  *      }
  *  }
  * )
@@ -294,6 +294,6 @@ class Job
 
     public function __toString()
     {
-        return '#'.$this->getId();
+        return '#' . $this->getId();
     }
 }

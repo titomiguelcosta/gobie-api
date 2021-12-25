@@ -10,17 +10,24 @@ class BatchService
 {
     private $batchClient;
     private $tokenManager;
+    private $enabled;
 
     public function __construct(
         BatchClient $batchClient,
-        JWTTokenManagerInterface $tokenManager
+        JWTTokenManagerInterface $tokenManager,
+        bool $awsBatchEnabled
     ) {
         $this->batchClient = $batchClient;
         $this->tokenManager = $tokenManager;
+        $this->enabled = $awsBatchEnabled;
     }
 
     public function submitJob(Job $job): void
     {
+        if (!$this->enabled) {
+            return;
+        }
+
         $user = $job->getProject()->getCreatedBy();
         $token = $this->tokenManager->create($user);
         $username = $user->getUsername();
@@ -43,9 +50,9 @@ class BatchService
                     ],
                 ],
             ],
-            'jobDefinition' => $_ENV['AWS_BATCH_JOB_DEFINITION_'.$job->getEnvironment()],
+            'jobDefinition' => $_ENV['AWS_BATCH_JOB_DEFINITION_' . $job->getEnvironment()],
             'jobName' => 'api',
-            'jobQueue' => $_ENV['AWS_BATCH_JOB_QUEUE_'.$job->getEnvironment()],
+            'jobQueue' => $_ENV['AWS_BATCH_JOB_QUEUE_' . $job->getEnvironment()],
         ]);
     }
 }

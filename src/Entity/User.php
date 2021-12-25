@@ -44,7 +44,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          "path" = "/users/auth",
  *          "controller" = AuthController::class,
  *          "defaults" = {"_api_receive" = false},
- *          "security" = "is_granted('IS_AUTHENTICATED_ANONYMOUSLY')",
+ *          "security" = "is_granted('PUBLIC_ACCESS')",
  *          "normalization_context" = {"groups" = {"auth"}},
  *          "swagger_context"={
  *              "parameters" = {

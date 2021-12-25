@@ -2,31 +2,31 @@ App\Entity\Job:
   job_1:
     project: "@project_1"
     branch: master
-    environment: PHP73
+    environment: PHP81
     status: pending
-  
+
   job_2:
     project: "@project_2"
     branch: master
     status: aborted
-    environment: PHP73
+    environment: PHP81
     startedAt: <dateTimeBetween("-3 days", "-2 days")>
     finishedAt: <dateTimeBetween($startedAt, "-1 day")>
   job_3:
     project: "@project_2"
     branch: master
     status: finished
-    environment: PHP80
+    environment: PHP81
     errors:
       - Repo is unreachable
       - Branch not available
     startedAt: <dateTimeBetween("-20 minutes", "-10 minutes")>
     finishedAt: <dateTimeBetween($startedAt, "now")>
-  
+
   job_4:
     project: "@project_3"
     branch: development
-    environment: PHP74
+    environment: PHP80
     status: finished
     startedAt: <dateTimeBetween("-20 minutes", "-10 minutes")>
     finishedAt: <dateTimeBetween($startedAt, "now")>

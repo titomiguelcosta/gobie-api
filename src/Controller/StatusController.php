@@ -11,7 +11,7 @@ class StatusController extends AbstractController
 {
     /**
      * @Route("/status", name="status", methods={"GET"})
-     * @IsGranted("IS_AUTHENTICATED_ANONYMOUSLY")
+     * @IsGranted("PUBLIC_ACCESS")
      */
     public function __invoke()
     {

@@ -6,6 +6,7 @@
 parameters:
   locale: "en"
   process_jobs: true
+  aws_batch_enabled: true
 
 services:
   # default configuration for services in *this* file
@@ -16,6 +17,7 @@ services:
       $projectDir: "%kernel.project_dir%"
       $githubAppId: "%env(GITHUB_GOBIE_APP_ID)%"
       $processJobsEnabled: "%env(default:process_jobs:bool:PROCESS_JOBS)%"
+      $awsBatchEnabled: "%aws_batch_enabled%"
 
   _instanceof:
     App\Graph\GraphInterface:
