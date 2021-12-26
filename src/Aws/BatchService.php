@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Aws;
 
 use App\Entity\Job;
@@ -8,18 +10,11 @@ use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 
 class BatchService
 {
-    private $batchClient;
-    private $tokenManager;
-    private $enabled;
-
     public function __construct(
-        BatchClient $batchClient,
-        JWTTokenManagerInterface $tokenManager,
-        bool $awsBatchEnabled
+        private BatchClient $batchClient,
+        private JWTTokenManagerInterface $tokenManager,
+        private bool $awsBatchEnabled
     ) {
-        $this->batchClient = $batchClient;
-        $this->tokenManager = $tokenManager;
-        $this->enabled = $awsBatchEnabled;
     }
 
     public function submitJob(Job $job): void

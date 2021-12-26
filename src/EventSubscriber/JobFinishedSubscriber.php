@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\EventSubscriber;
 
 use App\Entity\Job;
@@ -16,13 +18,8 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 final class JobFinishedSubscriber implements EventSubscriber
 {
-    private $mailer;
-    private $bus;
-
-    public function __construct(MailerInterface $mailer, MessageBusInterface $bus)
+    public function __construct(private MailerInterface $mailer, private MessageBusInterface $bus)
     {
-        $this->mailer = $mailer;
-        $this->bus = $bus;
     }
 
     public function postUpdate(LifecycleEventArgs $event)

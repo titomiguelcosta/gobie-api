@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
@@ -120,7 +122,7 @@ class Project
      */
     public function getSanitizedRepo(): ?string
     {
-        return preg_replace('/.*:?.*@/', '', $this->repo);
+        return $this->repo ? preg_replace('/.*:?.*@/', '', $this->repo) : null;
     }
 
     public function setRepo(string $repo): self
@@ -212,6 +214,6 @@ class Project
 
     public function __toString()
     {
-        return '#'.$this->getId().': '.$this->getDescription();
+        return '#' . $this->getId() . ': ' . $this->getDescription();
     }
 }

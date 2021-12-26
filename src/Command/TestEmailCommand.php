@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Command;
 
 use Symfony\Component\Console\Command\Command;
@@ -12,11 +14,9 @@ use Symfony\Component\Mime\Email;
 class TestEmailCommand extends Command
 {
     protected static $defaultName = 'test:email';
-    protected $mailer;
 
-    public function __construct(MailerInterface $mailer)
+    public function __construct(private MailerInterface $mailer)
     {
-        $this->mailer = $mailer;
         parent::__construct();
     }
 

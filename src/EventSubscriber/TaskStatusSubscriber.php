@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\EventSubscriber;
 
 use App\Entity\Task;
@@ -12,13 +14,8 @@ use Symfony\Component\Workflow\StateMachine;
 
 final class TaskStatusSubscriber implements EventSubscriber
 {
-    private $stateMachine;
-    private $auditConfiguration;
-
-    public function __construct(StateMachine $stateMachine, Configuration $auditConfiguration)
+    public function __construct(private StateMachine $stateMachine, private Configuration $auditConfiguration)
     {
-        $this->stateMachine = $stateMachine;
-        $this->auditConfiguration = $auditConfiguration;
     }
 
     public function preUpdate(PreUpdateEventArgs $event)

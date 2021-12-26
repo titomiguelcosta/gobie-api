@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\EventSubscriber;
 
 use App\Entity\Task;
@@ -12,11 +14,8 @@ use Doctrine\ORM\Events;
 
 final class TaskGraphSubscriber implements EventSubscriber
 {
-    private $graphManager;
-
-    public function __construct(GraphManager $graphManager)
+    public function __construct(private GraphManager $graphManager)
     {
-        $this->graphManager = $graphManager;
     }
 
     public function prePersist(LifecycleEventArgs $event)

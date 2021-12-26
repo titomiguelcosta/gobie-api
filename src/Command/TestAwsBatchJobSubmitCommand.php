@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Command;
 
 use Aws\Batch\BatchClient;
@@ -11,12 +13,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class TestAwsBatchJobSubmitCommand extends Command
 {
     protected static $defaultName = 'test:aws:batch:job:submit';
-    protected $batchClient;
-    protected $mailer;
 
-    public function __construct(BatchClient $batchClient)
+    public function __construct(private BatchClient $batchClient)
     {
-        $this->batchClient = $batchClient;
         parent::__construct();
     }
 

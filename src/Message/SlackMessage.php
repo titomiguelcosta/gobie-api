@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Message;
 
 final class SlackMessage
@@ -10,7 +12,7 @@ final class SlackMessage
     public function __construct(string $message, string $channel)
     {
         $this->message = $message;
-        $this->channel = 'slack_'.$channel;
+        $this->channel = 'slack_' . $channel;
     }
 
     public function getMessage(): string

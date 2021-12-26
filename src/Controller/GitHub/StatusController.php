@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\GitHub;
 
 use Psr\Log\LoggerInterface;
@@ -10,11 +12,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class StatusController extends AbstractController
 {
-    private $logger;
-
-    public function __construct(LoggerInterface $logger)
+    public function __construct(private LoggerInterface $logger)
     {
-        $this->logger = $logger;
     }
 
     /**
@@ -22,7 +21,7 @@ class StatusController extends AbstractController
      */
     public function __invoke(Request $request)
     {
-        $this->logger->critical('Debug GitHub request: '.$request);
+        $this->logger->critical('Debug GitHub request: ' . $request);
 
         return new Response('Got info.');
     }

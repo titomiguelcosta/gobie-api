@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\EventSubscriber;
 
 use App\Entity\User;
@@ -10,11 +12,8 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 final class UserPasswordSubscriber implements EventSubscriber
 {
-    private $encoder;
-
-    public function __construct(UserPasswordHasherInterface $encoder)
+    public function __construct(private UserPasswordHasherInterface $encoder)
     {
-        $this->encoder = $encoder;
     }
 
     public function prePersist(LifecycleEventArgs $event)

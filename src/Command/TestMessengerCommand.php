@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Command;
 
 use App\Message\EmailMessage;
@@ -13,11 +15,9 @@ use Symfony\Component\Messenger\MessageBusInterface;
 class TestMessengerCommand extends Command
 {
     protected static $defaultName = 'test:messenger';
-    protected $bus;
 
-    public function __construct(MessageBusInterface $bus)
+    public function __construct(private MessageBusInterface $bus)
     {
-        $this->bus = $bus;
         parent::__construct();
     }
 

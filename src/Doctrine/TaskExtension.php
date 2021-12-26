@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Doctrine;
 
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Extension\QueryCollectionExtensionInterface;
@@ -11,11 +13,8 @@ use Symfony\Component\Security\Core\Security;
 
 final class TaskExtension implements QueryCollectionExtensionInterface, QueryItemExtensionInterface
 {
-    private $security;
-
-    public function __construct(Security $security)
+    public function __construct(private Security $security)
     {
-        $this->security = $security;
     }
 
     public function applyToCollection(QueryBuilder $queryBuilder, QueryNameGeneratorInterface $queryNameGenerator, string $resourceClass, string $operationName = null)
@@ -38,7 +37,7 @@ final class TaskExtension implements QueryCollectionExtensionInterface, QueryIte
         $queryBuilder->innerJoin(sprintf('%s.job', $rootAlias), 'j');
         $queryBuilder->innerJoin('j.project', 'p');
         $queryBuilder->andWhere('p.createdBy = :current_user');
-        $queryBuilder->orderBy($rootAlias.'.startedAt', 'desc');
+        $queryBuilder->orderBy($rootAlias . '.startedAt', 'desc');
         $queryBuilder->setParameter('current_user', $user);
     }
 }

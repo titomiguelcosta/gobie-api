@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\MessageHandler;
 
 use App\Entity\Event;
@@ -13,18 +15,11 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 final class EventMessageHandler implements MessageHandlerInterface
 {
-    private $pusher;
-    private $entityManager;
-    private $eventDispatcher;
-
     public function __construct(
-        Pusher $pusher,
-        EntityManagerInterface $entityManager,
-        EventDispatcherInterface $eventDispatcher
+        private Pusher $pusher,
+        private EntityManagerInterface $entityManager,
+        private EventDispatcherInterface $eventDispatcher
     ) {
-        $this->pusher = $pusher;
-        $this->entityManager = $entityManager;
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function __invoke(EventMessage $message)
@@ -51,7 +46,7 @@ final class EventMessageHandler implements MessageHandlerInterface
 
         if ($user instanceof User) {
             $this->pusher->trigger(
-                'gobie.event.user.'.$user->getId(),
+                'gobie.event.user.' . $user->getId(),
                 'created',
                 $message->getMessage()
             );

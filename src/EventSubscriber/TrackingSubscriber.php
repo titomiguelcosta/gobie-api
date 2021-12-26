@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\EventSubscriber;
 
 use App\Message\TrackingMessage;
@@ -13,14 +15,10 @@ use Symfony\Component\Security\Core\Security;
 
 class TrackingSubscriber implements EventSubscriberInterface
 {
-    private $bus;
-    private $security;
-    private $startedAt;
+    private $startedAt = null;
 
-    public function __construct(MessageBusInterface $bus, Security $security)
+    public function __construct(private MessageBusInterface $bus, private Security $security)
     {
-        $this->bus = $bus;
-        $this->security = $security;
     }
 
     public function onKernelRequest(RequestEvent $event)

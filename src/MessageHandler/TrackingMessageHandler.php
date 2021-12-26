@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\MessageHandler;
 
 use App\Entity\Request;
@@ -12,15 +14,10 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 final class TrackingMessageHandler implements MessageHandlerInterface
 {
-    private $entityManager;
-    private $userRepository;
-
     public function __construct(
-        EntityManagerInterface $entityManager,
-        UserRepository $userRepository
+        private EntityManagerInterface $entityManager,
+        private UserRepository $userRepository
     ) {
-        $this->entityManager = $entityManager;
-        $this->userRepository = $userRepository;
     }
 
     public function __invoke(TrackingMessage $message)

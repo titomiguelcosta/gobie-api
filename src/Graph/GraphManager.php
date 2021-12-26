@@ -1,16 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Graph;
 
 use App\Entity\Task;
 
 class GraphManager
 {
-    private $graphs = [];
-
-    public function __construct(iterable $graphs)
+    public function __construct(private iterable $graphs)
     {
-        $this->graphs = $graphs;
     }
 
     public function getGraph(Task $task): ?GraphInterface

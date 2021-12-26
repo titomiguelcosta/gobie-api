@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\MessageHandler;
 
 use App\Message\EmailMessage;
@@ -9,11 +11,8 @@ use Symfony\Component\Mime\Email;
 
 final class EmailMessageHandler implements MessageHandlerInterface
 {
-    private $mailer;
-
-    public function __construct(MailerInterface $mailer)
+    public function __construct(private MailerInterface $mailer)
     {
-        $this->mailer = $mailer;
     }
 
     public function __invoke(EmailMessage $message)

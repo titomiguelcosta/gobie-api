@@ -18,15 +18,9 @@ class DoctrineSchemaGraphvizCommand extends Command
      */
     protected static $defaultName = 'doctrine:schema:graphviz';
 
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $em;
-
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(private EntityManagerInterface $em)
     {
         parent::__construct();
-        $this->em = $em;
     }
 
     /**

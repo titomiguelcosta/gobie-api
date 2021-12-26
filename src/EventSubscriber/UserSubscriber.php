@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
@@ -13,11 +15,8 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 final class UserSubscriber implements EventSubscriberInterface
 {
-    private $mailer;
-
-    public function __construct(MailerInterface $mailer)
+    public function __construct(private MailerInterface $mailer)
     {
-        $this->mailer = $mailer;
     }
 
     public function welcomeEmail(ViewEvent $event)

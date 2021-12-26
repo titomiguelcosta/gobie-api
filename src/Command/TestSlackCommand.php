@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Command;
 
 use Symfony\Component\Console\Command\Command;
@@ -11,11 +13,9 @@ use Symfony\Component\Notifier\Message\ChatMessage;
 class TestSlackCommand extends Command
 {
     protected static $defaultName = 'test:slack';
-    protected $notifier;
 
-    public function __construct(ChatterInterface $notifier)
+    public function __construct(private ChatterInterface $notifier)
     {
-        $this->notifier = $notifier;
         parent::__construct();
     }
 

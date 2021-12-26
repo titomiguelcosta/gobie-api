@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\MessageHandler;
 
 use App\Message\PusherMessage;
@@ -8,11 +10,8 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 final class PusherMessageHandler implements MessageHandlerInterface
 {
-    private $pusher;
-
-    public function __construct(Pusher $pusher)
+    public function __construct(private Pusher $pusher)
     {
-        $this->pusher = $pusher;
     }
 
     public function __invoke(PusherMessage $message)

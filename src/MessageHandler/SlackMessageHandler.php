@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\MessageHandler;
 
 use App\Message\SlackMessage;
@@ -9,11 +11,8 @@ use Symfony\Component\Notifier\Message\ChatMessage;
 
 final class SlackMessageHandler implements MessageHandlerInterface
 {
-    private $notifier;
-
-    public function __construct(ChatterInterface $notifier)
+    public function __construct(private ChatterInterface $notifier)
     {
-        $this->notifier = $notifier;
     }
 
     public function __invoke(SlackMessage $message)

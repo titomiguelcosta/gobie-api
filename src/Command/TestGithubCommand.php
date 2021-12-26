@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Command;
 
+use DateTimeImmutable;
 use Github\Client as GithubClient;
 use Github\HttpClient\Builder as GithubBuilder;
-use Http\Adapter\Guzzle6\Client as GuzzleClient;
+use GuzzleHttp\Client as GuzzleClient;
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Signer\Key;
 use Lcobucci\JWT\Signer\Rsa\Sha256;
@@ -16,14 +19,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class TestGithubCommand extends Command
 {
     protected static $defaultName = 'test:github';
-    protected $projectDir;
-    protected $githubAppId;
 
-    public function __construct(string $projectDir, string $githubAppId)
+    public function __construct(private string $projectDir, private string $githubAppId)
     {
         parent::__construct();
-        $this->projectDir = $projectDir;
-        $this->githubAppId = $githubAppId;
     }
 
     protected function configure()
@@ -41,7 +40,7 @@ class TestGithubCommand extends Command
 
         $jwt = (new Builder())
             ->issuedBy($this->githubAppId)
-            ->issuedAt(time())
+            ->issuedAt(new DateTimeImmutable(time()))
             ->expiresAt(time() + 60)
             ->getToken(
                 new Sha256(),

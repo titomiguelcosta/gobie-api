@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\EventSubscriber;
 
 use App\Aws\BatchService;
@@ -15,21 +17,12 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 final class JobCreatedSubscriber implements EventSubscriber
 {
-    private $batchService;
-    private $mailer;
-    private $bus;
-    private $processJobsEnabled;
-
     public function __construct(
-        BatchService $batchService,
-        MailerInterface $mailer,
-        MessageBusInterface $bus,
-        bool $processJobsEnabled = true
+        private BatchService $batchService,
+        private MailerInterface $mailer,
+        private MessageBusInterface $bus,
+        private bool $processJobsEnabled = true
     ) {
-        $this->batchService = $batchService;
-        $this->mailer = $mailer;
-        $this->bus = $bus;
-        $this->processJobsEnabled = $processJobsEnabled;
     }
 
     public function postPersist(LifecycleEventArgs $event)

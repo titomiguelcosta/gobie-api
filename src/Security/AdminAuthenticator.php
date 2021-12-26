@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Security;
 
 use App\Entity\User;
@@ -48,7 +50,7 @@ class AdminAuthenticator extends AbstractAuthenticator implements Authentication
             && $request->isMethod('POST');
     }
 
-    public function authenticate(Request $request)
+    public function authenticate(Request $request): Passport
     {
         return new Passport(
             new UserBadge($this->getUser($request)->getUserIdentifier()),

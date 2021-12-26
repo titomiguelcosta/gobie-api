@@ -1,18 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Message;
 
 final class PusherMessage
 {
-    private $channel;
-    private $event;
-    private $data;
-
-    public function __construct(string $channel, string $event, array $data = [])
+    public function __construct(private string $channel, private string $event, private array $data = [])
     {
-        $this->channel = $channel;
-        $this->event = $event;
-        $this->data = $data;
     }
 
     public function getChannel(): string

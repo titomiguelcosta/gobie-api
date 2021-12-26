@@ -1,14 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Message;
 
 final class EmailMessage
 {
-    private $to;
-
-    public function __construct(string $to)
+    public function __construct(private string $to)
     {
-        $this->to = $to;
     }
 
     public function getTo(): string
