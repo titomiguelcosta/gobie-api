@@ -27,17 +27,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      "post" = {
  *          "validation_groups" = {"Default", "create"},
  *          "security" = "is_granted('ROLE_ADMIN')"
- *      }
- *  },
- *  itemOperations = {
- *      "get" = {
- *          "security" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object)"
- *      },
- *      "delete" = {
- *          "security" = "is_granted('ROLE_ADMIN')"
- *      },
- *      "put" = {
- *          "security" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object)"
  *      },
  *      "auth" = {
  *          "method" = "POST",
@@ -45,23 +34,24 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          "controller" = AuthController::class,
  *          "defaults" = {"_api_receive" = false},
  *          "security" = "is_granted('PUBLIC_ACCESS')",
- *          "normalization_context" = {"groups" = {"auth"}},
- *          "swagger_context"={
- *              "parameters" = {
- *                  {
- *                      "name" = "user",
- *                      "in" = "body",
- *                      "description" = "Login details",
- *                      "schema" = {
- *                          "type" = "object",
- *                          "properties" = {
- *                              "username" = {"type" = "string"},
- *                              "password" = {"type" = "string"}
- *                          }
- *                      },
- *                      "example" = {
- *                          "username" = "example",
- *                          "password" = "secret"
+ *          "normalization_context" = {},
+ *          "openapi_context"={
+ *              "summary" = "Obtains an JWT token",
+ *              "description" = "Authenticate user and get access token in the response",
+ *              "requestBody" = {
+ *                  "content" = {
+ *                      "application/json" = {
+ *                          "schema" = {
+ *                              "type" = "object",
+ *                              "properties" = {
+ *                                  "username" = {"type" = "string"},
+ *                                  "password" = {"type" = "string"}
+ *                              }
+ *                          },
+ *                          "example" = {
+ *                              "username" = "example",
+ *                              "password" = "secret"
+ *                          } 
  *                      }
  *                  }
  *              },
@@ -78,6 +68,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  *                              "roles"
  *                          },
  *                          "properties" = {
+ *                              "@id" = {
+ *                                  "type" = "string"
+ *                              },
  *                              "id" = {
  *                                  "type" = "integer"
  *                              },
@@ -90,7 +83,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *                              "email" = {
  *                                  "type" = "string"
  *                              },
- *                             "roles" = {
+ *                              "roles" = {
  *                                  "type" = "object"
  *                              }
  *                          }
@@ -103,7 +96,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *                      "description" = "User not found"
  *                  }
  *              },
- *              "summary" = "Obtains an JWT token",
  *              "consumes" = {
  *                  "application/ld+json",
  *                  "application/json",
@@ -112,6 +104,17 @@ use Symfony\Component\Validator\Constraints as Assert;
  *                  "application/json"
  *              }
  *          }
+ *      }
+ *  },
+ *  itemOperations = {
+ *      "get" = {
+ *          "security" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object)"
+ *      },
+ *      "delete" = {
+ *          "security" = "is_granted('ROLE_ADMIN')"
+ *      },
+ *      "put" = {
+ *          "security" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object)"
  *      }
  *  })
  * )
