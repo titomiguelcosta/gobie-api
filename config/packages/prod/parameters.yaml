@@ -1,0 +1,2 @@
+parameters:
+  aws_batch_enabled: true

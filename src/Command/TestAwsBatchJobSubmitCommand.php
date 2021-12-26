@@ -47,9 +47,9 @@ class TestAwsBatchJobSubmitCommand extends Command
                     ['name' => 'APP_ENV', 'value' => $_ENV['APP_ENV']],
                 ],
             ],
-            'jobDefinition' => $_ENV['AWS_BATCH_JOB_DEFINITION_PHP73'],
+            'jobDefinition' => $_ENV['AWS_BATCH_JOB_DEFINITION_PHP80'],
             'jobName' => 'api',
-            'jobQueue' => $_ENV['AWS_BATCH_JOB_QUEUE_PHP73'],
+            'jobQueue' => $_ENV['AWS_BATCH_JOB_QUEUE_PHP80'],
         ]);
 
         $io->success($output);
