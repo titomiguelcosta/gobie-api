@@ -12,17 +12,12 @@ class BatchService
 {
     public function __construct(
         private BatchClient $batchClient,
-        private JWTTokenManagerInterface $tokenManager,
-        private bool $awsBatchEnabled
+        private JWTTokenManagerInterface $tokenManager
     ) {
     }
 
     public function submitJob(Job $job): void
     {
-        if (!$this->enabled) {
-            return;
-        }
-
         $user = $job->getProject()->getCreatedBy();
         $token = $this->tokenManager->create($user);
         $username = $user->getUsername();

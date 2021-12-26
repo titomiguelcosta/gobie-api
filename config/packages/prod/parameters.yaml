@@ -1,2 +1,2 @@
 parameters:
-  aws_batch_enabled: true
+  process_jobs: true
