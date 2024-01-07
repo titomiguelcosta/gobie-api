@@ -9,118 +9,92 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ApiResource(
- *  attributes = {
- *      "security" = "is_granted('IS_AUTHENTICATED_FULLY')"
- *  },
- *  collectionOperations={
- *      "get" = {
- *          "security" = "is_granted('ROLE_USER')"
- *      },
- *      "post" = {
- *          "security" = "is_granted('ROLE_USER')"
- *      }
- *  },
- *  itemOperations = {
- *      "get" = {
- *          "security" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.getJob().getProject().getCreatedBy())"
- *      },
- *      "delete" = {
- *          "security" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.getJob().getProject().getCreatedBy())"
- *      },
- *      "put" = {
- *          "security" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.getJob().getProject().getCreatedBy())"
- *      }
- *  }
- * )
- * @ORM\Entity(repositoryClass="App\Repository\TaskRepository")
- */
+#[ApiResource(
+    attributes: [
+        'security' => "is_granted('IS_AUTHENTICATED_FULLY')",
+    ],
+    collectionOperations: [
+        'get' => [
+            'security' => "is_granted('ROLE_USER')",
+        ],
+        'post' => [
+            'security' => "is_granted('ROLE_USER')",
+        ],
+    ],
+    itemOperations: [
+        'get' => [
+            'security' => "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.getJob().getProject().getCreatedBy())",
+        ],
+        'delete' => [
+            'security' => "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.getJob().getProject().getCreatedBy())",
+        ],
+        'put' => [
+            'security' => "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.getJob().getProject().getCreatedBy())",
+        ],
+    ]
+)]
+#[ORM\Entity(repositoryClass: 'App\Repository\TaskRepository')]
 class Task
 {
-    const STATUS_PENDING = 'pending';
-    const STATUS_RUNNING = 'running';
-    const STATUS_ABORTED = 'aborted';
-    const STATUS_FAILED = 'failed';
-    const STATUS_SUCCEEDED = 'succeeded';
+    public const STATUS_PENDING = 'pending';
+    public const STATUS_RUNNING = 'running';
+    public const STATUS_ABORTED = 'aborted';
+    public const STATUS_FAILED = 'failed';
+    public const STATUS_SUCCEEDED = 'succeeded';
 
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     * @Groups({"job", "project"})
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    #[Groups(['job', 'project'])]
     private $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Job", inversedBy="tasks")
-     * @ORM\JoinColumn(nullable=false)
-     * @Assert\Type(Job::class)
-     */
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\Job', inversedBy: 'tasks')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Assert\Type(Job::class)]
     private $job;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
-     * @Groups({"job", "project"})
-     */
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank]
+    #[Groups(['job', 'project'])]
     private $tool;
 
-    /**
-     * @ORM\Column(type="json", nullable=true)
-     * @Groups({"job", "project"})
-     */
+    #[ORM\Column(type: 'json', nullable: true)]
+    #[Groups(['job', 'project'])]
     private $options;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"job", "project"})
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['job', 'project'])]
     private $command;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @Groups({"job", "project"})
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[Groups(['job', 'project'])]
     private $output;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @Groups({"job", "project"})
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[Groups(['job', 'project'])]
     private $errorOutput;
 
-    /**
-     * @ORM\Column(type="json", nullable=true)
-     * @Groups({"job", "project"})
-     */
+    #[ORM\Column(type: 'json', nullable: true)]
+    #[Groups(['job', 'project'])]
     private $graph;
 
-    /**
-     * @ORM\Column(type="smallint", nullable=true)
-     * @Groups({"job", "project"})
-     */
+    #[ORM\Column(type: 'smallint', nullable: true)]
+    #[Groups(['job', 'project'])]
     private $exitCode;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @Assert\Type(\DateTimeInterface::class)
-     * @Groups({"job", "project"})
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Assert\Type(\DateTimeInterface::class)]
+    #[Groups(['job', 'project'])]
     private $startedAt;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @Assert\Type(\DateTimeInterface::class)
-     * @Groups({"job", "project"})
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Assert\Type(\DateTimeInterface::class)]
+    #[Groups(['job', 'project'])]
     private $finishedAt;
 
-    /**
-     * @ORM\Column(type="string")
-     * @Assert\NotBlank()
-     * @Groups({"job", "project"})
-     */
+    #[ORM\Column(type: 'string')]
+    #[Assert\NotBlank]
+    #[Groups(['job', 'project'])]
     private $status;
 
     public function __construct()
@@ -275,7 +249,7 @@ class Task
         return $this->finishedAt;
     }
 
-    public function setFinishedAt(?\DateTimeInterface $finishedAt = null): self
+    public function setFinishedAt(\DateTimeInterface $finishedAt = null): self
     {
         $this->finishedAt = $finishedAt;
 

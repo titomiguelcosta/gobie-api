@@ -7,7 +7,6 @@ namespace App\MessageHandler;
 use App\Entity\Event;
 use App\Entity\User;
 use App\Message\EventMessage;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Pusher\Pusher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -31,7 +30,7 @@ final class EventMessageHandler implements MessageHandlerInterface
 
         $event = new Event();
         $event->setUser($user);
-        $event->setDispatchedAt(new DateTime());
+        $event->setDispatchedAt(new \DateTime());
         $event->setName($message->getName());
         $event->setEntityNamespace($message->getEntityNamespace());
         $event->setEntityId($message->getEntityId());
@@ -46,7 +45,7 @@ final class EventMessageHandler implements MessageHandlerInterface
 
         if ($user instanceof User) {
             $this->pusher->trigger(
-                'gobie.event.user.' . $user->getId(),
+                'gobie.event.user.'.$user->getId(),
                 'created',
                 $message->getMessage()
             );

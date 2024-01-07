@@ -21,13 +21,13 @@ class TestMessengerCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Send a message to a queue using messenger');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
@@ -36,6 +36,6 @@ class TestMessengerCommand extends Command
 
         $io->success('message dispatched');
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

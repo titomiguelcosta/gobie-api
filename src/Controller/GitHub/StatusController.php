@@ -16,12 +16,10 @@ class StatusController extends AbstractController
     {
     }
 
-    /**
-     * @Route("/github/status", name="github_status", methods={"POST"})
-     */
+    #[Route('/github/status', name: 'github_status', methods: ['POST'])]
     public function __invoke(Request $request)
     {
-        $this->logger->critical('Debug GitHub request: ' . $request);
+        $this->logger->critical('Debug GitHub request: '.$request);
 
         return new Response('Got info.');
     }

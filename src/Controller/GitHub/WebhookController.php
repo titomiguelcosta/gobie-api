@@ -16,12 +16,10 @@ class WebhookController extends AbstractController
     {
     }
 
-    /**
-     * @Route("/github/webhook", name="github_webhook", methods={"POST"})
-     */
+    #[Route(path: '/github/webhook', name: 'github_webhook', methods: ['POST'])]
     public function __invoke(Request $request)
     {
-        $this->logger->critical('Debug GitHub request: ' . $request);
+        $this->logger->critical('Debug GitHub request: '.$request);
 
         return new Response('Got info.');
     }

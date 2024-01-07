@@ -12,121 +12,97 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ApiResource(
- *  attributes = {
- *      "security" = "is_granted('IS_AUTHENTICATED_FULLY')"
- *  },
- *  normalizationContext = {"groups" = {"job"}},
- *  collectionOperations={
- *      "get" = {
- *          "security" = "is_granted('ROLE_USER')"
- *      },
- *      "post" = {
- *          "security" = "is_granted('ROLE_USER')"
- *      }
- *  },
- *  itemOperations = {
- *      "get" = {
- *          "security" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.getProject().getCreatedBy())"
- *      },
- *      "delete" = {
- *          "security" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.getProject().getCreatedBy())"
- *      },
- *      "put" = {
- *          "security" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.getProject().getCreatedBy())"
- *      },
- *      "rerun" = {
- *          "method" = "POST",
- *          "path" = "/jobs/{id}/rerun.{_format}",
- *          "controller" = JobRerunController::class,
- *          "defaults" = {"_api_receive" = false},
- *          "security" = "is_granted('PUBLIC_ACCESS') or (is_granted('ROLE_USER') and user == object)"
- *      }
- *  }
- * )
- * @UniqueEntity("token")
- * @ORM\Entity(repositoryClass="App\Repository\JobRepository")
- */
+#[ApiResource(
+    attributes: [
+        'security' => "is_granted('IS_AUTHENTICATED_FULLY')",
+    ],
+    normalizationContext: ['groups' => ['job']],
+    collectionOperations: [
+       'get' => [
+           'security' => "is_granted('ROLE_USER')",
+       ],
+       'post' => [
+           'security' => "is_granted('ROLE_USER')",
+       ],
+    ],
+    itemOperations: [
+        'get' => [
+            'security' => "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.getProject().getCreatedBy())",
+        ],
+        'delete' => [
+            'security' => "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.getProject().getCreatedBy())",
+        ],
+        'put' => [
+            'security' => "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.getProject().getCreatedBy())",
+        ],
+        'rerun' => [
+            'method' => 'POST',
+            'path' => '/jobs/{id}/rerun.{_format}',
+            'controller' => JobRerunController::class,
+            'defaults' => ['_api_receive' => false],
+            'security' => "is_granted('PUBLIC_ACCESS') or (is_granted('ROLE_USER') and user == object)",
+        ],
+    ],
+)]
+#[UniqueEntity('token')]
+#[ORM\Entity(repositoryClass: "App\Repository\JobRepository")]
 class Job
 {
-    const STATUS_PENDING = 'pending';
-    const STATUS_STARTED = 'started';
-    const STATUS_FINISHED = 'finished';
-    const STATUS_ABORTED = 'aborted';
+    public const STATUS_PENDING = 'pending';
+    public const STATUS_STARTED = 'started';
+    public const STATUS_FINISHED = 'finished';
+    public const STATUS_ABORTED = 'aborted';
 
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     * @Groups({"job", "project"})
-     */
+    #[ORM\Id()]
+    #[ORM\GeneratedValue()]
+    #[ORM\Column(type: 'integer')]
+    #[Groups(['job', 'project'])]
     private $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Project", inversedBy="jobs")
-     * @ORM\JoinColumn(nullable=false)
-     * @Assert\NotBlank()
-     * @Groups({"job"})
-     */
+    #[ORM\ManyToOne(targetEntity: "App\Entity\Project", inversedBy: 'jobs')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank()]
+    #[Groups(['job'])]
     private $project;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
-     * @Groups({"job", "project"})
-     */
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank()]
+    #[Groups(['job', 'project'])]
     private $branch;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @Groups({"job", "project"})
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Groups(['job', 'project'])]
     private $startedAt;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @Groups({"job", "project"})
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Groups(['job', 'project'])]
     private $finishedAt;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="job", orphanRemoval=true)
-     * @Assert\Valid()
-     * @Groups({"job", "project"})
-     */
+    #[ORM\OneToMany(targetEntity: "App\Entity\Task", mappedBy: 'job', orphanRemoval: true)]
+    #[Assert\Valid()]
+    #[Groups(['job', 'project'])]
     private $tasks;
 
-    /**
-     * @ORM\Column(type="array", nullable=true)
-     * @Groups({"job", "project"})
-     */
+    #[ORM\Column(type: 'array', nullable: true)]
+    #[Groups(['job', 'project'])]
     private $errors;
 
-    /**
-     * @ORM\Column(type="string")
-     * @Assert\NotBlank()
-     * @Groups({"job", "project"})
-     */
+    #[ORM\Column(type: 'string')]
+    #[Assert\NotBlank()]
+    #[Groups(['job', 'project'])]
     private $status;
 
-    /**
-     * @ORM\Column(type="string")
-     * @Assert\NotBlank()
-     * @Groups({"job", "project"})
-     */
+    #[ORM\Column(type: 'string')]
+    #[Assert\NotBlank()]
+    #[Groups(['job', 'project'])]
     private $environment;
 
-    /**
-     * @ORM\Column(type="string")
-     * @Groups({"job", "project"})
-     */
+    #[ORM\Column(type: 'string')]
+    #[Groups(['job', 'project'])]
     private $token;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     * @Groups({"job", "project"})
-     */
+    #[ORM\Column(type: 'string', nullable: true)]
+    #[Groups(['job', 'project'])]
     private $commitHash;
 
     public function __construct()
@@ -296,6 +272,6 @@ class Job
 
     public function __toString()
     {
-        return '#' . $this->getId();
+        return '#'.$this->getId();
     }
 }

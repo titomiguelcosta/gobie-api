@@ -12,8 +12,8 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Mime\Email;
 
 final class JobCreatedSubscriber implements EventSubscriber
 {
@@ -36,7 +36,7 @@ final class JobCreatedSubscriber implements EventSubscriber
         $this->batchService->submitJob($job);
 
         $this->bus->dispatch(
-            new PusherMessage('gobie.job.' . $job->getId(), Job::STATUS_STARTED, ['job' => $job->getId()])
+            new PusherMessage('gobie.job.'.$job->getId(), Job::STATUS_STARTED, ['job' => $job->getId()])
         );
 
         $eventMessage = new EventMessage();

@@ -9,7 +9,6 @@ use DH\Auditor\Provider\Doctrine\Configuration;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Events;
-use LogicException;
 use Symfony\Component\Workflow\StateMachine;
 
 final class JobStatusSubscriber implements EventSubscriber
@@ -31,7 +30,7 @@ final class JobStatusSubscriber implements EventSubscriber
             if ($this->stateMachine->can($job, $transitionName)) {
                 $this->stateMachine->apply($job, $transitionName);
             } else {
-                throw new LogicException(sprintf('Invalid job status. From %s to %s. %s.', $event->getOldValue('status'), $event->getNewValue('status'), $transitionName));
+                throw new \LogicException(sprintf('Invalid job status. From %s to %s. %s.', $event->getOldValue('status'), $event->getNewValue('status'), $transitionName));
             }
         }
     }

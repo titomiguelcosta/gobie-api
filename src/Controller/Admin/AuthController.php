@@ -11,9 +11,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class AuthController extends AbstractController
 {
-    /**
-     * @Route("/admin/login", name="admin_login")
-     */
+    #[Route('/admin/login', name: 'admin_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         if ($this->getUser()) {
@@ -67,10 +65,8 @@ class AuthController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/admin/logout", name="admin_logout")
-     */
-    public function logout()
+    #[Route('/admin/logout', name: 'admin_logout')]
+    public function logout(): void
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }

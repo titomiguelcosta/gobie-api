@@ -19,7 +19,7 @@ class TestAwsBatchJobSubmitCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Submit a job to AWS Batch');
@@ -52,8 +52,8 @@ class TestAwsBatchJobSubmitCommand extends Command
             'jobQueue' => $_ENV['AWS_BATCH_JOB_QUEUE_PHP80'],
         ]);
 
-        $io->success($output);
+        $io->success(print_r($output, true));
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

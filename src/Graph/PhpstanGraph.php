@@ -8,7 +8,7 @@ use App\Entity\Task;
 
 class PhpstanGraph implements GraphInterface
 {
-    const TOOL = 'phpstan';
+    public const TOOL = 'phpstan';
 
     public function getData(Task $task): array
     {

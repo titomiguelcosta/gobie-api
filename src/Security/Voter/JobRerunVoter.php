@@ -12,12 +12,12 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 class JobRerunVoter extends Voter
 {
-    protected function supports($attribute, $subject)
+    protected function supports($attribute, $subject): bool
     {
         return in_array($attribute, [Permissions::JOB_RERUN]) && $subject instanceof Job;
     }
 
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+    protected function voteOnAttribute($attribute, $subject, TokenInterface $token): bool
     {
         $user = $token->getUser();
 

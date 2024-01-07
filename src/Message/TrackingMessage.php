@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Message;
 
 use App\Entity\User;
-use DateTimeInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -32,8 +31,8 @@ final class TrackingMessage
     public function __construct(
         Request $request,
         Response $response,
-        DateTimeInterface $startedAt,
-        DateTimeInterface $terminatedAt,
+        \DateTimeInterface $startedAt,
+        \DateTimeInterface $terminatedAt,
         ?User $user
     ) {
         $this->routeName = $request->attributes->get('_route', 'unknown');
@@ -57,12 +56,12 @@ final class TrackingMessage
         $this->sanitize();
     }
 
-    public function getStartedAt(): DateTimeInterface
+    public function getStartedAt(): \DateTimeInterface
     {
         return $this->startedAt;
     }
 
-    public function getTerminatedAt(): DateTimeInterface
+    public function getTerminatedAt(): \DateTimeInterface
     {
         return $this->terminatedAt;
     }

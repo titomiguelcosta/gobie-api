@@ -20,13 +20,13 @@ class TestEmailCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Send an e-mail');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
@@ -37,10 +37,8 @@ class TestEmailCommand extends Command
             ->text('Job submitted to AWS Batch')
             ->html('<p>Job submitted to AWS Batch</p>');
 
-        $output = $this->mailer->send($message);
+        $this->mailer->send($message);
 
-        $io->success($output);
-
-        return 0;
+        return Command::SUCCESS;
     }
 }

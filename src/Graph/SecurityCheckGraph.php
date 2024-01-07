@@ -8,7 +8,7 @@ use App\Entity\Task;
 
 class SecurityCheckGraph implements GraphInterface
 {
-    const TOOL = 'security:check';
+    public const TOOL = 'security:check';
 
     public function getData(Task $task): array
     {

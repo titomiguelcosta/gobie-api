@@ -15,9 +15,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class JobRerunController extends AbstractController
 {
-    /**
-     * @ParamConverter("job", class=Job::class)
-     */
+    #[ParamConverter('job', class: Job::class)]
     public function __invoke(
         Request $request,
         Job $job,

@@ -9,7 +9,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Extension\QueryItemExtensionInterface;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Util\QueryNameGeneratorInterface;
 use App\Entity\Job;
 use Doctrine\ORM\QueryBuilder;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 
 final class JobExtension implements QueryCollectionExtensionInterface, QueryItemExtensionInterface
 {
@@ -36,7 +36,7 @@ final class JobExtension implements QueryCollectionExtensionInterface, QueryItem
         $rootAlias = $queryBuilder->getRootAliases()[0];
         $queryBuilder->innerJoin(sprintf('%s.project', $rootAlias), 'p');
         $queryBuilder->andWhere('p.createdBy = :current_user');
-        $queryBuilder->orderBy($rootAlias . '.startedAt', 'desc');
+        $queryBuilder->orderBy($rootAlias.'.startedAt', 'desc');
         $queryBuilder->setParameter('current_user', $user);
     }
 }

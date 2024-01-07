@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use DateTimeImmutable;
 use Github\Client as GithubClient;
 use Github\HttpClient\Builder as GithubBuilder;
 use GuzzleHttp\Client as GuzzleClient;
@@ -25,7 +24,7 @@ class TestGithubCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Integration with GitHub');
@@ -40,7 +39,7 @@ class TestGithubCommand extends Command
 
         $jwt = (new Builder())
             ->issuedBy($this->githubAppId)
-            ->issuedAt(new DateTimeImmutable(time()))
+            ->issuedAt(new \DateTimeImmutable(time()))
             ->expiresAt(time() + 60)
             ->getToken(
                 new Sha256(),
@@ -61,7 +60,7 @@ class TestGithubCommand extends Command
         $params = [
             'name' => 'testing integration with gobie',
             'head_sha' => '6bfde2a0cfcc721f8bea6ff3e9c6798cfb5a0a6c',
-            //'status' => 'in_progress',
+            // 'status' => 'in_progress',
             'conclusion' => 'success',
             'details_url' => 'https://gobie.titomiguelcosta.com/',
             'output' => [
@@ -73,6 +72,6 @@ class TestGithubCommand extends Command
 
         print_r($check);
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

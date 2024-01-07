@@ -19,19 +19,19 @@ class TestSlackCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Post a slack message');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $chat = new ChatMessage('Testing integration with slack');
         $chat->transport('slack_builds');
 
         $this->notifier->send($chat);
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

@@ -9,7 +9,6 @@ use DH\Auditor\Provider\Doctrine\Configuration;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Events;
-use LogicException;
 use Symfony\Component\Workflow\StateMachine;
 
 final class TaskStatusSubscriber implements EventSubscriber
@@ -31,7 +30,7 @@ final class TaskStatusSubscriber implements EventSubscriber
             if ($this->stateMachine->can($task, $transitionName)) {
                 $this->stateMachine->apply($task, $transitionName);
             } else {
-                throw new LogicException(sprintf('Invalid task status. From %s to %s. %s.', $event->getOldValue('status'), $event->getNewValue('status'), $transitionName));
+                throw new \LogicException(sprintf('Invalid task status. From %s to %s. %s.', $event->getOldValue('status'), $event->getNewValue('status'), $transitionName));
             }
         }
     }

@@ -12,92 +12,76 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ApiResource(
- *  attributes = {
- *      "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
- *      "pagination_items_per_page" = 5
- *  },
- *  normalizationContext = {"groups" = {"project"}},
- *  collectionOperations={
- *      "get" = {
- *          "security" = "is_granted('ROLE_USER')"
- *      },
- *      "post" = {
- *          "security" = "is_granted('ROLE_USER')"
- *      }
- *  },
- *  itemOperations = {
- *      "get" = {
- *          "security" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.getCreatedBy())"
- *      },
- *      "delete" = {
- *          "security" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.getCreatedBy())"
- *      },
- *      "put" = {
- *          "security" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.getCreatedBy())"
- *      }
- *  }
- * )
- * @ORM\Entity(repositoryClass="App\Repository\ProjectRepository")
- */
+#[ApiResource(
+    attributes: [
+        'security' => "is_granted('IS_AUTHENTICATED_FULLY')",
+        'pagination_items_per_page' => 5,
+    ],
+    normalizationContext: ['groups' => ['project']],
+    collectionOperations: [
+        'get' => [
+            'security' => "is_granted('ROLE_USER')",
+        ],
+        'post' => [
+            'security' => "is_granted('ROLE_USER')",
+        ],
+    ],
+    itemOperations: [
+        'get' => [
+            'security' => "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.getCreatedBy())",
+        ],
+        'delete' => [
+            'security' => "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.getCreatedBy())",
+        ],
+        'put' => [
+            'security' => "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.getCreatedBy())",
+        ],
+    ]
+)]
+#[ORM\Entity(repositoryClass: 'App\Repository\ProjectRepository')]
 class Project
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     * @Groups({"job", "project"})
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    #[Groups(['job', 'project'])]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
-     * @Assert\Url(
-     *  protocols={"http", "https", "git"}
-     * )
-     * @Groups({"job", "project"})
-     */
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Url(protocols: ['http', 'https', 'git'])]
+    #[Groups(['job', 'project'])]
     private $repo;
 
     /**
      * @ApiProperty()
-     * @Groups({"job", "project"})
      */
+    #[Groups(['job', 'project'])]
     private $repoSanitized;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"job", "project"})
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['job', 'project'])]
     private $description;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="projects")
-     * @Assert\Type(User::class)
-     * @Groups({"job", "project"})
-     */
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\User', inversedBy: 'projects')]
+    #[Assert\Type(User::class)]
+    #[Groups(['job', 'project'])]
     private $createdBy;
 
     /**
-     * @ORM\Column(type="datetime")
      * @Gedmo\Timestampable(on="create")
-     * @Groups({"job", "project"})
      */
+    #[ORM\Column(type: 'datetime')]
+    #[Groups(['job', 'project'])]
     private $createdAt;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Job", mappedBy="project", orphanRemoval=true)
-     * @Assert\Valid()
-     * @Groups({"project"})
-     */
+    #[ORM\OneToMany(targetEntity: 'App\Entity\Job', mappedBy: 'project', orphanRemoval: true)]
+    #[Assert\Valid]
+    #[Groups(['project'])]
     private $jobs;
 
-    /**
-     * @ORM\Column(type="boolean")
-     * @Groups({"job", "project"})
-     */
+    #[ORM\Column(type: 'boolean')]
+    #[Groups(['job', 'project'])]
     private $isPrivate;
 
     public function __construct()
@@ -214,6 +198,6 @@ class Project
 
     public function __toString()
     {
-        return '#' . $this->getId() . ': ' . $this->getDescription();
+        return '#'.$this->getId().': '.$this->getDescription();
     }
 }

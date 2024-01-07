@@ -13,8 +13,8 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Mime\Email;
 
 final class JobFinishedSubscriber implements EventSubscriber
 {
@@ -31,7 +31,7 @@ final class JobFinishedSubscriber implements EventSubscriber
             $this->doEmail($job, $user);
 
             $this->bus->dispatch(
-                new PusherMessage('gobie.job.' . $job->getId(), Job::STATUS_FINISHED, ['job' => $job->getId()])
+                new PusherMessage('gobie.job.'.$job->getId(), Job::STATUS_FINISHED, ['job' => $job->getId()])
             );
 
             $this->bus->dispatch(
@@ -75,7 +75,7 @@ final class JobFinishedSubscriber implements EventSubscriber
                 sprintf(
                     'Job #%d finished. Check the report %s.',
                     $job->getId(),
-                    'https://gobie.titomiguelcosta.com/jobs/' . $job->getId()
+                    'https://gobie.titomiguelcosta.com/jobs/'.$job->getId()
                 )
             );
 

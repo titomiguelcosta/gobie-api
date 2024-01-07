@@ -8,7 +8,7 @@ use App\Entity\Task;
 
 class LintXliffGraph implements GraphInterface
 {
-    const TOOL = 'lint:xliff';
+    public const TOOL = 'lint:xliff';
 
     /**
      * [

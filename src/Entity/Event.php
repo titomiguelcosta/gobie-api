@@ -10,82 +10,63 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use App\Repository\EventRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ApiResource(
- *  attributes = {
- *      "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
- *      "pagination_items_per_page" = 5
- *  },
- *  collectionOperations={
- *      "get" = {
- *          "security" = "is_granted('ROLE_USER')"
- *      },
- *      "post" = {
- *          "security" = "is_granted('ROLE_USER')"
- *      }
- *  },
- *  itemOperations = {
- *      "get" = {
- *          "security" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.getUser())"
- *      },
- *      "delete" = {
- *          "security" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.getUser())"
- *      },
- *      "put" = {
- *          "security" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.getUser())"
- *      }
- *  }
- * )
- * @ApiFilter(OrderFilter::class, properties={"dispatchedAt": "DESC"}, arguments={"orderParameterName"="order"})
- * @ORM\Entity(repositoryClass=EventRepository::class)
- */
+#[ApiResource(
+    attributes: [
+      'security' => "is_granted('IS_AUTHENTICATED_FULLY')",
+      'pagination_items_per_page' => 5,
+    ],
+    collectionOperations: [
+      'get' => [
+          'security' => "is_granted('ROLE_USER')",
+      ],
+      'post' => [
+          'security' => "is_granted('ROLE_USER')",
+      ],
+    ],
+    itemOperations: [
+      'get' => [
+          'security' => "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.getUser())",
+      ],
+      'delete' => [
+          'security' => "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.getUser())",
+      ],
+      'put' => [
+          'security' => "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object.getUser())",
+      ],
+    ],
+)
+]
+#[ApiFilter(OrderFilter::class, properties: ['dispatchedAt' => 'DESC'], arguments: ['orderParameterName' => 'order'])]
+#[ORM\Entity(repositoryClass: EventRepository::class)]
 class Event
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id()]
+    #[ORM\GeneratedValue()]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private $name;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $entityNamespace;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     private $entityId;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="events")
-     */
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'events')]
     private $user;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private $dispatchedAt;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $message;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private $level;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private $action;
 
     public function getId(): ?int

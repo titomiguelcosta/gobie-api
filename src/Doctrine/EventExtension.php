@@ -9,7 +9,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Extension\QueryItemExtensionInterface;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Util\QueryNameGeneratorInterface;
 use App\Entity\Event;
 use Doctrine\ORM\QueryBuilder;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 
 final class EventExtension implements QueryCollectionExtensionInterface, QueryItemExtensionInterface
 {
@@ -34,8 +34,8 @@ final class EventExtension implements QueryCollectionExtensionInterface, QueryIt
         }
 
         $rootAlias = $queryBuilder->getRootAliases()[0];
-        $queryBuilder->andWhere($rootAlias . '.user = :current_user');
-        $queryBuilder->orderBy($rootAlias . '.dispatchedAt', 'desc');
+        $queryBuilder->andWhere($rootAlias.'.user = :current_user');
+        $queryBuilder->orderBy($rootAlias.'.dispatchedAt', 'desc');
         $queryBuilder->setParameter('current_user', $user);
     }
 }

@@ -7,57 +7,37 @@ namespace App\Entity;
 use App\Repository\RequestRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=RequestRepository::class)
- */
+#[ORM\Entity(repositoryClass: RequestRepository::class)]
 class Request
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\OneToOne(targetEntity=Tracking::class, inversedBy="request", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\OneToOne(targetEntity: Tracking::class, inversedBy: 'request', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
     private $tracking;
 
-    /**
-     * @ORM\Column(type="array", nullable=true)
-     */
+    #[ORM\Column(type: 'array', nullable: true)]
     private $queryParameters = [];
 
-    /**
-     * @ORM\Column(type="array", nullable=true)
-     */
+    #[ORM\Column(type: 'array', nullable: true)]
     private $headers = [];
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private $method;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private $format;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $body;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private $pathInfo;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $locale;
 
     public function getId(): ?int

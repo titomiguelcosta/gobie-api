@@ -6,5 +6,5 @@ namespace App\Security;
 
 class Permissions
 {
-    const JOB_RERUN = 'job.rerun';
+    public const JOB_RERUN = 'job.rerun';
 }

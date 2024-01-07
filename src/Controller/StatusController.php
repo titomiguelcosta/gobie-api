@@ -11,10 +11,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class StatusController extends AbstractController
 {
-    /**
-     * @Route("/status", name="status", methods={"GET"})
-     * @IsGranted("PUBLIC_ACCESS")
-     */
+    #[Route('/status', name: 'status', methods: ['GET'])]
+    #[IsGranted('PUBLIC_ACCESS')]
     public function __invoke()
     {
         return new JsonResponse(['status' => 'ok']);

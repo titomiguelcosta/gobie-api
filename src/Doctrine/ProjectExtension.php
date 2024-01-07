@@ -9,7 +9,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Extension\QueryItemExtensionInterface;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Util\QueryNameGeneratorInterface;
 use App\Entity\Project;
 use Doctrine\ORM\QueryBuilder;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 
 final class ProjectExtension implements QueryCollectionExtensionInterface, QueryItemExtensionInterface
 {

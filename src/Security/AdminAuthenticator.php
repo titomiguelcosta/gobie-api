@@ -6,7 +6,6 @@ namespace App\Security;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -15,14 +14,16 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\EntryPoint\AuthenticationEntryPointInterface;
+use Symfony\Component\Security\Http\SecurityRequestAttributes;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
 class AdminAuthenticator extends AbstractAuthenticator implements AuthenticationEntryPointInterface
@@ -66,7 +67,7 @@ class AdminAuthenticator extends AbstractAuthenticator implements Authentication
             'csrf_token' => $request->request->get('_csrf_token'),
         ];
         $request->getSession()->set(
-            Security::LAST_USERNAME,
+            SecurityRequestAttributes::LAST_USERNAME,
             $credentials['username']
         );
 
@@ -91,7 +92,7 @@ class AdminAuthenticator extends AbstractAuthenticator implements Authentication
         return $user;
     }
 
-    public function checkCredentials($credentials, UserInterface $user): bool
+    public function checkCredentials($credentials, PasswordAuthenticatedUserInterface $user): bool
     {
         return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
     }
@@ -111,13 +112,13 @@ class AdminAuthenticator extends AbstractAuthenticator implements Authentication
         }
 
         // return new RedirectResponse($this->urlGenerator->generate('some_route'));
-        throw new \Exception('TODO: provide a valid redirect inside ' . __FILE__);
+        throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): RedirectResponse
     {
         if ($request->hasSession()) {
-            $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
+            $request->getSession()->set(SecurityRequestAttributes::AUTHENTICATION_ERROR, $exception);
         }
 
         $url = $this->getLoginUrl();

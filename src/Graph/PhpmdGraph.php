@@ -9,7 +9,7 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class PhpmdGraph implements GraphInterface
 {
-    const TOOL = 'phpmd';
+    public const TOOL = 'phpmd';
 
     private $crawler;
 

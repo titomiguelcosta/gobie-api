@@ -15,173 +15,161 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ApiResource(
- *  attributes = {
- *      "normalization_context" = {"groups" = {"read"}},
- *      "denormalization_context" = {"groups" = {"write"}},
- *      "security" = "is_granted('IS_AUTHENTICATED_FULLY')"
- *  },
- *  collectionOperations={
- *      "get" = {
- *          "security" = "is_granted('ROLE_ADMIN')"
- *      },
- *      "post" = {
- *          "validation_groups" = {"Default", "create"},
- *          "security" = "is_granted('ROLE_ADMIN')"
- *      },
- *      "auth" = {
- *          "method" = "POST",
- *          "path" = "/users/auth",
- *          "controller" = AuthController::class,
- *          "defaults" = {"_api_receive" = false},
- *          "security" = "is_granted('PUBLIC_ACCESS')",
- *          "normalization_context" = {},
- *          "openapi_context"={
- *              "summary" = "Obtains an JWT token",
- *              "description" = "Authenticate user and get access token in the response",
- *              "requestBody" = {
- *                  "content" = {
- *                      "application/json" = {
- *                          "schema" = {
- *                              "type" = "object",
- *                              "properties" = {
- *                                  "username" = {"type" = "string"},
- *                                  "password" = {"type" = "string"}
- *                              }
- *                          },
- *                          "example" = {
- *                              "username" = "example",
- *                              "password" = "secret"
- *                          } 
- *                      }
- *                  }
- *              },
- *              "responses" = {
- *                  "200" = {
- *                      "description" = "Generate JWT token",
- *                      "schema" =  {
- *                          "type" = "object",
- *                          "required" = {
- *                              "id",
- *                              "username",
- *                              "token",
- *                              "email",
- *                              "roles"
- *                          },
- *                          "properties" = {
- *                              "@id" = {
- *                                  "type" = "string"
- *                              },
- *                              "id" = {
- *                                  "type" = "integer"
- *                              },
- *                              "username" = {
- *                                  "type" = "string"
- *                              },
- *                              "token" = {
- *                                  "type" = "string"
- *                              },
- *                              "email" = {
- *                                  "type" = "string"
- *                              },
- *                              "roles" = {
- *                                  "type" = "object"
- *                              }
- *                          }
- *                      }
- *                  },
- *                  "400" = {
- *                      "description" = "Invalid input"
- *                  },
- *                  "404" = {
- *                      "description" = "User not found"
- *                  }
- *              },
- *              "consumes" = {
- *                  "application/ld+json",
- *                  "application/json",
- *              },
- *              "produces" = {
- *                  "application/json"
- *              }
- *          }
- *      }
- *  },
- *  itemOperations = {
- *      "get" = {
- *          "security" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object)"
- *      },
- *      "delete" = {
- *          "security" = "is_granted('ROLE_ADMIN')"
- *      },
- *      "put" = {
- *          "security" = "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object)"
- *      }
- *  })
- * )
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- */
+#[ApiResource(
+    attributes: [
+        'normalization_context' => ['groups' => ['read']],
+        'denormalization_context' => ['groups' => ['write']],
+        'security' => "is_granted('IS_AUTHENTICATED_FULLY')",
+    ],
+    collectionOperations: [
+        'get' => [
+            'security' => "is_granted('ROLE_ADMIN')",
+        ],
+        'post' => [
+            'validation_groups' => ['Default', 'create'],
+            'security' => "is_granted('ROLE_ADMIN')",
+        ],
+        'auth' => [
+            'method' => 'POST',
+            'path' => '/users/auth',
+            'controller' => AuthController::class,
+            'defaults' => ['_api_receive' => false],
+            'security' => "is_granted('PUBLIC_ACCESS')",
+            'normalization_context' => [],
+            'openapi_context' => [
+                'summary' => 'Obtains an JWT token',
+                'description' => 'Authenticate user and get access token in the response',
+                'requestBody' => [
+                    'content' => [
+                        'application/json' => [
+                            'schema' => [
+                                'type' => 'object',
+                                'properties' => [
+                                    'username' => ['type' => 'string'],
+                                    'password' => ['type' => 'string'],
+                                ],
+                            ],
+                            'example' => [
+                                'username' => 'example',
+                                'password' => 'secret',
+                            ],
+                        ],
+                    ],
+                ],
+                'responses' => [
+                    '200' => [
+                        'description' => 'Generate JWT token',
+                        'schema' => [
+                            'type' => 'object',
+                            'required' => [
+                                'id',
+                                'username',
+                                'token',
+                                'email',
+                                'roles',
+                            ],
+                            'properties' => [
+                                '@id' => [
+                                    'type' => 'string',
+                                ],
+                                'id' => [
+                                    'type' => 'integer',
+                                ],
+                                'username' => [
+                                    'type' => 'string',
+                                ],
+                                'token' => [
+                                    'type' => 'string',
+                                ],
+                                'email' => [
+                                    'type' => 'string',
+                                ],
+                                'roles' => [
+                                    'type' => 'object',
+                                ],
+                            ],
+                        ],
+                    ],
+                    '400' => [
+                        'description' => 'Invalid input',
+                    ],
+                    '404' => [
+                        'description' => 'User not found',
+                    ],
+                ],
+                'consumes' => [
+                    'application/ld+json',
+                    'application/json',
+                ],
+                'produces' => [
+                    'application/json',
+                ],
+            ],
+        ],
+    ],
+    itemOperations: [
+        'get' => [
+            'security' => "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object)",
+        ],
+        'delete' => [
+            'security' => "is_granted('ROLE_ADMIN')",
+        ],
+        'put' => [
+            'security' => "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and user == object)",
+        ],
+    ]
+)]
+#[ORM\Entity(repositoryClass: "App\Repository\UserRepository")]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @ApiProperty(identifier=false)
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     * @Groups({"read", "job", "project"})
      */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    #[Groups(['read', 'job', 'project'])]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=180, unique=true)
-     * @Assert\Email()
-     * @Groups({"read", "write"})
-     */
+    #[ORM\Column(type: 'string', length: 180, unique: true)]
+    #[Assert\Email]
+    #[Groups(['read', 'write'])]
     private $email;
 
-    /**
-     * @ORM\Column(type="json")
-     * @Groups({"read", "write"})
-     */
+    #[ORM\Column(type: 'json')]
+    #[Groups(['read', 'write'])]
     private $roles = [];
 
     /**
      * @ApiProperty(identifier=true)
-     * @ORM\Column(type="string", length=180, unique=true)
-     * @Assert\NotBlank()
-     * @Assert\Regex("/^\w+$/")
-     * @Groups({"auth", "read", "write", "job", "project"})
      */
+    #[ORM\Column(type: 'string', length: 180, unique: true)]
+    #[Assert\NotBlank]
+    #[Assert\Regex('/^\w+$/')]
+    #[Groups(['auth', 'read', 'write', 'job', 'project'])]
     private $username;
 
     /**
      * @var string The hashed password
-     * @ORM\Column(type="string")
-     * @Groups({"auth", "read"})
      */
+    #[ORM\Column(type: 'string')]
+    #[Groups(['auth', 'read'])]
     private $password;
 
     /**
      * @var string The plain text password
-     * @Assert\NotBlank(groups={"create"})
-     * @Groups({"write"})
      */
+    #[Assert\NotBlank(groups: ['create'])]
+    #[Groups(['write'])]
     private $plainPassword;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Project", mappedBy="createdBy")
-     */
+    #[ORM\OneToMany(targetEntity: 'App\Entity\Project', mappedBy: 'createdBy')]
     private $projects;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Tracking::class, mappedBy="user")
-     */
+    #[ORM\OneToMany(targetEntity: Tracking::class, mappedBy: 'user')]
     private $trackings;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Event::class, mappedBy="user")
-     */
+    #[ORM\OneToMany(targetEntity: Event::class, mappedBy: 'user')]
     private $events;
 
     public function __construct()

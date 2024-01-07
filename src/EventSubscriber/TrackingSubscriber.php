@@ -5,17 +5,16 @@ declare(strict_types=1);
 namespace App\EventSubscriber;
 
 use App\Message\TrackingMessage;
-use DateTimeImmutable;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\TerminateEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\Security\Core\Security;
 
 class TrackingSubscriber implements EventSubscriberInterface
 {
-    private $startedAt = null;
+    private $startedAt;
 
     public function __construct(private MessageBusInterface $bus, private Security $security)
     {
@@ -23,7 +22,7 @@ class TrackingSubscriber implements EventSubscriberInterface
 
     public function onKernelRequest(RequestEvent $event)
     {
-        $this->startedAt = new DateTimeImmutable();
+        $this->startedAt = new \DateTimeImmutable();
     }
 
     public function onKernelTerminate(TerminateEvent $event)
@@ -31,8 +30,8 @@ class TrackingSubscriber implements EventSubscriberInterface
         $message = new TrackingMessage(
             $event->getRequest(),
             $event->getResponse(),
-            $this->startedAt ?? new DateTimeImmutable(),
-            new DateTimeImmutable(),
+            $this->startedAt ?? new \DateTimeImmutable(),
+            new \DateTimeImmutable(),
             $this->security->getUser()
         );
 

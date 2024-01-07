@@ -8,7 +8,7 @@ use App\Entity\Task;
 
 class LintYamlGraph implements GraphInterface
 {
-    const TOOL = 'lint:yaml';
+    public const TOOL = 'lint:yaml';
 
     public function getData(Task $task): array
     {

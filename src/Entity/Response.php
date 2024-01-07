@@ -7,37 +7,25 @@ namespace App\Entity;
 use App\Repository\ResponseRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=ResponseRepository::class)
- */
+#[ORM\Entity(repositoryClass: ResponseRepository::class)]
 class Response
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\OneToOne(targetEntity=Tracking::class, inversedBy="response", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\OneToOne(targetEntity: Tracking::class, inversedBy: 'response', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
     private $tracking;
 
-    /**
-     * @ORM\Column(type="string", length=3)
-     */
+    #[ORM\Column(type: 'string', length: 3)]
     private $statusCode;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private $statusText;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $body;
 
     public function getId(): ?int

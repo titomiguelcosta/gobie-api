@@ -324,6 +324,18 @@
     "phpspec/prophecy": {
         "version": "1.8.0"
     },
+    "phpstan/phpstan": {
+        "version": "1.10",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "1.0",
+            "ref": "5e490cc197fb6bb1ae22e5abbc531ddc633b6767"
+        },
+        "files": [
+            "phpstan.dist.neon"
+        ]
+    },
     "phpunit/php-code-coverage": {
         "version": "7.0.3"
     },
@@ -443,18 +455,6 @@
     },
     "sebastian/version": {
         "version": "2.0.1"
-    },
-    "sensio/framework-extra-bundle": {
-        "version": "5.2",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "5.2",
-            "ref": "fb7e19da7f013d0d422fa9bce16f5c510e27609b"
-        },
-        "files": [
-            "config/packages/sensio_framework_extra.yaml"
-        ]
     },
     "stof/doctrine-extensions-bundle": {
         "version": "1.2",
@@ -882,6 +882,9 @@
     },
     "theseer/tokenizer": {
         "version": "1.1.0"
+    },
+    "twig/extra-bundle": {
+        "version": "v3.8.0"
     },
     "twig/twig": {
         "version": "v2.7.4"

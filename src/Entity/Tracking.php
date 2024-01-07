@@ -7,61 +7,39 @@ namespace App\Entity;
 use App\Repository\TrackingRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=TrackingRepository::class)
- */
+#[ORM\Entity(repositoryClass: TrackingRepository::class)]
 class Tracking
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private $routeName;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private $startedAt;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private $terminatedAt;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="trackings")
-     */
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'trackings')]
     private $user;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $ipAddress;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $device;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $navigator;
 
-    /**
-     * @ORM\OneToOne(targetEntity=Request::class, mappedBy="tracking", cascade={"persist", "remove"})
-     */
+    #[ORM\OneToOne(targetEntity: Request::class, mappedBy: 'tracking', cascade: ['persist', 'remove'])]
     private $request;
 
-    /**
-     * @ORM\OneToOne(targetEntity=Response::class, mappedBy="tracking", cascade={"persist", "remove"})
-     */
+    #[ORM\OneToOne(targetEntity: Response::class, mappedBy: 'tracking', cascade: ['persist', 'remove'])]
     private $response;
 
     public function getId(): ?int

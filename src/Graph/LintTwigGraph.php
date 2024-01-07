@@ -8,7 +8,7 @@ use App\Entity\Task;
 
 class LintTwigGraph implements GraphInterface
 {
-    const TOOL = 'lint:twig';
+    public const TOOL = 'lint:twig';
 
     public function getData(Task $task): array
     {
