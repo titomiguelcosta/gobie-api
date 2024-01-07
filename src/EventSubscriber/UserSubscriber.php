@@ -19,7 +19,7 @@ final class UserSubscriber implements EventSubscriberInterface
     {
     }
 
-    public function welcomeEmail(ViewEvent $event)
+    public function welcomeEmail(ViewEvent $event): void
     {
         $user = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
@@ -37,7 +37,7 @@ final class UserSubscriber implements EventSubscriberInterface
         $this->mailer->send($message);
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             KernelEvents::VIEW => [

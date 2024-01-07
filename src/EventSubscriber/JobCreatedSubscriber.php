@@ -9,7 +9,7 @@ use App\Entity\Job;
 use App\Message\EventMessage;
 use App\Message\PusherMessage;
 use Doctrine\Common\EventSubscriber;
-use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PostPersistEventArgs;
 use Doctrine\ORM\Events;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -25,7 +25,7 @@ final class JobCreatedSubscriber implements EventSubscriber
     ) {
     }
 
-    public function postPersist(LifecycleEventArgs $event)
+    public function postPersist(PostPersistEventArgs $event): void
     {
         $job = $event->getObject();
 
@@ -53,7 +53,7 @@ final class JobCreatedSubscriber implements EventSubscriber
         $this->doEmail($job);
     }
 
-    public function getSubscribedEvents()
+    public function getSubscribedEvents(): array
     {
         return [
             Events::postPersist,

@@ -6,12 +6,13 @@ namespace App\EventSubscriber;
 
 use App\Entity\Project;
 use Doctrine\Common\EventSubscriber;
-use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PrePersistEventArgs;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Events;
 
 final class IsProjectPrivateSubscriber implements EventSubscriber
 {
-    public function prePersist(LifecycleEventArgs $event)
+    public function prePersist(PrePersistEventArgs $event): void
     {
         /** @var Project $project */
         $project = $event->getObject();
@@ -23,7 +24,7 @@ final class IsProjectPrivateSubscriber implements EventSubscriber
         $this->isPrivate($project);
     }
 
-    public function preUpdate(LifecycleEventArgs $event)
+    public function preUpdate(PreUpdateEventArgs $event): void
     {
         /** @var Project $project */
         $project = $event->getObject();
@@ -35,7 +36,7 @@ final class IsProjectPrivateSubscriber implements EventSubscriber
         $this->isPrivate($project);
     }
 
-    public function getSubscribedEvents()
+    public function getSubscribedEvents(): array
     {
         return [
             Events::prePersist,

@@ -20,12 +20,12 @@ class TrackingSubscriber implements EventSubscriberInterface
     {
     }
 
-    public function onKernelRequest(RequestEvent $event)
+    public function onKernelRequest(RequestEvent $event): void
     {
         $this->startedAt = new \DateTimeImmutable();
     }
 
-    public function onKernelTerminate(TerminateEvent $event)
+    public function onKernelTerminate(TerminateEvent $event): void
     {
         $message = new TrackingMessage(
             $event->getRequest(),
@@ -38,7 +38,7 @@ class TrackingSubscriber implements EventSubscriberInterface
         $this->bus->dispatch($message);
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             KernelEvents::TERMINATE => 'onKernelTerminate',

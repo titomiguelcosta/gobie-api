@@ -8,7 +8,8 @@ use App\Entity\Task;
 use App\Graph\GraphInterface;
 use App\Graph\GraphManager;
 use Doctrine\Common\EventSubscriber;
-use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\Persistence\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PrePersistEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Events;
 
@@ -18,7 +19,7 @@ final class TaskGraphSubscriber implements EventSubscriber
     {
     }
 
-    public function prePersist(LifecycleEventArgs $event)
+    public function prePersist(PrePersistEventArgs $event): void
     {
         if ($this->handleEvent($event)) {
             $task = $event->getObject();
@@ -26,14 +27,14 @@ final class TaskGraphSubscriber implements EventSubscriber
         }
     }
 
-    public function preUpdate(PreUpdateEventArgs $event)
+    public function preUpdate(PreUpdateEventArgs $event): void
     {
         if ($this->handleEvent($event) && $event->hasChangedField('graph')) {
             $event->setNewValue('graph', $this->recalculateGraph($event->getObject()));
         }
     }
 
-    public function getSubscribedEvents()
+    public function getSubscribedEvents(): array
     {
         return [
             Events::prePersist,

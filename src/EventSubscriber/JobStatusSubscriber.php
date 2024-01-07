@@ -9,15 +9,15 @@ use DH\Auditor\Provider\Doctrine\Configuration;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Events;
-use Symfony\Component\Workflow\StateMachine;
+use Symfony\Component\Workflow\WorkflowInterface;
 
 final class JobStatusSubscriber implements EventSubscriber
 {
-    public function __construct(private StateMachine $stateMachine, private Configuration $auditConfiguration)
+    public function __construct(private WorkflowInterface $stateMachine, private Configuration $auditConfiguration)
     {
     }
 
-    public function preUpdate(PreUpdateEventArgs $event)
+    public function preUpdate(PreUpdateEventArgs $event): void
     {
         $job = $event->getObject();
         if ($job instanceof Job && $event->hasChangedField('status')) {
@@ -35,7 +35,7 @@ final class JobStatusSubscriber implements EventSubscriber
         }
     }
 
-    public function getSubscribedEvents()
+    public function getSubscribedEvents(): array
     {
         return [
             Events::preUpdate,

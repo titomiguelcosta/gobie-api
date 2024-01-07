@@ -10,7 +10,7 @@ use App\Message\EventMessage;
 use App\Message\PusherMessage;
 use App\Message\SlackMessage;
 use Doctrine\Common\EventSubscriber;
-use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PostUpdateEventArgs;
 use Doctrine\ORM\Events;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -22,7 +22,7 @@ final class JobFinishedSubscriber implements EventSubscriber
     {
     }
 
-    public function postUpdate(LifecycleEventArgs $event)
+    public function postUpdate(PostUpdateEventArgs $event): void
     {
         $job = $event->getObject();
         if ($job instanceof Job && Job::STATUS_FINISHED === $job->getStatus()) {
@@ -58,7 +58,7 @@ final class JobFinishedSubscriber implements EventSubscriber
         }
     }
 
-    public function getSubscribedEvents()
+    public function getSubscribedEvents(): array
     {
         return [
             Events::postUpdate,
