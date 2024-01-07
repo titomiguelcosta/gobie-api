@@ -8,14 +8,12 @@ use App\Entity\Job;
 use App\Entity\Task;
 use App\Security\Permissions;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class JobRerunController extends AbstractController
 {
-    #[ParamConverter('job', class: Job::class)]
     public function __invoke(
         Request $request,
         Job $job,
