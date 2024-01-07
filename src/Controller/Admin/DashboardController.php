@@ -25,7 +25,10 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Gobie');
+            ->setTitle('Gobie')
+            ->renderContentMaximized()
+            ->disableDarkMode(false)
+            ->renderSidebarMinimized();
     }
 
     public function configureMenuItems(): iterable
@@ -35,5 +38,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Projects', 'fa fa-user', Project::class);
         yield MenuItem::linkToCrud('Jobs', 'fa fa-user', Job::class);
         yield MenuItem::linkToCrud('Tasks', 'fa fa-user', Task::class);
+        yield MenuItem::linkToLogout('Logout', 'fa fa-exit');
     }
 }
